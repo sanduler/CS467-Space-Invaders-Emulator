@@ -4,4 +4,5 @@ Build an Emulator and Run Space Invaders ROM Create an Intel 8080 emulator in C/
 
 # Resources 
 Hardware specification and code walkthrough - http://computerarcheology.com/Arcade/SpaceInvaders/
+
 i8080 manual - http://altairclone.com/downloads/manuals/8080%20Programmers%20Manual.pdf
