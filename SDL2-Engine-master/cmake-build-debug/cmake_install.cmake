@@ -1,4 +1,4 @@
-# Install script for directory: /Users/rubensanduleac/Downloads/SDL2-Engine-master
+# Install script for directory: /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

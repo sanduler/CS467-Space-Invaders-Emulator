@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/rubensanduleac/Downloads/SDL2-Engine-master
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug
+-- Build files have been written to: /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug

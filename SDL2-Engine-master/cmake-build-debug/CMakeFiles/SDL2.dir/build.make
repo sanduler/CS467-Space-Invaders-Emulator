@@ -62,10 +62,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/rubensanduleac/Downloads/SDL2-Engine-master
+CMAKE_SOURCE_DIR = /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/SDL2.dir/depend.make
@@ -78,90 +78,29 @@ include CMakeFiles/SDL2.dir/flags.make
 
 CMakeFiles/SDL2.dir/source/src/main.cpp.o: CMakeFiles/SDL2.dir/flags.make
 CMakeFiles/SDL2.dir/source/src/main.cpp.o: ../source/src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SDL2.dir/source/src/main.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2.dir/source/src/main.cpp.o -c /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SDL2.dir/source/src/main.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2.dir/source/src/main.cpp.o -c /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/source/src/main.cpp
 
 CMakeFiles/SDL2.dir/source/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2.dir/source/src/main.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/main.cpp > CMakeFiles/SDL2.dir/source/src/main.cpp.i
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/source/src/main.cpp > CMakeFiles/SDL2.dir/source/src/main.cpp.i
 
 CMakeFiles/SDL2.dir/source/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2.dir/source/src/main.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/main.cpp -o CMakeFiles/SDL2.dir/source/src/main.cpp.s
-
-CMakeFiles/SDL2.dir/source/src/graphics.cpp.o: CMakeFiles/SDL2.dir/flags.make
-CMakeFiles/SDL2.dir/source/src/graphics.cpp.o: ../source/src/graphics.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SDL2.dir/source/src/graphics.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2.dir/source/src/graphics.cpp.o -c /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/graphics.cpp
-
-CMakeFiles/SDL2.dir/source/src/graphics.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2.dir/source/src/graphics.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/graphics.cpp > CMakeFiles/SDL2.dir/source/src/graphics.cpp.i
-
-CMakeFiles/SDL2.dir/source/src/graphics.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2.dir/source/src/graphics.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/graphics.cpp -o CMakeFiles/SDL2.dir/source/src/graphics.cpp.s
-
-CMakeFiles/SDL2.dir/source/src/game.cpp.o: CMakeFiles/SDL2.dir/flags.make
-CMakeFiles/SDL2.dir/source/src/game.cpp.o: ../source/src/game.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SDL2.dir/source/src/game.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2.dir/source/src/game.cpp.o -c /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/game.cpp
-
-CMakeFiles/SDL2.dir/source/src/game.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2.dir/source/src/game.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/game.cpp > CMakeFiles/SDL2.dir/source/src/game.cpp.i
-
-CMakeFiles/SDL2.dir/source/src/game.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2.dir/source/src/game.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/game.cpp -o CMakeFiles/SDL2.dir/source/src/game.cpp.s
-
-CMakeFiles/SDL2.dir/source/src/input.cpp.o: CMakeFiles/SDL2.dir/flags.make
-CMakeFiles/SDL2.dir/source/src/input.cpp.o: ../source/src/input.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SDL2.dir/source/src/input.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2.dir/source/src/input.cpp.o -c /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/input.cpp
-
-CMakeFiles/SDL2.dir/source/src/input.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2.dir/source/src/input.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/input.cpp > CMakeFiles/SDL2.dir/source/src/input.cpp.i
-
-CMakeFiles/SDL2.dir/source/src/input.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2.dir/source/src/input.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/input.cpp -o CMakeFiles/SDL2.dir/source/src/input.cpp.s
-
-CMakeFiles/SDL2.dir/source/src/sprite.cpp.o: CMakeFiles/SDL2.dir/flags.make
-CMakeFiles/SDL2.dir/source/src/sprite.cpp.o: ../source/src/sprite.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SDL2.dir/source/src/sprite.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2.dir/source/src/sprite.cpp.o -c /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/sprite.cpp
-
-CMakeFiles/SDL2.dir/source/src/sprite.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2.dir/source/src/sprite.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/sprite.cpp > CMakeFiles/SDL2.dir/source/src/sprite.cpp.i
-
-CMakeFiles/SDL2.dir/source/src/sprite.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2.dir/source/src/sprite.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/rubensanduleac/Downloads/SDL2-Engine-master/source/src/sprite.cpp -o CMakeFiles/SDL2.dir/source/src/sprite.cpp.s
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/source/src/main.cpp -o CMakeFiles/SDL2.dir/source/src/main.cpp.s
 
 # Object files for target SDL2
 SDL2_OBJECTS = \
-"CMakeFiles/SDL2.dir/source/src/main.cpp.o" \
-"CMakeFiles/SDL2.dir/source/src/graphics.cpp.o" \
-"CMakeFiles/SDL2.dir/source/src/game.cpp.o" \
-"CMakeFiles/SDL2.dir/source/src/input.cpp.o" \
-"CMakeFiles/SDL2.dir/source/src/sprite.cpp.o"
+"CMakeFiles/SDL2.dir/source/src/main.cpp.o"
 
 # External object files for target SDL2
 SDL2_EXTERNAL_OBJECTS =
 
 SDL2: CMakeFiles/SDL2.dir/source/src/main.cpp.o
-SDL2: CMakeFiles/SDL2.dir/source/src/graphics.cpp.o
-SDL2: CMakeFiles/SDL2.dir/source/src/game.cpp.o
-SDL2: CMakeFiles/SDL2.dir/source/src/input.cpp.o
-SDL2: CMakeFiles/SDL2.dir/source/src/sprite.cpp.o
 SDL2: CMakeFiles/SDL2.dir/build.make
-SDL2: /opt/homebrew/lib/libSDL2_image.dylib
 SDL2: /opt/homebrew/lib/libSDL2_ttf.dylib
 SDL2: CMakeFiles/SDL2.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable SDL2"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable SDL2"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SDL2.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -174,6 +113,6 @@ CMakeFiles/SDL2.dir/clean:
 .PHONY : CMakeFiles/SDL2.dir/clean
 
 CMakeFiles/SDL2.dir/depend:
-	cd /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/rubensanduleac/Downloads/SDL2-Engine-master /Users/rubensanduleac/Downloads/SDL2-Engine-master /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles/SDL2.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug/CMakeFiles/SDL2.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/SDL2.dir/depend
 

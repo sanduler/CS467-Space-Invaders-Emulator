@@ -67,10 +67,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/rubensanduleac/Downloads/SDL2-Engine-master
+CMAKE_SOURCE_DIR = /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug/CMakeFiles /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rubensanduleac/Downloads/SDL2-Engine-master/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rubensanduleac/Documents/GitHub/CS467-Space-Invaders-Emulator/SDL2-Engine-master/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -142,87 +142,6 @@ SDL2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/build
 .PHONY : SDL2/fast
 
-source/src/game.o: source/src/game.cpp.o
-
-.PHONY : source/src/game.o
-
-# target to build an object file
-source/src/game.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/game.cpp.o
-.PHONY : source/src/game.cpp.o
-
-source/src/game.i: source/src/game.cpp.i
-
-.PHONY : source/src/game.i
-
-# target to preprocess a source file
-source/src/game.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/game.cpp.i
-.PHONY : source/src/game.cpp.i
-
-source/src/game.s: source/src/game.cpp.s
-
-.PHONY : source/src/game.s
-
-# target to generate assembly for a file
-source/src/game.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/game.cpp.s
-.PHONY : source/src/game.cpp.s
-
-source/src/graphics.o: source/src/graphics.cpp.o
-
-.PHONY : source/src/graphics.o
-
-# target to build an object file
-source/src/graphics.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/graphics.cpp.o
-.PHONY : source/src/graphics.cpp.o
-
-source/src/graphics.i: source/src/graphics.cpp.i
-
-.PHONY : source/src/graphics.i
-
-# target to preprocess a source file
-source/src/graphics.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/graphics.cpp.i
-.PHONY : source/src/graphics.cpp.i
-
-source/src/graphics.s: source/src/graphics.cpp.s
-
-.PHONY : source/src/graphics.s
-
-# target to generate assembly for a file
-source/src/graphics.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/graphics.cpp.s
-.PHONY : source/src/graphics.cpp.s
-
-source/src/input.o: source/src/input.cpp.o
-
-.PHONY : source/src/input.o
-
-# target to build an object file
-source/src/input.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/input.cpp.o
-.PHONY : source/src/input.cpp.o
-
-source/src/input.i: source/src/input.cpp.i
-
-.PHONY : source/src/input.i
-
-# target to preprocess a source file
-source/src/input.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/input.cpp.i
-.PHONY : source/src/input.cpp.i
-
-source/src/input.s: source/src/input.cpp.s
-
-.PHONY : source/src/input.s
-
-# target to generate assembly for a file
-source/src/input.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/input.cpp.s
-.PHONY : source/src/input.cpp.s
-
 source/src/main.o: source/src/main.cpp.o
 
 .PHONY : source/src/main.o
@@ -250,33 +169,6 @@ source/src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/main.cpp.s
 .PHONY : source/src/main.cpp.s
 
-source/src/sprite.o: source/src/sprite.cpp.o
-
-.PHONY : source/src/sprite.o
-
-# target to build an object file
-source/src/sprite.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/sprite.cpp.o
-.PHONY : source/src/sprite.cpp.o
-
-source/src/sprite.i: source/src/sprite.cpp.i
-
-.PHONY : source/src/sprite.i
-
-# target to preprocess a source file
-source/src/sprite.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/sprite.cpp.i
-.PHONY : source/src/sprite.cpp.i
-
-source/src/sprite.s: source/src/sprite.cpp.s
-
-.PHONY : source/src/sprite.s
-
-# target to generate assembly for a file
-source/src/sprite.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2.dir/build.make CMakeFiles/SDL2.dir/source/src/sprite.cpp.s
-.PHONY : source/src/sprite.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -286,21 +178,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SDL2"
-	@echo "... source/src/game.o"
-	@echo "... source/src/game.i"
-	@echo "... source/src/game.s"
-	@echo "... source/src/graphics.o"
-	@echo "... source/src/graphics.i"
-	@echo "... source/src/graphics.s"
-	@echo "... source/src/input.o"
-	@echo "... source/src/input.i"
-	@echo "... source/src/input.s"
 	@echo "... source/src/main.o"
 	@echo "... source/src/main.i"
 	@echo "... source/src/main.s"
-	@echo "... source/src/sprite.o"
-	@echo "... source/src/sprite.i"
-	@echo "... source/src/sprite.s"
 .PHONY : help
 
 
