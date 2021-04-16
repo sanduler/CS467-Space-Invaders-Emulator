@@ -12,29 +12,25 @@ const int EM_HEIGHT = 256;
 
 // global SDL variables
 SDL_Window* gameWindow = NULL;		// main window for game
-SDL_Renderer* gwRenderer   = NULL;	// 
-SDL_Texture* emBgTex = NULL;
-SDL_Surface* gwSurface = NULL;
+SDL_Surface* gwSurface = NULL;		// surface of the game window
+SDL_Renderer* gwRenderer   = NULL;
 SDL_Surface* gwMenu_1  = NULL;
 SDL_Surface* gwMenu_2  = NULL;
 SDL_Surface* gwMenu_3  = NULL;
-SDL_Surface* siBezel   = NULL;
 
 // function prototypes
 bool initGameWindow();	// initializes the game window
 void loadMainMenu();	// load the main menu files
 void waitForMenuEvent();// wait for the user to make a selection 
-void runEmulator();		// run the emulator
+void runSpaceInvaders();// run the emulator
 void closeGameWindow();	// shut down procedure for the game
 
 int main(int argc, char* argv[])
 {
-	initGameWindow();
-	loadMainMenu();
-	waitForMenuEvent();
-	// close the window
-	closeGameWindow();
-
+	initGameWindow();	// initialize the SDL structures
+	loadMainMenu();		// load the menu options
+	waitForMenuEvent();	// wait for the user to select a menu option
+	closeGameWindow();	// close the window
 	return 0;
 }
 
@@ -81,15 +77,7 @@ bool initGameWindow()
 
 void loadMainMenu()
 {
-	// load the menu BG files
-	gwMenu_1 = SDL_LoadBMP("bmp_files/menu_1.bmp");
-	gwMenu_2 = SDL_LoadBMP("bmp_files/menu_2.bmp");
-	gwMenu_3 = SDL_LoadBMP("bmp_files/menu_3.bmp");
-	
-	// apply the first menu bg to game window
-	SDL_BlitSurface(gwMenu_1, NULL, gwSurface, NULL);
-	// update the surface of the main window
-	SDL_UpdateWindowSurface(gameWindow);
+
 
 	return;
 }
@@ -104,6 +92,15 @@ void waitForMenuEvent()
 
 	// event to handle 
 	SDL_Event evnt;
+
+	// load the menu BG files
+	gwMenu_1 = SDL_LoadBMP("bmp_files/menu_1.bmp");
+	gwMenu_2 = SDL_LoadBMP("bmp_files/menu_2.bmp");
+	gwMenu_3 = SDL_LoadBMP("bmp_files/menu_3.bmp");
+
+	// apply the first menu bg to game window
+	SDL_BlitSurface(gwMenu_1, NULL, gwSurface, NULL);
+	SDL_UpdateWindowSurface(gameWindow);
 
 	while (!quit_flag) {
 		// look at the event queue and handle events on it until
@@ -122,7 +119,7 @@ void waitForMenuEvent()
 					quit_flag = true;
 					break;
 				case SDLK_c:
-					runEmulator();
+					runSpaceInvaders();
 					break;
 				default:
 					break;
@@ -149,7 +146,7 @@ void waitForMenuEvent()
 	}
 }
 
-void runEmulator()
+void runSpaceInvaders()
 {
 	// flag to signal program exit
 	bool quit_flag = false;
@@ -157,27 +154,36 @@ void runEmulator()
 	// event to handle 
 	SDL_Event evnt;
 
-	// load the emulator bezel to the screen
-	siBezel = SDL_LoadBMP("bmp_files/space_invaders_bezel.bmp");
-	//SDL_BlitSurface(siBezel, NULL, gwSurface, NULL);
+	// load the emulator bezel as a texture
+	SDL_Surface* siBezel = SDL_LoadBMP("bmp_files/space_invaders_bezel.bmp");
+	SDL_Texture* siBackground = SDL_CreateTextureFromSurface(gwRenderer, siBezel);
 
-	// load the emulator container
+	// create a texture to run the emulator inside of 
+	SDL_Texture* siContainer = SDL_CreateTexture(
+		gwRenderer,
+		SDL_PIXELFORMAT_RGBA8888,
+		SDL_TEXTUREACCESS_STREAMING,
+		EM_WIDTH,
+		EM_HEIGHT);
+
 	// START TEST CODE FOR EMULATOR WINDOW *************************
-	emBgTex = SDL_CreateTextureFromSurface(gwRenderer, siBezel);
-	/*SDL_SetRenderTarget(gwRenderer, emBgTex);
-	SDL_Rect fillRect = { 
-		EM_WIDTH, 
-		EM_HEIGHT, 
-		WIND_WIDTH / 4, 
-		WIND_HEIGHT / 4 };
-	SDL_RenderClear(gwRenderer);
-	SDL_SetRenderDrawColor(gwRenderer, 0xFF, 0x00, 0x00, 0xFF);
-	SDL_RenderFillRect(gwRenderer, &fillRect);*/
-	SDL_RenderCopy(gwRenderer, emBgTex, NULL, NULL);
-	SDL_RenderPresent(gwRenderer);
-	// END TEST CODE FOR EMULATOR WINDOW *************************
+	// change all the pixels to white 
+	unsigned char* pixels;
+	int pitch;
+	SDL_LockTexture(siContainer, NULL, (void**)&pixels, &pitch);
+	// set pixels to solid white
+	for (int i = 0; i < pitch * EM_HEIGHT; i++) {
+		pixels[i] = 255;
+	}
+	SDL_UnlockTexture(siContainer);
+	// END TEST CODE FOR EMULATOR WINDOW ***************************
 
-	SDL_UpdateWindowSurface(gameWindow);
+	// define the area for the si emulator
+	SDL_Rect fillRect = {
+		WIND_WIDTH / 2,
+		WIND_HEIGHT / 2,
+		EM_WIDTH,
+		EM_HEIGHT };
 
 	// enter while loop until quit signal
 	while (!quit_flag) {
@@ -201,7 +207,16 @@ void runEmulator()
 				}
 			}
 		}
+		// after handling the events re render the screen
+		SDL_RenderCopy(gwRenderer, siBackground, NULL, NULL);
+		SDL_RenderCopy(gwRenderer, siContainer, NULL, &fillRect);
+		SDL_RenderPresent(gwRenderer);
 	}
+
+	// clean up the SDL structures used for the emulator
+	SDL_DestroyTexture(siContainer);
+	SDL_DestroyTexture(siBackground);
+	SDL_FreeSurface(siBezel);
 }
 
 void closeGameWindow()
@@ -214,10 +229,6 @@ void closeGameWindow()
 	gwMenu_2 = NULL;
 	SDL_FreeSurface(gwMenu_3);
 	gwMenu_3 = NULL;
-
-	// release the space invader bezel
-	SDL_FreeSurface(siBezel);
-	siBezel = NULL;
 
 	// release the window variable
 	SDL_DestroyWindow(gameWindow);
