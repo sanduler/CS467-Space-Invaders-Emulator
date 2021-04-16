@@ -1,39 +1,45 @@
 #include "SDL.h"
 #include <stdio.h>
 #include <string>
+#include <math.h> 
 
-// window dimensions
-const int WIND_WIDTH  = 1161;
-const int WIND_HEIGHT = 1200;
+// window dimensions 
+// based on the SI bezel (387 : 400)
+const double BEZEL_RATIO = 1.4;
+
+// warnings turned off becuase rounding is OK here
+#pragma warning(disable:4244)
+const int WIND_WIDTH  = 387 * BEZEL_RATIO;
+const int WIND_HEIGHT = 400 * BEZEL_RATIO;
+#pragma warning(default:4244)
 
 // emulator window dimensions
+// based on the SI ROM (7 : 8)
 const int EM_WIDTH = 224;
 const int EM_HEIGHT = 256;
 
 // global SDL variables
-SDL_Window* gameWindow = NULL;		// main window for game
-SDL_Surface* gwSurface = NULL;		// surface of the game window
-SDL_Renderer* gwRenderer   = NULL;
-SDL_Surface* gwMenu_1  = NULL;
-SDL_Surface* gwMenu_2  = NULL;
-SDL_Surface* gwMenu_3  = NULL;
+SDL_Window* gameWindow = NULL;			// main window for game
+SDL_Renderer* gwRenderer = NULL;		// main renderer
 
 // function prototypes
-bool initGameWindow();	// initializes the game window
-void loadMainMenu();	// load the main menu files
-void waitForMenuEvent();// wait for the user to make a selection 
-void runSpaceInvaders();// run the emulator
-void closeGameWindow();	// shut down procedure for the game
+bool initGameWindow();					// initializes the game window
+void waitForMenuEvent();				// wait for the user to make a selection 
+void menuAnimation(bool destroy_flag);	// handle the main menu animation
+void runSpaceInvaders();				// run the emulator for space invaders
+void closeGameWindow();					// shut down procedure for the game
 
 int main(int argc, char* argv[])
 {
-	initGameWindow();	// initialize the SDL structures
-	loadMainMenu();		// load the menu options
-	waitForMenuEvent();	// wait for the user to select a menu option
-	closeGameWindow();	// close the window
+	initGameWindow();					// initialize the SDL structures
+	waitForMenuEvent();					// wait for the user to select a menu option
+	closeGameWindow();					// close the window
 	return 0;
 }
 
+/*
+	Initialize the game window and the game renderer
+*/
 bool initGameWindow()
 {
 	bool load_success = true;
@@ -59,10 +65,6 @@ bool initGameWindow()
 			printf("Error initGameWindow [window] Error Message: %s\n", SDL_GetError());
 			load_success = false;
 		}
-		else {
-			// get the surface variable of the window created
-			gwSurface = SDL_GetWindowSurface(gameWindow);
-		}
 
 		// initialize the renderer for the game window
 		gwRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
@@ -75,32 +77,17 @@ bool initGameWindow()
 	return load_success;
 }
 
-void loadMainMenu()
-{
-
-
-	return;
-}
-
+/*
+	Wait for user to make a selection from the menu
+	- While waiting, animate the menu
+*/
 void waitForMenuEvent()
 {
 	// flag to signal program exit
 	bool quit_flag = false;
 
-	// keeps track of the current background image of the menu
-	int cur_menu_ind = 1;
-
 	// event to handle 
 	SDL_Event evnt;
-
-	// load the menu BG files
-	gwMenu_1 = SDL_LoadBMP("bmp_files/menu_1.bmp");
-	gwMenu_2 = SDL_LoadBMP("bmp_files/menu_2.bmp");
-	gwMenu_3 = SDL_LoadBMP("bmp_files/menu_3.bmp");
-
-	// apply the first menu bg to game window
-	SDL_BlitSurface(gwMenu_1, NULL, gwSurface, NULL);
-	SDL_UpdateWindowSurface(gameWindow);
 
 	while (!quit_flag) {
 		// look at the event queue and handle events on it until
@@ -127,25 +114,70 @@ void waitForMenuEvent()
 			}
 		}
 		// after the events have been handled switch to the next screen
-		switch (cur_menu_ind) {
-		case 1:
-			SDL_BlitSurface(gwMenu_2, NULL, gwSurface, NULL);
-			cur_menu_ind++;
-			break;
-		case 2:
-			SDL_BlitSurface(gwMenu_3, NULL, gwSurface, NULL);
-			cur_menu_ind++;
-			break;
-		case 3:
-			SDL_BlitSurface(gwMenu_1, NULL, gwSurface, NULL);
-			cur_menu_ind = 1;
-			break;
-		}
-		SDL_UpdateWindowSurface(gameWindow);
+		menuAnimation(false);		
 		SDL_Delay(200);
 	}
+	// destory the menu textures
+	menuAnimation(true);
 }
 
+/*
+	Handle the menu animation by switching between BMP files
+*/
+void menuAnimation(bool destroy_flag)
+{
+	// declare the static variables curresponding to the textures loaded
+	static SDL_Texture* gwMenu_1 = NULL;
+	static SDL_Texture* gwMenu_2 = NULL;
+	static SDL_Texture* gwMenu_3 = NULL;
+
+	// check if the images need to be loaded and if so load them
+	if (gwMenu_1 == NULL) {
+		SDL_Surface* imageLoader = SDL_LoadBMP("bmp_files/menu_1.bmp");
+		gwMenu_1 = SDL_CreateTextureFromSurface(gwRenderer, imageLoader);
+		imageLoader = SDL_LoadBMP("bmp_files/menu_2.bmp");
+		gwMenu_2 = SDL_CreateTextureFromSurface(gwRenderer, imageLoader);
+		imageLoader = SDL_LoadBMP("bmp_files/menu_3.bmp");
+		gwMenu_3 = SDL_CreateTextureFromSurface(gwRenderer, imageLoader);
+		SDL_FreeSurface(imageLoader);
+	}
+
+	// keeps track of the current background image of the menu
+	static int cur_menu_ind = 1;
+
+	switch (cur_menu_ind) {
+	case 1:
+		SDL_RenderCopy(gwRenderer, gwMenu_2, NULL, NULL);
+		cur_menu_ind++;
+		break;
+	case 2:
+		SDL_RenderCopy(gwRenderer, gwMenu_3, NULL, NULL);
+		cur_menu_ind++;
+		break;
+	case 3:
+		SDL_RenderCopy(gwRenderer, gwMenu_1, NULL, NULL);
+		cur_menu_ind = 1;
+		break;
+	}
+
+	SDL_RenderPresent(gwRenderer);
+
+	// check if the destroy flag is set, if it is destroy the textures
+	if (destroy_flag) {
+		SDL_DestroyTexture(gwMenu_1);
+		gwMenu_1 = NULL;
+		SDL_DestroyTexture(gwMenu_2);
+		gwMenu_2 = NULL;
+		SDL_DestroyTexture(gwMenu_3);
+		gwMenu_3 = NULL;
+	}
+
+}
+
+/*
+	Run the space invaders emulator
+	This is the main loop the update function should be called from
+*/
 void runSpaceInvaders()
 {
 	// flag to signal program exit
@@ -179,11 +211,16 @@ void runSpaceInvaders()
 	// END TEST CODE FOR EMULATOR WINDOW ***************************
 
 	// define the area for the si emulator
+	#pragma warning(disable:4838)
+	#pragma warning(disable:4244)
 	SDL_Rect fillRect = {
-		WIND_WIDTH / 2,
-		WIND_HEIGHT / 2,
+		(WIND_WIDTH / 2) - (EM_WIDTH / 2),
+		WIND_HEIGHT / 3.1,
 		EM_WIDTH,
-		EM_HEIGHT };
+		EM_HEIGHT 
+	};
+	#pragma warning(default:4838)
+	#pragma warning(default:4244)
 
 	// enter while loop until quit signal
 	while (!quit_flag) {
@@ -219,20 +256,18 @@ void runSpaceInvaders()
 	SDL_FreeSurface(siBezel);
 }
 
+/*
+	Free the global variables and quit SDL
+*/
 void closeGameWindow()
 {
-	// release menu surface variable
-	// * window surface handles by destroy window
-	SDL_FreeSurface(gwMenu_1);
-	gwMenu_1 = NULL;	
-	SDL_FreeSurface(gwMenu_2);
-	gwMenu_2 = NULL;
-	SDL_FreeSurface(gwMenu_3);
-	gwMenu_3 = NULL;
-
 	// release the window variable
 	SDL_DestroyWindow(gameWindow);
 	gameWindow = NULL;
+
+	// Destroy the renderer
+	SDL_DestroyRenderer(gwRenderer);
+	gwRenderer = NULL;
 
 	// close all SDL processes
 	SDL_Quit();
