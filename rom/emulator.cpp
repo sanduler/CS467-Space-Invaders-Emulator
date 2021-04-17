@@ -92,11 +92,11 @@ current_8080 setEmulator()
 	ConditionCodes cc;
 
 	//sets the condition codes to 0 --> false
-	c_Codes.z = 0;
-    c_Codes.s = 0;
-    c_Codes.p = 0;
-    c_Codes.cy = 0;
-    c_Codes.ac = 0;
+	cc.z = 0;
+    cc.s = 0;
+    cc.p = 0;
+    cc.cy = 0;
+    cc.ac = 0;
 
 
     //sets the current state of the emulator to 0 --> false
