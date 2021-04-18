@@ -23,8 +23,20 @@
 // Generic Add Function to pass the ADD OpCodes to
 int func_ADD_Registers(char &Destination, char &Source1, char &Source2);
 
+// Generic Sub Function to pass the SUB OpCodes to
+int func_SUB_Registers(char &Destination, char &Source1, char &Source2);
+
+// Generic And Function to pass the ANA OpCodes to
+int func_AND_Registers(char &Destination, char &Source1, char &Source2);
+
+// Generic Or Function to pass the ORA OpCodes to
+int func_OR_Registers(char &Destination, char &Source1, char &Source2);
+
 // Generic Move Function to pass the MOV OpCodes to
 int func_MOV_Registers(char &Destination, char &Source);
+
+// Generic Check Parity Function to return the parity of a register value_comp
+bool func_Check_Parity(char %Register);
 
 //Opcode	Instruction	size	flags	function
 int func_NOP();
@@ -45,7 +57,7 @@ int func_INR_B(struct_8080State &state);
 int func_DCR_B(struct_8080State &state);
 
 // Michael
-int func_MVI_B(struct_8080State &state);
+int func_MVI_B_D8(struct_8080State &state);
 
 // Madison
 int func_RLC(struct_8080State &state);
@@ -66,7 +78,7 @@ int func_INR_C(struct_8080State &state);
 int func_DCR_C(struct_8080State &state);
 
 // Madison
-int func_MVI_C(struct_8080State &state);
+int func_MVI_C_D8(struct_8080State &state);
 
 // Ruben
 int func_RRC(struct_8080State &state);
@@ -87,7 +99,7 @@ int func_INR_D(struct_8080State &state);
 int func_DCR_D(struct_8080State &state);
 
 // Madison
-int func_MVI_D(struct_8080State &state);
+int func_MVI_D_D8(struct_8080State &state);
 
 // Ruben
 int func_RAL(struct_8080State &state);
@@ -108,7 +120,7 @@ int func_INR_E(struct_8080State &state);
 int func_DCR_E(struct_8080State &state);
 
 // Madison
-int func_MVI_E(struct_8080State &state);
+int func_MVI_E_D8(struct_8080State &state);
 
 // Ruben
 int func_RAR(struct_8080State &state);
