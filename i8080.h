@@ -2,8 +2,8 @@
 // Created by Ruben Sanduleac on 4/18/21.
 //
 
-#ifndef PROJECT_CPU_H
-#define PROJECT_CPU_H
+#ifndef PROJECT_i8080_H
+#define PROJECT_i8080_H
 
 
 #include <cstdint>

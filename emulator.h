@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
-#include "CPU.h"
+#include "i8080.h"
 #include "emulator.h"
 
 //Function used to start the emulator. import a file 
