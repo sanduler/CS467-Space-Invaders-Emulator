@@ -23,11 +23,14 @@ using std::ios;
 using std::vector;
 
 bool parity(uint8_t b_bits);
-class i8080
-{
-	private:
-	public:
-	
+class i8080{
+private:
+public:
+	//general constructor, sets memorysize and starting point
+	i8080(size_t memSize = 0x10000, uint16_t beginPoint = 0);
+    ~i8080();
+
+
 typedef struct ConditionCodes
 {
     //conditional codes go here

@@ -54,6 +54,13 @@ uint8_t errorParity(uint16_t value)
     //check the size of the 8 bit file using a for loop
 }
 
+/*****************************
+ * Function Type: bool, checks if true
+ * This function takes the bits balue to comapre the sizes
+ * parity
+ * this is done by checking the lower and upper limits of the bit value and com
+ * comapring them using the modulus operator
+ * **************/
 
 bool parity(uint8_t b_bits)
 {
@@ -62,7 +69,7 @@ bool parity(uint8_t b_bits)
     uint8_t lowerbit = 0;
 
     //while loop to decrement to 8
-    while (n-- > 0)
+    while (upperbit-- > 0)
     {
         //increment the bits
         lowerbit += ((b_bits >> upperbit) & 1);
