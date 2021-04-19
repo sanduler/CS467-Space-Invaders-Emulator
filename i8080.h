@@ -26,9 +26,21 @@ bool parity(uint8_t b_bits);
 class i8080{
 private:
 public:
+
+	//create and iterupt switch --> set to false
+	bool interruptSwitch = false; 
+
+	// pointer pointing at memory for uint8_t
+	uint8_t *memory;
+
+	//Interrupt service routine used to handle
+	//interupts as quickly as possible so one
+	//can resume execution on threads
+	
+    uint8_t ISR = 0;
 	//general constructor, sets memorysize and starting point
 	i8080(size_t memSize = 0x10000, uint16_t beginPoint = 0);
-	
+
 	//general destructor that clears the memory
     ~i8080();
 
