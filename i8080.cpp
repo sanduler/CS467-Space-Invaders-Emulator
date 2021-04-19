@@ -3,14 +3,17 @@
 //
 
 #include <iostream>
-#include "i8080.h"
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
-#include<cstdarg>
-
+#include <cstdarg>
+#include "i8080.h"
+using std::ifstream;
+using std::ios;
+using std::vector;
+using std::sprintf
 
 
 #define Z_FLAG  (1 << 7)
@@ -146,6 +149,78 @@ int i8080::loadRom(const char * nameOfFile, size_t offset)
     return s;
 }
 
+/*****************************
+ * Function Type: uint8_t i8080::cycleEmulate()
+ * Discription: 
+ * **************/
+
+uint8_t i8080::cycleEmulate()
+{
+
+    uint8_t opcode;
+
+    //interupt service reapeat in case there is no interupt se the opcode
+    if (!ISR)
+    {
+        opcode = memory[programCounter];
+    }
+    else
+    {
+        //decremtn program counter
+        programCounter--;
+        //set the iterupt seitch to false to get the program ready to run
+        interruptSwitch = false;
+
+        //set the inteupt service reapeat to false
+        opcode = ISR;
+        ISR = 0;
+    }
+
+    //enable debuging string if needed
+    char debug_string[50];
+
+    //sets the ability to increment the program counter when needed
+    incrementPC = true;
+
+    //Switch satements that recieves the disassemble instructions from the opcodes and loads them to memory
+    switch (disassemble[opcode].nOperands) 
+    {
+        case 2:
+            I2 = memory[programCounter + 1];
+            if (debug)
+                sprintf(debug_string, disassemble[opcode].disassembly, I2);
+            break;
+        case 3:
+            I = memory[programCounter + 1] | (memory[programCounter + 2] << 8);
+            if (debug)
+                sprintf(debug_string, disassemble[opcode].disassembly, I);
+            break;
+        default:
+            if (debug)
+                sprintf(debug_string, disassemble[opcode].disassembly);
+            break;
+    }
+
+    //opcode isntructions are not null
+    if (disassemble[opcode].instr != NULL)
+    {
+        //points back to the disassemble instructions
+        disassemble[opcode].instr(*this);
+    }
+    //Interrupts enabled following the execution of the next instruction writ IE call
+    if (_IE && (programCounter != _PC_IET)) 
+    {
+        _IE = false;
+        interruptSwitch = true;
+    }
+
+    if(incrementPC)
+        programCounter += disassemble[opcode].nOperands;
+
+    //returns the insructions of the opcode and emulates it for one cycle
+    return  disassemble[opcode].states;
+
+}
 
 uint8_t auxiliaryCarryAdd(State8080 *state ,uint16_t value, uint16_t result)
 {
