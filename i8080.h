@@ -28,7 +28,12 @@ private:
 public:
 	//general constructor, sets memorysize and starting point
 	i8080(size_t memSize = 0x10000, uint16_t beginPoint = 0);
+	
+	//general destructor that clears the memory
     ~i8080();
+
+    //load the roam into memory
+    int loadRom(const char* nameOfFile, size_t offset = 0x00);
 
 
 typedef struct ConditionCodes
