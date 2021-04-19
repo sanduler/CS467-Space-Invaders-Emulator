@@ -10,9 +10,24 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+#include "i8080.h"
+#include <fstream>
+#include<cstdarg>
+#include<iomanip>
+//Header for opcodes that will get passed down to the strcuture of the scpu #include "////////"
+using std::ifstream;
+using std::ios;
+using std::vector;
 
-
-
+bool parity(uint8_t b_bits);
+class i8080
+{
+	private:
+	public:
+	
 typedef struct ConditionCodes
 {
     //conditional codes go here

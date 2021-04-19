@@ -7,6 +7,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <fstream>
+#include<cstdarg>
+
 
 
 #define Z_FLAG  (1 << 7)
@@ -50,6 +53,25 @@ uint8_t errorParity(uint16_t value)
 {
     //check the size of the 8 bit file using a for loop
 }
+
+
+bool parity(uint8_t b_bits)
+{
+    //lower and upper check for bits
+    uint8_t upperbit = 8;
+    uint8_t lowerbit = 0;
+
+    //while loop to decrement to 8
+    while (n-- > 0)
+    {
+        //increment the bits
+        lowerbit += ((b_bits >> upperbit) & 1);
+    }
+
+    //return the bit value
+    return ((lowerbit % 2) == 0);
+}
+
 
 uint8_t auxiliaryCarryAdd(State8080 *state ,uint16_t value, uint16_t result)
 {
