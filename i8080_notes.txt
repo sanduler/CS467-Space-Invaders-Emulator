@@ -1,0 +1,41 @@
+struct i8080
+	ROM
+	16K memory
+	Data type?
+
+	struct state
+		Interupts
+		5ish 
+
+		struct Flags
+		7 Bool
+			bool AC
+			get_AC
+			set_AC
+			unset_AC
+			...
+	
+
+
+		Inputs
+			256 bit
+			?? get_Inputs()
+
+		Outputs
+			256 bit
+			?? set_Outputs()
+
+		Registers
+
+		struct Registers
+			unint8 A
+			unint get_A
+			void set_A(value)
+	
+			unint PC
+			get_PC
+			set_PC(value)
+	
+	unint SP
+	get_SP
+	set_SP(value)
