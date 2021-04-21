@@ -11,21 +11,22 @@ struct i8080
     i8080(memory* mem, uint8_t _ConsoleMode);
     unsigned char ROM;
     double memory;
-
-    struct state
-    {
+    i8080_state state;
+};
+struct i8080_state
+{
         int unint_SP();
         double get_SP();
         void set_SP(int SP);
         int unset_AC();
-
-        struct Flags
-        {
-            bool AC();
+        state_Flags flags;
+};
+struct state_Flags
+{
+             bool AC();
             double get_AC();
             double set_AC();
             bool unset_AC();
-
             // Flags
             uint8_t FlagZSP[0x100]; // Precalculated ZSP
             uint8_t flag_Z; // Zero
@@ -33,8 +34,7 @@ struct i8080
             uint8_t flag_P; // Parity
             uint8_t flag_C; // Carry
             uint8_t flag_AC; // Auxiliar Carry
-
-        };
+};
 
         struct Inputs
         {
