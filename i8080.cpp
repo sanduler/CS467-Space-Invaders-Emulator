@@ -3,12 +3,14 @@
 //
 
 #include "i8080.h"
+#include <stdint.h>
+#include <string.h>
 
-
-i8080::i8080(unsigned char rom) : ROM(rom)
+i8080::i8080(class memory *mem, uint8_t _ConsoleMode)
 {
-    //general cosntructor that initilizes the rom
+    
 }
+
 
 int i8080::state::unint_SP()
 {
@@ -84,3 +86,4 @@ void i8080::state::Registers::set_PC(int PC)
 {
 
 }
+
