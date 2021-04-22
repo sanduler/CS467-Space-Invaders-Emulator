@@ -39,3 +39,58 @@ struct i8080
 	unint SP
 	get_SP
 	set_SP(value)
+	
+	
+	
+	
+	
+	class i8080_Interrupt
+	
+	class i8080_Flags{
+		public bool S;
+		public bool Z;
+		public bool ZeroValue = FALSE;
+		public bool OneValue = TRUE;
+		..
+	};
+	
+	class i8080_Registers{
+		public uint16 A;
+		public uint8 B;
+		public uint8 C;
+		
+		public uint16 PC;
+		public uint16 SP;
+		
+	
+	class i8080_State{
+		public i8080_Flags flags;
+		
+	
+	class i8080{
+		
+		private i8080_State state;
+		
+		public
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
