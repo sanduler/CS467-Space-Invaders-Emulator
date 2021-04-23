@@ -10,8 +10,6 @@
 #define I8080_H
 #include <cstdint>
 #include <stdint.h>
-#include <opencl-c-base.h>
-
 
 /*********************************
  * Flags class
