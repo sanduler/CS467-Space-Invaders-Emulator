@@ -6,8 +6,8 @@
  * - i8080 Class
  ********************************/
 
-#ifndef PROJECT101_I8080_H
-#define PROJECT101_I8080_H
+#ifndef I8080_H
+#define I8080_H
 #include <cstdint>
 #include <stdint.h>
 #include <opencl-c-base.h>
@@ -110,4 +110,4 @@ public:
 };
 
 
-#endif //PROJECT101_I8080_H
+#endif I8080_H
