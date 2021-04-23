@@ -1,0 +1,96 @@
+struct i8080
+	ROM
+	16K memory
+	Data type?
+
+	struct state
+		Interupts
+		5ish 
+
+		struct Flags
+		7 Bool
+			bool AC
+			get_AC
+			set_AC
+			unset_AC
+			...
+	
+
+
+		Inputs
+			256 bit
+			?? get_Inputs()
+
+		Outputs
+			256 bit
+			?? set_Outputs()
+
+		Registers
+
+		struct Registers
+			unint8 A
+			unint get_A
+			void set_A(value)
+	
+			unint PC
+			get_PC
+			set_PC(value)
+	
+	unint SP
+	get_SP
+	set_SP(value)
+	
+	
+	
+	
+	
+	class i8080_Interrupt
+	
+	class i8080_Flags{
+		public bool S;
+		public bool Z;
+		public bool ZeroValue = FALSE;
+		public bool OneValue = TRUE;
+		..
+	};
+	
+	class i8080_Registers{
+		public uint16 A;
+		public uint8 B;
+		public uint8 C;
+		
+		public uint16 PC;
+		public uint16 SP;
+		
+	
+	class i8080_State{
+		public i8080_Flags flags;
+		
+	
+	class i8080{
+		
+		private i8080_State state;
+		
+		public
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
