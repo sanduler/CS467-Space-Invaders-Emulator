@@ -46,12 +46,6 @@ public:
 class i8080_Registers {
 private:
 public:
-    uint16 A;
-    uint8 B;
-    uint8 C;
-    uint16 PC;
-    uint16 SP;
-
     double unint8_A;
     double unint_get_A();
     void set_A(int A);
