@@ -17,7 +17,7 @@
 
 #include <stdio.h>
 #include "OpCodeFunctions.h"
-#include "Intel8080.h"
+#include "i8080.h"
 
 //***** REGISTERS *****//
 // 15 ... 8	7 ... 0		For 16 bit instructions
@@ -50,6 +50,8 @@ int func_ADD_Registers(char &Destination, char &Source1, char &Source2)
 // Generic Sub Function to pass the SUB OpCodes to
 int func_SUB_Registers(char &Destination, char &Source1, char &Source2)
 {
+	// When checking the Carry Bit Source2 needs to be a 2's compliment
+	// the result has to be negated also before setting/resetting the flag.
 };
 
 // Generic And Function to pass the ANA OpCodes to
@@ -67,10 +69,127 @@ int func_MOV_Registers(char &Destination, char &Source)
 {
 };
 
-// Generic Check Parity Function to return the parity of a register value_comp
-bool func_Check_Parity(char %Register)
+// Generic Check Sign Function to return the Sign of a register value
+// Reference Material: https://www.cprogramming.com/tutorial/bitwise_operators.html
+bool func_Check_Sign(uint8_t uint8_Register)
 {
+	bool boolResult = 0;
+	
+	if (uint8_Register & 0x80 != 0x00){
+		boolResult = 1;
+	}
+		
+	return boolResult;
 };
+
+// Generic Check Sign Function to return the Sign of a register value
+bool func_Check_Zero(uint8_t uint8_Register)
+{
+	bool boolResult = 0;
+	
+	if (uint8_Register == 0x00){
+		boolResult = 1;
+	}
+	
+	return boolResult;
+};
+
+// Generic Check Auxiliary Carry Function to return if there was a carry from the bit position 3 addition/subtraction/etc.
+bool func_Check_AuxCarry(uint8_t uint8_Source1, uint8_t uint8_Source2)
+{
+	bool boolResult = 0;
+	
+	uint8_t uint8_Carry = 0x00;
+	
+	int intBitPosition;
+	uint8_t uint8_Source1Temp = 0x00;
+	uint8_t uint8_Source2Temp = 0x00;
+	uint8_t uint8_ResultTemp = 0x00;
+	
+	for (intBitPosition = 0; intBitPosition < 4 ; intBitPosition++){
+		
+		uint8_Source1Temp = 0x00;
+		uint8_Source2Temp = 0x00;
+		
+		uint8_Carry = uint8_Carry >> 1;
+		
+		uint8_Source1Temp = ((uint8_Source1 >> intBitPosition) & 0x01);
+		uint8_Source2Temp = ((uint8_Source2 >> intBitPosition) & 0x01);
+		
+		uint8_ResultTemp = uint8_Source1Temp + uint8_Source2Temp + uint8_Carry;
+		
+		if ((uint8_ResultTemp & 0x02) != 0x00){
+			boolResult = 1;
+		}
+		else {
+			boolResult = 0;
+		};
+		
+		uint8_Carry = uint8_ResultTemp;
+		 
+		
+	};
+	
+	return boolResult;
+	
+};
+
+// Generic Check Parity Function to return the parity of a register value
+bool func_Check_Parity(uint8_t uint8_Register)
+{
+	bool boolResult = 0;
+	
+	if (uint8_Register %2 == 0x00){
+		boolResult = 1;
+	}
+	
+	return boolResult;
+};
+
+// Generic Check Carry Function to return if there was a carry from the bit position 7 addition/subtraction/etc.
+bool func_Check_Carry(uint8_t uint8_Source1, uint8_t uint8_Source2)
+{
+	bool boolResult = 0;
+	
+	uint8_t uint8_Carry = 0x00;
+	
+	int intBitPosition;
+	uint8_t uint8_Source1Temp = 0x00;
+	uint8_t uint8_Source2Temp = 0x00;
+	uint8_t uint8_ResultTemp = 0x00;
+	
+	for (intBitPosition = 0; intBitPosition < 8 ; intBitPosition++){
+		
+		uint8_Source1Temp = 0x00;
+		uint8_Source2Temp = 0x00;
+		
+		uint8_Carry = uint8_Carry >> 1;
+		
+		uint8_Source1Temp = ((uint8_Source1 >> intBitPosition) & 0x01);
+		uint8_Source2Temp = ((uint8_Source2 >> intBitPosition) & 0x01);
+		
+		uint8_ResultTemp = uint8_Source1Temp + uint8_Source2Temp + uint8_Carry;
+		
+		if ((uint8_ResultTemp & 0x02) != 0x00){
+			boolResult = 1;
+		}
+		else {
+			boolResult = 0;
+		};
+		
+		uint8_Carry = uint8_ResultTemp;
+		 
+		
+	};
+	
+	return boolResult;
+	
+};
+
+// Generic Function to run a given number of Clock Cycles
+void func_ClockCycles(int intClockCycles)
+{
+};	
 
 
 int func_NOP()
@@ -535,12 +654,30 @@ int func_MOV_B_B(struct_8080State &state)
 	// No Flags Effected
 };
 
-// Michael
+////////////////////
+// Name: func_MOV_B_C
+// OpCode: 0x41
+// Description: Move the contents of Register C into Register B
+// Inputs: 
+// Outputs: Integer Value 1 = completed propoerly, -1 = Not completed, -99 = Halt Processor
+// Written By: Michael
+////////////////////
 int func_MOV_B_C(struct_8080State &state)
 {
+	// Initialize Result Variable to the default Not completed
+	int intResult = -1;
+	
 	// B <- C
-	// 5 clock cycles
+	intResult = func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.C);
+	
+	// Run 5 clock cycles
+	func_ClockCycles(5)
+	
 	// No Flags Effected
+	
+	intResult = 1
+	
+	return intResult;
 };
 
 // Madison
@@ -1039,12 +1176,38 @@ int func_MOV_A_A(struct_8080State &state)
 	// No Flags Effected
 };
 
-// Michael
+////////////////////
+// Name: func_ADD_B
+// OpCode: 0x80
+// Description: Add the contents of Register B with Register A, and stores it in Register A
+// Inputs: 
+// Modifed References: i8080.state.registers.A, i8080.state.flags
+// Outputs: Integer Value 1 = completed propoerly, -1 = Not completed, -99 = Halt Processor
+// Written By: Michael
+////////////////////
 int func_ADD_B(struct_8080State &state)
 {
+	// Initialize Result Variable to the default Not completed 
+	int intResult = -1;
+	
 	// A <- A + B
+	intResult = func_ADD_Registers(i8080.state.registers.A, i8080.state.registers.A, i8080.state.registers.B);
+	
 	// 4 clock cycles
+	func_ClockCycles(4);
+	
 	// S	Z	AC	P	CY
+	
+	//i8080.state.flags.S = func_Check_Sign(i8080.state.registers.A);
+	i8080.state.flags.S.set(func_Check_Sign(i8080.state.registers.A));
+	i8080.state.flags.Z.set(func_Check_Zero(i8080.state.registers.A));
+	i8080.state.flags.AC.set(func_Check_AuxCarry(i8080.state.registers.A, i8080.state.registers.B));
+	i8080.state.flags.P.set(func_Check_Parity(i8080.state.registers.A));
+	i8080.state.flags.CY.set(func_Check_Carry(i8080.state.registers.A, i8080.state.registers.B));
+	
+	intResult = 1
+	
+	return intResult;
 };
 
 // Madison

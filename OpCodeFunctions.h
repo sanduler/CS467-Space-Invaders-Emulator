@@ -38,6 +38,9 @@ int func_MOV_Registers(char &Destination, char &Source);
 // Generic Check Parity Function to return the parity of a register value_comp
 bool func_Check_Parity(char %Register);
 
+// Generic Function to run a given number of Clock Cycles
+void func_ClockCycles(int intClockCycles);
+
 //Opcode	Instruction	size	flags	function
 int func_NOP();
 
