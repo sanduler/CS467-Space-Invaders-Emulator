@@ -173,3 +173,15 @@ i8080::i8080(size_t memorySize, uint16_t beginPoint)
     PC = beginPoint;
 
 }
+
+i8080_State i8080::setupEmulator()
+{
+    return i8080_State();
+}
+
+void i8080::startEmulator(char *file)
+{
+    //starts the emulator
+}
+
+
