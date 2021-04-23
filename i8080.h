@@ -102,9 +102,13 @@ private:
     i8080_State state;
 public:
     i8080();
+    i8080(size_t memsize = 0x10000, uint16_t startpoint = 0);
     ~i8080();
     unsigned char ROM;
     double memory;
+
+    //Loads the rom into the emulator
+    int loadRom(const char * nameOfFile, size_t offset)
 };
 
 
