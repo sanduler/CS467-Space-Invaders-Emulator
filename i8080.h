@@ -1,17 +1,15 @@
 /*********************************
- * i8080 Emulator
+ * i8080_CPU Emulator
  * - Flags Class
  * - Register Class
  * - State Class
- * - i8080 Class
+ * - i8080_CPU Class
  ********************************/
 
 #ifndef I8080_H
 #define I8080_H
 #include <cstdint>
 #include <stdint.h>
-#include <opencl-c-base.h>
-
 
 /*********************************
  * Flags class
@@ -91,13 +89,13 @@ public:
  * recieves the state class as a member
  * loads the rom and intilizes the emulator
  ********************************/
-class i8080 {
+class i8080_CPU {
 private:
-    i8080_State state;
 public:
-    i8080();
-    i8080(size_t memsize = 0x10000, uint16_t startpoint = 0);
-    ~i8080();
+    i8080_State state;
+    i8080_CPU();
+    i8080_CPU(size_t memsize = 0x10000, uint16_t startpoint = 0);
+    ~i8080_CPU();
     unsigned char ROM;
     double memory;
 

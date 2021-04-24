@@ -104,16 +104,16 @@ int i8080_State::unset_AC()
 }
 
 //general contructor
-i8080::i8080()
+i8080_CPU::i8080_CPU()
 {
 
 }
 
 /*****************************
- * Function Type: destructor, ~i8080();
+ * Function Type: destructor, ~i8080_CPU();
  * Discription: clears the allocated memory
  * **************/
-i8080::~i8080()
+i8080_CPU::~i8080_CPU()
 {
 
 }
@@ -123,7 +123,7 @@ i8080::~i8080()
  * Discription: gets the name of the rom, loads the rom into the meormy and then
  *              checks if its loaded iof not breaks the loop and returns false
  * **************/
-int i8080::loadRom(const char * nameOfFile, size_t offset)
+int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
 {
 
     //sets the size in memory to 0 = false
@@ -156,12 +156,12 @@ int i8080::loadRom(const char * nameOfFile, size_t offset)
 }
 
 /*****************************
- * Function Type: constructor: i8080::i8080(size_t memorySize, uint16_t beginPoint)
+ * Function Type: constructor: i8080_CPU::i8080_CPU(size_t memorySize, uint16_t beginPoint)
  * Discription: This function allocates memory and sets the size
  * depending on the rom file then sets the starting point in
  * memory
  * **************/
-i8080::i8080(size_t memorySize, uint16_t beginPoint)
+i8080_CPU::i8080_CPU(size_t memorySize, uint16_t beginPoint)
 {
     //Find in memory
     this->memsize = memorySize;
@@ -174,12 +174,12 @@ i8080::i8080(size_t memorySize, uint16_t beginPoint)
 
 }
 
-i8080_State i8080::setupEmulator()
+i8080_State i8080_CPU::setupEmulator()
 {
     return i8080_State();
 }
 
-void i8080::startEmulator(char *file)
+void i8080_CPU::startEmulator(char *file)
 {
     //starts the emulator
 }
