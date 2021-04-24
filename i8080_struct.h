@@ -6,8 +6,8 @@
  * - i8080_CPU Class
  ********************************/
 
-#ifndef I8080_H
-#define I8080_H
+#ifndef I8080_STRUCT_H
+#define I8080_STRUCT_H
 #include <cstdint>
 #include <stdint.h>
 

@@ -5,11 +5,12 @@
  * - State Class
  * - i8080 Class
  ********************************/
-#include "i8080.h"
+#include "i8080_struct.h"
 #include <iostream>
 #include <cstdint>
 #include <cstring>
 #include <fstream>
+
 
 bool i8080_Flags::AC()
 {
