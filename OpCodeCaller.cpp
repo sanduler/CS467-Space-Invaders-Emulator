@@ -6,6 +6,10 @@
     Function to call the needed function for the desired opcode
 */
 void eval_opCode(unsigned char passed_code) {
+
+    // Inc the PC tha default step of 1
+    func_Inc_PC(1);
+
     switch(passed_code) {
         case 0x00: func_NOP();        break;
         case 0x01: func_LXI_B_D16();  break;

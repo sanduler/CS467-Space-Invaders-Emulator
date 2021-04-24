@@ -11,6 +11,8 @@
 #include <cstring>
 #include <fstream>
 
+i8080_CPU i8080;
+
 bool i8080_Flags::AC()
 {
     return false;
