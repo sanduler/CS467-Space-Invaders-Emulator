@@ -42,11 +42,47 @@
 // CY = Carry Flag : Set to 1 when a carry out or borrow was used in the carry bit
 //
 
+// Generic Move Function to pass the MOV OpCodes to
+int func_MOV_Registers(uint8_t &uint8_RegisterDestination, uint8_t &uint8_RegisterSource)
+{
+	// NOTE: How is this supposed to work if we are using set statements for the values of the Registers?????
+	uint8_RegisterDestination = uint8_RegisterSource;
+};
+
+// Generic Immediate Move Function to pass the MVI OpCodes to
+void func_MVI_Registers(uint8_t &uint8_Register, uint8_t uint8_Value)
+{
+	// How is this supposed to work with the gets and sets?
+};
+
 // Generic Add Function to pass the ADD OpCodes to
 void func_ADD_Registers(uint8_t &uint8_Register)
 {
 	uint8_t uint8_InitialA = i8080.state.registers.get_A();
-	uint8_t uint8_ResultTemp = i8080.state.registers.get_A() + uint8_Register;
+	uint8_t uint8_ResultTemp = uint8_InitialA + uint8_Register;
+	
+	i8080.state.registers.set_A(uint8_ResultTemp);
+	
+	// S	Z	AC	P	CY
+	
+	i8080.state.flags.S.set(func_Check_Sign());
+	i8080.state.flags.Z.set(func_Check_Zero());
+	i8080.state.flags.AC.set(func_Check_AuxCarry(uint8_InitialA, uint8_Register));
+	i8080.state.flags.P.set(func_Check_Parity());
+	i8080.state.flags.CY.set(func_Check_Carry(uint8_InitialA, uint8_Register));
+	
+};
+
+// Generic Add Plus Carry Function to pass ADC OpCodes to
+void func_ADC_Registers(uint8_t &uint8_Register)
+{
+	uint8_t uint8_InitialA = i8080.state.registers.get_A();
+	
+	if (i8080.state.flags.CY.get() == TRUE){
+		uint8_InitialA = uint8_InitialA + 0x01;
+	}
+	
+	uint8_t uint8_ResultTemp = uint8_InitialA + uint8_Register;
 	
 	i8080.state.registers.set_A(uint8_ResultTemp);
 	
@@ -61,11 +97,11 @@ void func_ADD_Registers(uint8_t &uint8_Register)
 };
 
 // Generic Sub Function to pass the SUB OpCodes to
-int func_SUB_Registers(uint8_t &uint8_Register)
+void func_SUB_Registers(uint8_t &uint8_Register)
 {
 	uint8_t uint8_InitialA = i8080.state.registers.get_A();
 	uint8_t uint8_RegisterTwosCompliment = (~uint8_Register) + 0x01;
-	uint8_t uint8_ResultTemp = i8080.state.registers.get_A() - uint8_Register;
+	uint8_t uint8_ResultTemp = uint8_InitialA - uint8_Register;
 	
 	i8080.state.registers.set_A(uint8_ResultTemp);
 	
@@ -83,8 +119,32 @@ int func_SUB_Registers(uint8_t &uint8_Register)
 	
 };
 
+// Generic Sub with Borrow Function to pass the SBB OpCodes to
+void func_SBB_Registers(uint8_t &uint8_Register)
+{
+	uint8_t uint8_InitialA = i8080.state.registers.get_A();
+	uint8_t uint8_RegisterTemp = uint8_Register;
+	
+	if (i8080.state.flags.CY.get() == TRUE){
+		uint8_RegisterTemp = uint8_RegisterTemp + 0x01;
+	}
+	
+	uint8_t uint8_ResultTemp = uint8_InitialA + uint8_RegisterTemp;
+	
+	i8080.state.registers.set_A(uint8_ResultTemp);
+	
+	// S	Z	AC	P	CY
+	
+	i8080.state.flags.S.set(func_Check_Sign());
+	i8080.state.flags.Z.set(func_Check_Zero());
+	i8080.state.flags.AC.set(func_Check_AuxCarry(uint8_InitialA, uint8_RegisterTemp));
+	i8080.state.flags.P.set(func_Check_Parity());
+	i8080.state.flags.CY.set(func_Check_Carry(uint8_InitialA, uint8_RegisterTemp));
+	
+};
+
 // Generic And Function to pass the ANA OpCodes to
-int func_AND_Registers(uint8_t &uint8_Register)
+void func_AND_Registers(uint8_t &uint8_Register)
 {
 	uint8_t uint8_ResultTemp = i8080.state.registers.get_A() & uint8_Register;
 	
@@ -100,8 +160,26 @@ int func_AND_Registers(uint8_t &uint8_Register)
 	i8080.state.flags.CY.set(0);
 };
 
+// Generic Exclusive OR Function to pass XRA OpCodes to
+void func_XOR_Registers(uint8_t &uint8_Register)
+{
+	uint8_t uint8_ResultTemp = i8080.state.registers.get_A() ^ uint8_Register;
+	
+	i8080.state.registers.set_A(uint8_ResultTemp);
+	
+	// S	Z	AC	P	CY
+	
+	i8080.state.flags.S.set(func_Check_Sign());
+	i8080.state.flags.Z.set(func_Check_Zero());
+	i8080.state.flags.AC.set(0);
+	i8080.state.flags.P.set(func_Check_Parity());
+	i8080.state.flags.CY.set(0);
+	
+	
+};
+
 // Generic Or Function to pass the ORA OpCodes to
-int func_OR_Registers(uint8_t &uint8_Register)
+void func_OR_Registers(uint8_t &uint8_Register)
 {
 	uint8_t uint8_ResultTemp = i8080.state.registers.get_A() | uint8_Register;
 	
@@ -117,20 +195,54 @@ int func_OR_Registers(uint8_t &uint8_Register)
 	
 };
 
-// Generic Move Function to pass the MOV OpCodes to
-int func_MOV_Registers(uint8_t &uint8_RegisterDestination, uint8_t &uint8_RegisterSource)
+void func_CMP_Registers(uint8_t &uint8_Register)
 {
-	// NOTE: How is this supposed to work if we are using set statements for the values of the Registers?????
-	uint8_RegisterDestination = uint8_RegisterSource;
+	uint8_t uint8_InitialA = i8080.state.registers.get_A();
+	uint8_t uint8_RegisterTwosCompliment = (~uint8_Register) + 0x01;
+	uint8_t uint8_ResultTemp = uint8_InitialA - uint8_Register;
+	
+	// S	Z	AC	P	CY
+	i8080.state.flags.S.set(func_Check_Sign(uint8_ResultTemp));
+	
+	if (uint8_InitialA == uint8_Register){
+		i8080.state.flags.Z.set(1);
+	}
+	else {
+		i8080.state.flags.Z.set(0);
+	}
+	
+	// When checking the Auxiliary Carry Bit Source2 needs to be a 2's compliment
+	i8080.state.flags.AC.set(func_Check_AuxCarry(uint8_InitialA, uint8_RegisterTwoCompliment);
+	
+	i8080.state.flags.P.set(func_Check_Parity(uint8_ResultTemp));
+	
+	// When checking the Carry Bit Source2 needs to be a 2's compliment
+	// the result has to be negated also before setting/resetting the flag.
+	i8080.state.flags.CY.set(!func_Check_Carry(uint8_InitialA, uint8_RegisterTwosCompliment));
+	
+	
 };
 
-// Generic Check Sign Function to return the Sign of a register value
+// Generic Check Sign Function to return the Sign of the Accumulator value
 // Reference Material: https://www.cprogramming.com/tutorial/bitwise_operators.html
 bool func_Check_Sign()
 {
 	bool boolResult = 0;
 	
 	if (i8080.state.registers.get_A() & 0x80 != 0x00){
+		boolResult = 1;
+	}
+		
+	return boolResult;
+};
+
+// Generic Check Sign Function to return the Sign of a register value
+// Reference Material: https://www.cprogramming.com/tutorial/bitwise_operators.html
+bool func_Check_Sign(uint8_t uint8_Register)
+{
+	bool boolResult = 0;
+	
+	if (uint8_Register & 0x80 != 0x00){
 		boolResult = 1;
 	}
 		
@@ -189,7 +301,7 @@ bool func_Check_AuxCarry(uint8_t uint8_Source1, uint8_t uint8_Source2)
 	
 };
 
-// Generic Check Parity Function to return the parity of a register value
+// Generic Check Parity Function to return the parity of the Accumulator value
 bool func_Check_Parity()
 {
 	bool boolResult = 0;
@@ -220,6 +332,37 @@ bool func_Check_Parity()
 	
 	return boolResult;
 };
+
+// Generic Check Parity Function to return the parity of a register value
+bool func_Check_Parity(uint8_t uint8_Register)
+{
+	bool boolResult = 0;
+	
+	int intBitPosition = 0;
+	int intBitCount = 0;
+	
+	uint8_t uint8_RegisterTemp = 0x00;
+	
+	for (intBitPosition = 0; intBitPosition < 8 ; intBitPosition++){
+		
+		uint8_RegisterTemp = 0x00;
+		
+		uint8_RegisterTemp = ((uint8_Register >> intBitPosition) & 0x01);
+		
+		if (uint8_RegisterTemp == 0x01){
+			intBitCount = intBitCount + 1;
+		}
+		 
+		
+	};
+	
+	if (intBitCount % 2 == 0){
+		boolResult = 1;
+	}
+	
+	return boolResult;
+};
+
 
 // Generic Check Carry Function to return if there was a carry from the bit position 7 addition/subtraction/etc.
 bool func_Check_Carry(uint8_t uint8_Source1, uint8_t uint8_Source2)
