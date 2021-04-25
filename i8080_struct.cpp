@@ -17,9 +17,18 @@ bool i8080_Flags::AC()
     return false;
 }
 
+/*****************************
+ * Function Type: i8080_Flags(), constructor
+ * Discription: initilize the flags and set them to 0 in the contructor
+ * **************/
 i8080_Flags::i8080_Flags()
 {
-
+    // Set Flags
+    flag_S = 0;
+    flag_Z = 0;
+    flag_AC = 0;
+    flag_P = 0;
+    flag_C = 0;
 }
 
 /*****************************
@@ -28,7 +37,7 @@ i8080_Flags::i8080_Flags()
  * **************/
 i8080_Flags::~i8080_Flags()
 {
-
+    delete[] memFlags;
 }
 
 double i8080_Flags::get_AC()
@@ -44,6 +53,18 @@ double i8080_Flags::set_AC()
 bool i8080_Flags::unset_AC()
 {
     return false;
+}
+
+i8080_Registers::i8080_Registers()
+{
+    i8080_Registers reg;
+    reg.a = 0;
+    reg.b = 0;
+    reg.c = 0;
+    reg.d = 0;
+    reg.e = 0;
+    reg.h = 0;
+    reg.l = 0;
 }
 
 double i8080_Registers::unint_get_A()
@@ -69,7 +90,9 @@ int i8080_Registers::get_PC()
 void i8080_Registers::set_PC(int PC)
 {
 
+    PC = 0;
 }
+
 
 i8080_State::i8080_State()
 {
@@ -82,21 +105,23 @@ i8080_State::i8080_State()
  * **************/
 i8080_State::~i8080_State()
 {
-
+    delete[] memState;
 }
 int i8080_State::unint_SP()
 {
-    return 0;
+    uint16_t SP;
+    SP = 0;
+    i8080_Registers(0) = SP;
 }
 
 double i8080_State::get_SP()
 {
-    return 0;
+    uint16_t  _sp;
 }
 
 void i8080_State::set_SP(int SP)
 {
-
+    i8080_Registers(0) = SP;
 }
 
 int i8080_State::unset_AC()
@@ -116,7 +141,7 @@ i8080_CPU::i8080_CPU()
  * **************/
 i8080_CPU::~i8080_CPU()
 {
-
+    delete[] memCPU;
 }
 
 /*****************************
