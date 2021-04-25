@@ -42,22 +42,24 @@ i8080_Flags::~i8080_Flags()
 
 double i8080_Flags::get_AC()
 {
+    flag_AC = 0;
     return 0;
 }
 
-double i8080_Flags::set_AC()
+void i8080_Flags::set_AC(uint8_t)
 {
-    return 0;
+    flag_AC = 1;
 }
 
-bool i8080_Flags::unset_AC()
+void i8080_Flags::unset_AC(uint8_t)
 {
-    return false;
+    flag_AC = 0;
 }
 
 i8080_Registers::i8080_Registers()
 {
     i8080_Registers reg;
+
     reg.a = 0;
     reg.b = 0;
     reg.c = 0;
@@ -72,14 +74,14 @@ double i8080_Registers::unint_get_A()
     return 0;
 }
 
-void i8080_Registers::set_A(int A)
+void i8080_Registers::set_A(uint8_t A)
 {
 
 }
 
-int i8080_Registers::unint_PC()
+void i8080_Registers::unint_PC(uint8_t)
 {
-    return 0;
+    pc = 0;
 }
 
 int i8080_Registers::get_PC()
@@ -87,16 +89,20 @@ int i8080_Registers::get_PC()
     return 0;
 }
 
-void i8080_Registers::set_PC(int PC)
+void i8080_Registers::set_PC(uint8_t pc)
 {
+    i8080_Registers registers;
 
-    PC = 0;
+    registers.pc = 1;
 }
 
 
 i8080_State::i8080_State()
 {
-
+    i8080_State state;
+    size_t max_size = 1 << 15;
+    state.memory = (uint8_t*) malloc(max_size * sizeof(*state.memory));
+    i8080_Registers registers;
 }
 
 /*****************************
@@ -124,9 +130,10 @@ void i8080_State::set_SP(int SP)
     i8080_Registers(0) = SP;
 }
 
-int i8080_State::unset_AC()
+void i8080_State::unset_AC(uint8_t)
 {
-    return 0;
+    i8080_Flags flag;
+    flag.flag_AC = 0
 }
 
 //general contructor
@@ -196,7 +203,9 @@ i8080_CPU::i8080_CPU(size_t memorySize, uint16_t beginPoint)
 
     memory = new uint8_t[memorySize];
 
-    PC = beginPoint;
+    uint8_t pc = 1;
+    
+    this->state.registers.set_PC(1);
 
 }
 
