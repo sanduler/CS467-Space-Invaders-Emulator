@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <stdint.h>
 
+
 /*********************************
  * Flags class
  * Sets the flags for the opcodes
@@ -93,7 +94,7 @@ class i8080_CPU {
 private:
 public:
     i8080_State state;
-    i8080_CPU();
+    //i8080_CPU(); This is ambiguous with the function directly below
     i8080_CPU(size_t memsize = 0x10000, uint16_t startpoint = 0);
     ~i8080_CPU();
     unsigned char ROM;
@@ -108,4 +109,4 @@ public:
 };
 
 
-#endif I8080_H
+#endif //I8080_H
