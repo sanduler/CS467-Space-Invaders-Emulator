@@ -10,10 +10,13 @@
 #include <cstdint>
 #include <cstring>
 #include <fstream>
+using namespace  std;
 
 
 bool i8080_Flags::AC()
 {
+    //debug
+    cout << "Flag is off" << endl;
     return false;
 }
 
@@ -23,6 +26,7 @@ bool i8080_Flags::AC()
  * **************/
 i8080_Flags::i8080_Flags()
 {
+    cout << "Constructor: Flags have been initilized " << endl;
     // Set Flags
     flag_S = 0;
     flag_Z = 0;
@@ -37,72 +41,66 @@ i8080_Flags::i8080_Flags()
  * **************/
 i8080_Flags::~i8080_Flags()
 {
-    delete[] memFlags;
+    cout << "Memory in Flags has been cleared " << endl;
 }
 
 double i8080_Flags::get_AC()
 {
+    cout << "Get the AC Flag" << endl;
     flag_AC = 0;
     return 0;
 }
 
-void i8080_Flags::set_AC(uint8_t)
+bool i8080_Flags::set_AC()
 {
-    flag_AC = 1;
-}
-
-void i8080_Flags::unset_AC(uint8_t)
-{
+    cout << "Set the AC Flag" << endl;
     flag_AC = 0;
 }
 
-i8080_Registers::i8080_Registers()
+bool i8080_Flags::unset_AC()
 {
-    i8080_Registers reg;
-
-    reg.a = 0;
-    reg.b = 0;
-    reg.c = 0;
-    reg.d = 0;
-    reg.e = 0;
-    reg.h = 0;
-    reg.l = 0;
+    cout << "Unset the AC Flag" << endl;
+    flag_AC = 0;
 }
+
 
 double i8080_Registers::unint_get_A()
 {
+    cout << "Get the A Register" << endl;
     return 0;
 }
 
-void i8080_Registers::set_A(uint8_t A)
-{
-
-}
-
-void i8080_Registers::unint_PC(uint8_t)
-{
-    pc = 0;
-}
 
 int i8080_Registers::get_PC()
 {
+    cout << "Get the PC Register" << endl;
     return 0;
 }
 
-void i8080_Registers::set_PC(uint8_t pc)
+void i8080_Registers::set_A(int A)
 {
-    i8080_Registers registers;
+    cout << "Set the A Register" << endl;
+}
 
-    registers.pc = 1;
+int i8080_Registers::unint_PC()
+{
+    return 0;
+}
+
+void i8080_Registers::set_PC()
+{
+    cout << "Set the PC Register" << endl;
 }
 
 
 i8080_State::i8080_State()
 {
-    i8080_State state;
-    size_t max_size = 1 << 15;
-    state.memory = (uint8_t*) malloc(max_size * sizeof(*state.memory));
-    i8080_Registers registers;
+
+    cout << "Constructor: State has been initilized...." << endl;
+    //i8080_State state;
+    //size_t max_size = 1 << 15;
+    //state.memory = (uint8_t*) malloc(max_size * sizeof(*state.memory));
+
 }
 
 /*****************************
@@ -111,35 +109,34 @@ i8080_State::i8080_State()
  * **************/
 i8080_State::~i8080_State()
 {
-    delete[] memState;
+    cout << "Memory in State has been cleared " << endl;
 }
 int i8080_State::unint_SP()
 {
     uint16_t SP;
     SP = 0;
-    i8080_Registers(0) = SP;
 }
 
 double i8080_State::get_SP()
 {
+    cout << "Get SP" << endl;
     uint16_t  _sp;
 }
 
 void i8080_State::set_SP(int SP)
 {
-    i8080_Registers(0) = SP;
+    cout << "SET SP" << endl;
 }
 
-void i8080_State::unset_AC(uint8_t)
+bool i8080_State::unset_AC()
 {
-    i8080_Flags flag;
-    flag.flag_AC = 0
+    cout << "UNSET AC" << endl;
 }
 
 //general contructor
 i8080_CPU::i8080_CPU()
 {
-
+    cout << "Constructor: i8080_CPU has been initilized...." << endl;
 }
 
 /*****************************
@@ -148,7 +145,7 @@ i8080_CPU::i8080_CPU()
  * **************/
 i8080_CPU::~i8080_CPU()
 {
-    delete[] memCPU;
+    cout << "Memory in i8080_CPU has been cleared " << endl;
 }
 
 /*****************************
@@ -158,7 +155,7 @@ i8080_CPU::~i8080_CPU()
  * **************/
 int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
 {
-
+    cout << "Start Loading the Rom " << endl;
     //sets the size in memory to 0 = false
     size_t s = 0;
 
@@ -194,6 +191,7 @@ int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
  * depending on the rom file then sets the starting point in
  * memory
  * **************/
+/*
 i8080_CPU::i8080_CPU(size_t memorySize, uint16_t beginPoint)
 {
     //Find in memory
@@ -204,19 +202,19 @@ i8080_CPU::i8080_CPU(size_t memorySize, uint16_t beginPoint)
     memory = new uint8_t[memorySize];
 
     uint8_t pc = 1;
-    
-    this->state.registers.set_PC(1);
+
 
 }
-
+*/
 i8080_State i8080_CPU::setupEmulator()
 {
+    cout << "Emulator is being set up" << endl;
     return i8080_State();
 }
 
 void i8080_CPU::startEmulator(char *file)
 {
+    cout << "Emulator has started " << endl;
     //starts the emulator
 }
-
 

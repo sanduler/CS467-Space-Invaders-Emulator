@@ -10,6 +10,9 @@
 #define I8080_STRUCT_H
 #include <cstdint>
 #include <stdint.h>
+#include <cstddef>
+#include <iostream>
+
 
 
 /*********************************
@@ -27,7 +30,7 @@ public:
     bool OneValue = 1;
     bool AC();
     double get_AC();
-    double set_AC();
+    bool set_AC();
     bool unset_AC();
     // Flags
     uint8_t FlagZSP[0x100]; // Precalculated ZSP
@@ -50,7 +53,7 @@ public:
     void set_A(int A);
     int unint_PC();
     int get_PC();
-    void set_PC(int PC);
+    void set_PC();
 
     uint8_t   a;
     uint8_t   b;
@@ -77,12 +80,13 @@ private:
 public:
     i8080_State();
     ~i8080_State();
+    uint8_t *memory;
     i8080_Flags flags;
     i8080_Registers registers;
     int unint_SP();
     double get_SP();
     void set_SP(int SP);
-    int unset_AC();
+    bool unset_AC();
 };
 
 /*********************************
@@ -93,12 +97,14 @@ public:
 class i8080_CPU {
 private:
 public:
+    i8080_CPU();
     i8080_State state;
-    //i8080_CPU(); This is ambiguous with the function directly below
-    i8080_CPU(size_t memsize = 0x10000, uint16_t startpoint = 0);
+    //i8080_CPU(size_t memsize = 0x10000, uint16_t startpoint = 0);
     ~i8080_CPU();
     unsigned char ROM;
-    double memory;
+
+    uint8_t *memory;
+    size_t memsize;
 
     i8080_State setupEmulator();
 
@@ -109,4 +115,4 @@ public:
 };
 
 
-#endif //I8080_H
+#endif
