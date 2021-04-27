@@ -1,3 +1,4 @@
+Function Skeleton
 ////////////////////
 // Description: 
 // OpCode: 0x00	|| Size: 1 bit	|| Clock cycles: 4
@@ -5,7 +6,7 @@
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_NOP() {
+void  func_NOP();() {
 
 	// Logic for: 
 	// @TODO [Madison]: fill in logic
@@ -21,10 +22,10 @@ void func_NOP() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_LXI_B_D16() {
+void  func_LXI_B_D16();() {
 
 	// Logic for: B <- byte 3, C <- byte 2
-	// @TODO [Ruben ]: fill in logic
+	func_LXI_Registers(i8080.state.register.reg_B, i8080.state.register.reg_D);
 
 	func_ClockCycles(10);
 
@@ -34,16 +35,16 @@ void func_LXI_B_D16() {
 }
 
 ////////////////////
-// Description: 
+// Description: Pushes A into the combined passed register and the next one
 // OpCode: 0x02	|| Size: 1 bit	|| Clock cycles: 7
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_STAX_B() {
+void  func_STAX_B();() {
 
 	// Logic for: (BC) <- A
-	// @TODO [Michael]: fill in logic
+	func_STAX_Registers(i8080.state.register.reg_B); & 
 
 	func_ClockCycles(7);
 
@@ -56,10 +57,10 @@ void func_STAX_B() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_INX_B() {
+void  func_INX_B();() {
 
 	// Logic for: BC <- BC+1
-	// @TODO [Madison]: fill in logic
+	func_INX_Registers(i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -72,10 +73,10 @@ void func_INX_B() {
 // Modifed Registers: B and A
 // Written By: Ruben 
 ////////////////////
-void func_INR_B() {
+void  func_INR_B();() {
 
 	// Logic for: B <- B+1
-	func_INR_Registers(i8080.state.registers.B);
+	func_INR_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -89,10 +90,10 @@ void func_INR_B() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_DCR_B() {
+void  func_DCR_B();() {
 
 	// Logic for: B <- B-1
-	func_DCR_Registers(i8080.state.registers.B);
+	func_DCR_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -106,10 +107,10 @@ void func_DCR_B() {
 // Modifed Registers: B and A
 // Written By: Madison
 ////////////////////
-void func_MVI_B_D8() {
+void  func_MVI_B_D8();() {
 
 	// Logic for: B <- byte 2
-	func_MVI_Registers(i8080.state.registers.B);
+	func_MVI_Registers(i8080.state.register.reg_B, i8080.state.register.reg_ );
 
 	func_ClockCycles(7);
 
@@ -125,7 +126,7 @@ void func_MVI_B_D8() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_RLC() {
+void  func_RLC();() {
 
 	// Logic for: A = A << 1; bit 0 = prev bit 7; CY = prev bit 7
 	// @TODO [Ruben ]: fill in logic
@@ -144,10 +145,10 @@ void func_RLC() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_DAD_B() {
+void  func_DAD_B();() {
 
 	// Logic for: HL = HL + BC
-	// @TODO [Madison]: fill in logic
+	func_DAD_Registers(i8080.state.register.reg_B);
 
 	// Set flags: CY
 	func_ClockCycles(10);
@@ -155,16 +156,16 @@ void func_DAD_B() {
 }
 
 ////////////////////
-// Description: 
+// Description: Pushes the combo of the passed register and the meighbor into A
 // OpCode: 0x0a	|| Size: 1 bit	|| Clock cycles: 7
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_LDAX_B() {
+void  func_LDAX_B();() {
 
 	// Logic for: A <- (BC)
-	// @TODO [Ruben ]: fill in logic
+	func_LDAX_Registers(i8080.state.register.reg_B); & 
 
 	func_ClockCycles(7);
 
@@ -177,10 +178,10 @@ void func_LDAX_B() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_DCX_B() {
+void  func_DCX_B();() {
 
 	// Logic for: BC = BC-1
-	// @TODO [Michael]: fill in logic
+	func_DCX_Registers(i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -193,10 +194,10 @@ void func_DCX_B() {
 // Modifed Registers: C and A
 // Written By: Madison
 ////////////////////
-void func_INR_C() {
+void  func_INR_C();() {
 
 	// Logic for: C <- C+1
-	func_INR_Registers(i8080.state.registers.C);
+	func_INR_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -210,10 +211,10 @@ void func_INR_C() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_DCR_C() {
+void  func_DCR_C();() {
 
 	// Logic for: C <-C-1
-	func_DCR_Registers(i8080.state.registers.C);
+	func_DCR_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -227,10 +228,10 @@ void func_DCR_C() {
 // Modifed Registers: C and A
 // Written By: Michael
 ////////////////////
-void func_MVI_C_D8() {
+void  func_MVI_C_D8();() {
 
 	// Logic for: C <- byte 2
-	func_MVI_Registers(i8080.state.registers.C);
+	func_MVI_Registers(i8080.state.register.reg_C, i8080.state.register.reg_D);
 
 	func_ClockCycles(7);
 
@@ -246,7 +247,7 @@ void func_MVI_C_D8() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_RRC() {
+void  func_RRC();() {
 
 	// Logic for: A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0
 	// @TODO [Madison]: fill in logic
@@ -265,10 +266,10 @@ void func_RRC() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_LXI_D_D16() {
+void  func_LXI_D_D16();() {
 
 	// Logic for: D <- byte 3, E <- byte 2
-	// @TODO [Michael]: fill in logic
+	func_LXI_Registers(i8080.state.register.reg_D, i8080.state.register.reg_D);
 
 	func_ClockCycles(10);
 
@@ -278,16 +279,16 @@ void func_LXI_D_D16() {
 }
 
 ////////////////////
-// Description: 
+// Description: Pushes A into the combined passed register and the next one
 // OpCode: 0x12	|| Size: 1 bit	|| Clock cycles: 7
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_STAX_D() {
+void  func_STAX_D();() {
 
 	// Logic for: (DE) <- A
-	// @TODO [Madison]: fill in logic
+	func_STAX_Registers(i8080.state.register.reg_D); & 
 
 	func_ClockCycles(7);
 
@@ -300,10 +301,10 @@ void func_STAX_D() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_INX_D() {
+void  func_INX_D();() {
 
 	// Logic for: DE <- DE + 1
-	// @TODO [Ruben ]: fill in logic
+	func_INX_Registers(i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -316,10 +317,10 @@ void func_INX_D() {
 // Modifed Registers: D and A
 // Written By: Michael
 ////////////////////
-void func_INR_D() {
+void  func_INR_D();() {
 
 	// Logic for: D <- D+1
-	func_INR_Registers(i8080.state.registers.D);
+	func_INR_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -333,10 +334,10 @@ void func_INR_D() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_DCR_D() {
+void  func_DCR_D();() {
 
 	// Logic for: D <- D-1
-	func_DCR_Registers(i8080.state.registers.D);
+	func_DCR_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -350,10 +351,10 @@ void func_DCR_D() {
 // Modifed Registers: D and A
 // Written By: Ruben 
 ////////////////////
-void func_MVI_D_D8() {
+void  func_MVI_D_D8();() {
 
 	// Logic for: D <- byte 2
-	func_MVI_Registers(i8080.state.registers.D);
+	func_MVI_Registers(i8080.state.register.reg_D, i8080.state.register.reg_ );
 
 	func_ClockCycles(7);
 
@@ -369,7 +370,7 @@ void func_MVI_D_D8() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_RAL() {
+void  func_RAL();() {
 
 	// Logic for: A = A << 1; bit 0 = prev CY; CY = prev bit 7
 	// @TODO [Michael]: fill in logic
@@ -388,10 +389,10 @@ void func_RAL() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_DAD_D() {
+void  func_DAD_D();() {
 
 	// Logic for: HL = HL + DE
-	// @TODO [Ruben ]: fill in logic
+	func_DAD_Registers(i8080.state.register.reg_D);
 
 	// Set flags: CY
 	func_ClockCycles(10);
@@ -399,16 +400,16 @@ void func_DAD_D() {
 }
 
 ////////////////////
-// Description: 
+// Description: Pushes the combo of the passed register and the meighbor into A
 // OpCode: 0x1a	|| Size: 1 bit	|| Clock cycles: 7
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_LDAX_D() {
+void  func_LDAX_D();() {
 
 	// Logic for: A <- (DE)
-	// @TODO [Michael]: fill in logic
+	func_LDAX_Registers(i8080.state.register.reg_D); & 
 
 	func_ClockCycles(7);
 
@@ -421,10 +422,10 @@ void func_LDAX_D() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_DCX_D() {
+void  func_DCX_D();() {
 
 	// Logic for: DE = DE-1
-	// @TODO [Madison]: fill in logic
+	func_DCX_Registers(i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -437,10 +438,10 @@ void func_DCX_D() {
 // Modifed Registers: E and A
 // Written By: Ruben 
 ////////////////////
-void func_INR_E() {
+void  func_INR_E();() {
 
 	// Logic for: E <-E+1
-	func_INR_Registers(i8080.state.registers.E);
+	func_INR_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -454,10 +455,10 @@ void func_INR_E() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_DCR_E() {
+void  func_DCR_E();() {
 
 	// Logic for: E <- E-1
-	func_DCR_Registers(i8080.state.registers.E);
+	func_DCR_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -471,10 +472,10 @@ void func_DCR_E() {
 // Modifed Registers: E and A
 // Written By: Madison
 ////////////////////
-void func_MVI_E_D8() {
+void  func_MVI_E_D8();() {
 
 	// Logic for: E <- byte 2
-	func_MVI_Registers(i8080.state.registers.E);
+	func_MVI_Registers(i8080.state.register.reg_E, i8080.state.register.reg_D);
 
 	func_ClockCycles(7);
 
@@ -490,7 +491,7 @@ void func_MVI_E_D8() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_RAR() {
+void  func_RAR();() {
 
 	// Logic for: A = A >> 1; bit 7 = prev bit 7; CY = prev bit 0
 	// @TODO [Ruben ]: fill in logic
@@ -507,7 +508,7 @@ void func_RAR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_RIM() {
+void  func_RIM();() {
 
 	// Logic for: special
 	// @TODO [Michael]: fill in logic
@@ -523,10 +524,10 @@ void func_RIM() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_LXI_H_D16() {
+void  func_LXI_H_D16();() {
 
 	// Logic for: H <- byte 3, L <- byte 2
-	// @TODO [Madison]: fill in logic
+	func_LXI_Registers(i8080.state.register.reg_H, i8080.state.register.reg_D);
 
 	func_ClockCycles(10);
 
@@ -542,7 +543,7 @@ void func_LXI_H_D16() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_SHLD_ADR() {
+void  func_SHLD_ADR();() {
 
 	// Logic for: (adr) <-L; (adr+1)<-H
 	// @TODO [Ruben ]: fill in logic
@@ -561,10 +562,10 @@ void func_SHLD_ADR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_INX_H() {
+void  func_INX_H();() {
 
 	// Logic for: HL <- HL + 1
-	// @TODO [Michael]: fill in logic
+	func_INX_Registers(i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -577,10 +578,10 @@ void func_INX_H() {
 // Modifed Registers: H and A
 // Written By: Madison
 ////////////////////
-void func_INR_H() {
+void  func_INR_H();() {
 
 	// Logic for: H <- H+1
-	func_INR_Registers(i8080.state.registers.H);
+	func_INR_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -594,10 +595,10 @@ void func_INR_H() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_DCR_H() {
+void  func_DCR_H();() {
 
 	// Logic for: H <- H-1
-	func_DCR_Registers(i8080.state.registers.H);
+	func_DCR_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -611,10 +612,10 @@ void func_DCR_H() {
 // Modifed Registers: H and A
 // Written By: Michael
 ////////////////////
-void func_MVI_H_D8() {
+void  func_MVI_H_D8();() {
 
 	// Logic for: L <- byte 2
-	func_MVI_Registers(i8080.state.registers.H);
+	func_MVI_Registers(i8080.state.register.reg_H, i8080.state.register.reg_D);
 
 	func_ClockCycles(7);
 
@@ -630,7 +631,7 @@ void func_MVI_H_D8() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_DAA() {
+void  func_DAA();() {
 
 	// Logic for: special
 	// @TODO [Madison]: fill in logic
@@ -648,10 +649,10 @@ void func_DAA() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_DAD_H() {
+void  func_DAD_H();() {
 
 	// Logic for: HL = HL + HI
-	// @TODO [Michael]: fill in logic
+	func_DAD_Registers(i8080.state.register.reg_H);
 
 	// Set flags: CY
 	func_ClockCycles(10);
@@ -665,7 +666,7 @@ void func_DAD_H() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_LHLD_ADR() {
+void  func_LHLD_ADR();() {
 
 	// Logic for: L <- (adr); H<-(adr+1)
 	// @TODO [Madison]: fill in logic
@@ -684,10 +685,10 @@ void func_LHLD_ADR() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_DCX_H() {
+void  func_DCX_H();() {
 
 	// Logic for: HL = HL-1
-	// @TODO [Ruben ]: fill in logic
+	func_DCX_Registers(i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -700,10 +701,10 @@ void func_DCX_H() {
 // Modifed Registers: L and A
 // Written By: Michael
 ////////////////////
-void func_INR_L() {
+void  func_INR_L();() {
 
 	// Logic for: L <- L+1
-	func_INR_Registers(i8080.state.registers.L);
+	func_INR_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -717,10 +718,10 @@ void func_INR_L() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_DCR_L() {
+void  func_DCR_L();() {
 
 	// Logic for: L <- L-1
-	func_DCR_Registers(i8080.state.registers.L);
+	func_DCR_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -734,10 +735,10 @@ void func_DCR_L() {
 // Modifed Registers: L and A
 // Written By: Ruben 
 ////////////////////
-void func_MVI_L_D8() {
+void  func_MVI_L_D8();() {
 
 	// Logic for: L <- byte 2
-	func_MVI_Registers(i8080.state.registers.L);
+	func_MVI_Registers(i8080.state.register.reg_L, i8080.state.register.reg_ );
 
 	func_ClockCycles(7);
 
@@ -753,7 +754,7 @@ void func_MVI_L_D8() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_CMA() {
+void  func_CMA();() {
 
 	// Logic for: A <- !A
 	// @TODO [Michael]: fill in logic
@@ -769,7 +770,7 @@ void func_CMA() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_SIM() {
+void  func_SIM();() {
 
 	// Logic for: special
 	// @TODO [Madison]: fill in logic
@@ -785,10 +786,10 @@ void func_SIM() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_LXI_SP_D16() {
+void  func_LXI_SP_D16();() {
 
 	// Logic for: SP.hi <- byte 3, SP.lo <- byte 2
-	// @TODO [Ruben ]: fill in logic
+	func_LXI_Registers(i8080.state.register.reg_S, i8080.state.register.reg_ );
 
 	func_ClockCycles(10);
 
@@ -804,7 +805,7 @@ void func_LXI_SP_D16() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_STA_ADR() {
+void  func_STA_ADR();() {
 
 	// Logic for: (adr) <- A
 	// @TODO [Michael]: fill in logic
@@ -823,10 +824,10 @@ void func_STA_ADR() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_INX_SP() {
+void  func_INX_SP();() {
 
 	// Logic for: SP = SP + 1
-	// @TODO [Madison]: fill in logic
+	func_INX_Registers(i8080.state.register.reg_S);
 
 	func_ClockCycles(5);
 
@@ -839,10 +840,10 @@ void func_INX_SP() {
 // Modifed Registers: M and A
 // Written By: Ruben 
 ////////////////////
-void func_INR_M() {
+void  func_INR_M();() {
 
 	// Logic for: (HL) <- (HL)+1
-	func_INR_Registers(i8080.state.registers.M);
+	func_INR_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(10);
@@ -856,10 +857,10 @@ void func_INR_M() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_DCR_M() {
+void  func_DCR_M();() {
 
 	// Logic for: (HL) <- (HL)-1
-	func_DCR_Registers(i8080.state.registers.M);
+	func_DCR_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(10);
@@ -873,10 +874,10 @@ void func_DCR_M() {
 // Modifed Registers: M and A
 // Written By: Madison
 ////////////////////
-void func_MVI_M_D8() {
+void  func_MVI_M_D8();() {
 
 	// Logic for: (HL) <- byte 2
-	func_MVI_Registers(i8080.state.registers.M);
+	func_MVI_Registers(i8080.state.register.reg_M, i8080.state.register.reg_D);
 
 	func_ClockCycles(10);
 
@@ -892,7 +893,7 @@ void func_MVI_M_D8() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_STC() {
+void  func_STC();() {
 
 	// Logic for: CY = 1
 	// @TODO [Ruben ]: fill in logic
@@ -911,10 +912,10 @@ void func_STC() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_DAD_SP() {
+void  func_DAD_SP();() {
 
 	// Logic for: HL = HL + SP
-	// @TODO [Madison]: fill in logic
+	func_DAD_Registers(i8080.state.register.reg_S);
 
 	// Set flags: CY
 	func_ClockCycles(10);
@@ -928,7 +929,7 @@ void func_DAD_SP() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_LDA_ADR() {
+void  func_LDA_ADR();() {
 
 	// Logic for: A <- (adr)
 	// @TODO [Ruben ]: fill in logic
@@ -947,10 +948,10 @@ void func_LDA_ADR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_DCX_SP() {
+void  func_DCX_SP();() {
 
 	// Logic for: SP = SP-1
-	// @TODO [Michael]: fill in logic
+	func_DCX_Registers(i8080.state.register.reg_S);
 
 	func_ClockCycles(5);
 
@@ -963,10 +964,10 @@ void func_DCX_SP() {
 // Modifed Registers: A and A
 // Written By: Madison
 ////////////////////
-void func_INR_A() {
+void  func_INR_A();() {
 
 	// Logic for: A <- A+1
-	func_INR_Registers(i8080.state.registers.A);
+	func_INR_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -980,10 +981,10 @@ void func_INR_A() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_DCR_A() {
+void  func_DCR_A();() {
 
 	// Logic for: A <- A-1
-	func_DCR_Registers(i8080.state.registers.A);
+	func_DCR_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(5);
@@ -997,10 +998,10 @@ void func_DCR_A() {
 // Modifed Registers: A and A
 // Written By: Michael
 ////////////////////
-void func_MVI_A_D8() {
+void  func_MVI_A_D8();() {
 
 	// Logic for: A <- byte 2
-	func_MVI_Registers(i8080.state.registers.A);
+	func_MVI_Registers(i8080.state.register.reg_A, i8080.state.register.reg_D);
 
 	func_ClockCycles(7);
 
@@ -1016,7 +1017,7 @@ void func_MVI_A_D8() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_CMC() {
+void  func_CMC();() {
 
 	// Logic for: CY=!CY
 	// @TODO [Madison]: fill in logic
@@ -1033,10 +1034,10 @@ void func_CMC() {
 // Modifed Registers: B and B
 // Written By: Ruben 
 ////////////////////
-void func_MOV_B_B() {
+void  func_MOV_B_B();() {
 
 	// Logic for: B <- B
-	func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.B);
+	func_MOV_Registers(i8080.state.register.reg_B, i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -1049,10 +1050,10 @@ void func_MOV_B_B() {
 // Modifed Registers: B and C
 // Written By: Michael
 ////////////////////
-void func_MOV_B_C() {
+void  func_MOV_B_C();() {
 
 	// Logic for: B <- C
-	func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.C);
+	func_MOV_Registers(i8080.state.register.reg_B, i8080.state.register.reg_C);
 
 	func_ClockCycles(5);
 
@@ -1065,10 +1066,10 @@ void func_MOV_B_C() {
 // Modifed Registers: B and D
 // Written By: Madison
 ////////////////////
-void func_MOV_B_D() {
+void  func_MOV_B_D();() {
 
 	// Logic for: B <- D
-	func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.D);
+	func_MOV_Registers(i8080.state.register.reg_B, i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -1081,10 +1082,10 @@ void func_MOV_B_D() {
 // Modifed Registers: B and E
 // Written By: Ruben 
 ////////////////////
-void func_MOV_B_E() {
+void  func_MOV_B_E();() {
 
 	// Logic for: B <- E
-	func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.E);
+	func_MOV_Registers(i8080.state.register.reg_B, i8080.state.register.reg_E);
 
 	func_ClockCycles(5);
 
@@ -1097,10 +1098,10 @@ void func_MOV_B_E() {
 // Modifed Registers: B and H
 // Written By: Michael
 ////////////////////
-void func_MOV_B_H() {
+void  func_MOV_B_H();() {
 
 	// Logic for: B <- H
-	func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.H);
+	func_MOV_Registers(i8080.state.register.reg_B, i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -1113,10 +1114,10 @@ void func_MOV_B_H() {
 // Modifed Registers: B and L
 // Written By: Madison
 ////////////////////
-void func_MOV_B_L() {
+void  func_MOV_B_L();() {
 
 	// Logic for: B <- L
-	func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.L);
+	func_MOV_Registers(i8080.state.register.reg_B, i8080.state.register.reg_L);
 
 	func_ClockCycles(5);
 
@@ -1129,10 +1130,10 @@ void func_MOV_B_L() {
 // Modifed Registers: B and M
 // Written By: Ruben 
 ////////////////////
-void func_MOV_B_M() {
+void  func_MOV_B_M();() {
 
 	// Logic for: B <- (HL)
-	func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.M);
+	func_MOV_Registers(i8080.state.register.reg_B, i8080.state.register.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1145,10 +1146,10 @@ void func_MOV_B_M() {
 // Modifed Registers: B and A
 // Written By: Michael
 ////////////////////
-void func_MOV_B_A() {
+void  func_MOV_B_A();() {
 
 	// Logic for: B <- A
-	func_MOV_Registers(i8080.state.registers.B, i8080.state.registers.A);
+	func_MOV_Registers(i8080.state.register.reg_B, i8080.state.register.reg_A);
 
 	func_ClockCycles(5);
 
@@ -1161,10 +1162,10 @@ void func_MOV_B_A() {
 // Modifed Registers: C and B
 // Written By: Madison
 ////////////////////
-void func_MOV_C_B() {
+void  func_MOV_C_B();() {
 
 	// Logic for: C <- B
-	func_MOV_Registers(i8080.state.registers.C, i8080.state.registers.B);
+	func_MOV_Registers(i8080.state.register.reg_C, i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -1177,10 +1178,10 @@ void func_MOV_C_B() {
 // Modifed Registers: C and C
 // Written By: Ruben 
 ////////////////////
-void func_MOV_C_C() {
+void  func_MOV_C_C();() {
 
 	// Logic for: C <- C
-	func_MOV_Registers(i8080.state.registers.C, i8080.state.registers.C);
+	func_MOV_Registers(i8080.state.register.reg_C, i8080.state.register.reg_C);
 
 	func_ClockCycles(5);
 
@@ -1193,10 +1194,10 @@ void func_MOV_C_C() {
 // Modifed Registers: C and D
 // Written By: Michael
 ////////////////////
-void func_MOV_C_D() {
+void  func_MOV_C_D();() {
 
 	// Logic for: C <- D
-	func_MOV_Registers(i8080.state.registers.C, i8080.state.registers.D);
+	func_MOV_Registers(i8080.state.register.reg_C, i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -1209,10 +1210,10 @@ void func_MOV_C_D() {
 // Modifed Registers: C and E
 // Written By: Madison
 ////////////////////
-void func_MOV_C_E() {
+void  func_MOV_C_E();() {
 
 	// Logic for: C <- E
-	func_MOV_Registers(i8080.state.registers.C, i8080.state.registers.E);
+	func_MOV_Registers(i8080.state.register.reg_C, i8080.state.register.reg_E);
 
 	func_ClockCycles(5);
 
@@ -1225,10 +1226,10 @@ void func_MOV_C_E() {
 // Modifed Registers: C and H
 // Written By: Ruben 
 ////////////////////
-void func_MOV_C_H() {
+void  func_MOV_C_H();() {
 
 	// Logic for: C <- H
-	func_MOV_Registers(i8080.state.registers.C, i8080.state.registers.H);
+	func_MOV_Registers(i8080.state.register.reg_C, i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -1241,10 +1242,10 @@ void func_MOV_C_H() {
 // Modifed Registers: C and L
 // Written By: Michael
 ////////////////////
-void func_MOV_C_L() {
+void  func_MOV_C_L();() {
 
 	// Logic for: C <- L
-	func_MOV_Registers(i8080.state.registers.C, i8080.state.registers.L);
+	func_MOV_Registers(i8080.state.register.reg_C, i8080.state.register.reg_L);
 
 	func_ClockCycles(5);
 
@@ -1257,10 +1258,10 @@ void func_MOV_C_L() {
 // Modifed Registers: C and M
 // Written By: Madison
 ////////////////////
-void func_MOV_C_M() {
+void  func_MOV_C_M();() {
 
 	// Logic for: C <- (HL)
-	func_MOV_Registers(i8080.state.registers.C, i8080.state.registers.M);
+	func_MOV_Registers(i8080.state.register.reg_C, i8080.state.register.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1273,10 +1274,10 @@ void func_MOV_C_M() {
 // Modifed Registers: C and A
 // Written By: Ruben 
 ////////////////////
-void func_MOV_C_A() {
+void  func_MOV_C_A();() {
 
 	// Logic for: C <- A
-	func_MOV_Registers(i8080.state.registers.C, i8080.state.registers.A);
+	func_MOV_Registers(i8080.state.register.reg_C, i8080.state.register.reg_A);
 
 	func_ClockCycles(5);
 
@@ -1289,10 +1290,10 @@ void func_MOV_C_A() {
 // Modifed Registers: D and B
 // Written By: Michael
 ////////////////////
-void func_MOV_D_B() {
+void  func_MOV_D_B();() {
 
 	// Logic for: D <- B
-	func_MOV_Registers(i8080.state.registers.D, i8080.state.registers.B);
+	func_MOV_Registers(i8080.state.register.reg_D, i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -1305,10 +1306,10 @@ void func_MOV_D_B() {
 // Modifed Registers: D and C
 // Written By: Madison
 ////////////////////
-void func_MOV_D_C() {
+void  func_MOV_D_C();() {
 
 	// Logic for: D <- C
-	func_MOV_Registers(i8080.state.registers.D, i8080.state.registers.C);
+	func_MOV_Registers(i8080.state.register.reg_D, i8080.state.register.reg_C);
 
 	func_ClockCycles(5);
 
@@ -1321,10 +1322,10 @@ void func_MOV_D_C() {
 // Modifed Registers: D and D
 // Written By: Ruben 
 ////////////////////
-void func_MOV_D_D() {
+void  func_MOV_D_D();() {
 
 	// Logic for: D <- D
-	func_MOV_Registers(i8080.state.registers.D, i8080.state.registers.D);
+	func_MOV_Registers(i8080.state.register.reg_D, i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -1337,10 +1338,10 @@ void func_MOV_D_D() {
 // Modifed Registers: D and E
 // Written By: Michael
 ////////////////////
-void func_MOV_D_E() {
+void  func_MOV_D_E();() {
 
 	// Logic for: D <- E
-	func_MOV_Registers(i8080.state.registers.D, i8080.state.registers.E);
+	func_MOV_Registers(i8080.state.register.reg_D, i8080.state.register.reg_E);
 
 	func_ClockCycles(5);
 
@@ -1353,10 +1354,10 @@ void func_MOV_D_E() {
 // Modifed Registers: D and H
 // Written By: Madison
 ////////////////////
-void func_MOV_D_H() {
+void  func_MOV_D_H();() {
 
 	// Logic for: D <- H
-	func_MOV_Registers(i8080.state.registers.D, i8080.state.registers.H);
+	func_MOV_Registers(i8080.state.register.reg_D, i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -1369,10 +1370,10 @@ void func_MOV_D_H() {
 // Modifed Registers: D and L
 // Written By: Ruben 
 ////////////////////
-void func_MOV_D_L() {
+void  func_MOV_D_L();() {
 
 	// Logic for: D <- L
-	func_MOV_Registers(i8080.state.registers.D, i8080.state.registers.L);
+	func_MOV_Registers(i8080.state.register.reg_D, i8080.state.register.reg_L);
 
 	func_ClockCycles(5);
 
@@ -1385,10 +1386,10 @@ void func_MOV_D_L() {
 // Modifed Registers: D and M
 // Written By: Michael
 ////////////////////
-void func_MOV_D_M() {
+void  func_MOV_D_M();() {
 
 	// Logic for: D <- (HL)
-	func_MOV_Registers(i8080.state.registers.D, i8080.state.registers.M);
+	func_MOV_Registers(i8080.state.register.reg_D, i8080.state.register.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1401,10 +1402,10 @@ void func_MOV_D_M() {
 // Modifed Registers: D and A
 // Written By: Madison
 ////////////////////
-void func_MOV_D_A() {
+void  func_MOV_D_A();() {
 
 	// Logic for: D <- A
-	func_MOV_Registers(i8080.state.registers.D, i8080.state.registers.A);
+	func_MOV_Registers(i8080.state.register.reg_D, i8080.state.register.reg_A);
 
 	func_ClockCycles(5);
 
@@ -1417,10 +1418,10 @@ void func_MOV_D_A() {
 // Modifed Registers: E and B
 // Written By: Ruben 
 ////////////////////
-void func_MOV_E_B() {
+void  func_MOV_E_B();() {
 
 	// Logic for: E <- B
-	func_MOV_Registers(i8080.state.registers.E, i8080.state.registers.B);
+	func_MOV_Registers(i8080.state.register.reg_E, i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -1433,10 +1434,10 @@ void func_MOV_E_B() {
 // Modifed Registers: E and C
 // Written By: Michael
 ////////////////////
-void func_MOV_E_C() {
+void  func_MOV_E_C();() {
 
 	// Logic for: E <- C
-	func_MOV_Registers(i8080.state.registers.E, i8080.state.registers.C);
+	func_MOV_Registers(i8080.state.register.reg_E, i8080.state.register.reg_C);
 
 	func_ClockCycles(5);
 
@@ -1449,10 +1450,10 @@ void func_MOV_E_C() {
 // Modifed Registers: E and D
 // Written By: Madison
 ////////////////////
-void func_MOV_E_D() {
+void  func_MOV_E_D();() {
 
 	// Logic for: E <- D
-	func_MOV_Registers(i8080.state.registers.E, i8080.state.registers.D);
+	func_MOV_Registers(i8080.state.register.reg_E, i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -1465,10 +1466,10 @@ void func_MOV_E_D() {
 // Modifed Registers: E and E
 // Written By: Ruben 
 ////////////////////
-void func_MOV_E_E() {
+void  func_MOV_E_E();() {
 
 	// Logic for: E <- E
-	func_MOV_Registers(i8080.state.registers.E, i8080.state.registers.E);
+	func_MOV_Registers(i8080.state.register.reg_E, i8080.state.register.reg_E);
 
 	func_ClockCycles(5);
 
@@ -1481,10 +1482,10 @@ void func_MOV_E_E() {
 // Modifed Registers: E and H
 // Written By: Michael
 ////////////////////
-void func_MOV_E_H() {
+void  func_MOV_E_H();() {
 
 	// Logic for: E <- H
-	func_MOV_Registers(i8080.state.registers.E, i8080.state.registers.H);
+	func_MOV_Registers(i8080.state.register.reg_E, i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -1497,10 +1498,10 @@ void func_MOV_E_H() {
 // Modifed Registers: E and L
 // Written By: Madison
 ////////////////////
-void func_MOV_E_L() {
+void  func_MOV_E_L();() {
 
 	// Logic for: E <- L
-	func_MOV_Registers(i8080.state.registers.E, i8080.state.registers.L);
+	func_MOV_Registers(i8080.state.register.reg_E, i8080.state.register.reg_L);
 
 	func_ClockCycles(5);
 
@@ -1513,10 +1514,10 @@ void func_MOV_E_L() {
 // Modifed Registers: E and M
 // Written By: Ruben 
 ////////////////////
-void func_MOV_E_M() {
+void  func_MOV_E_M();() {
 
 	// Logic for: E <- (HL)
-	func_MOV_Registers(i8080.state.registers.E, i8080.state.registers.M);
+	func_MOV_Registers(i8080.state.register.reg_E, i8080.state.register.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1529,10 +1530,10 @@ void func_MOV_E_M() {
 // Modifed Registers: E and A
 // Written By: Michael
 ////////////////////
-void func_MOV_E_A() {
+void  func_MOV_E_A();() {
 
 	// Logic for: E <- A
-	func_MOV_Registers(i8080.state.registers.E, i8080.state.registers.A);
+	func_MOV_Registers(i8080.state.register.reg_E, i8080.state.register.reg_A);
 
 	func_ClockCycles(5);
 
@@ -1545,10 +1546,10 @@ void func_MOV_E_A() {
 // Modifed Registers: H and B
 // Written By: Madison
 ////////////////////
-void func_MOV_H_B() {
+void  func_MOV_H_B();() {
 
 	// Logic for: H <- B
-	func_MOV_Registers(i8080.state.registers.H, i8080.state.registers.B);
+	func_MOV_Registers(i8080.state.register.reg_H, i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -1561,10 +1562,10 @@ void func_MOV_H_B() {
 // Modifed Registers: H and C
 // Written By: Ruben 
 ////////////////////
-void func_MOV_H_C() {
+void  func_MOV_H_C();() {
 
 	// Logic for: H <- C
-	func_MOV_Registers(i8080.state.registers.H, i8080.state.registers.C);
+	func_MOV_Registers(i8080.state.register.reg_H, i8080.state.register.reg_C);
 
 	func_ClockCycles(5);
 
@@ -1577,10 +1578,10 @@ void func_MOV_H_C() {
 // Modifed Registers: H and D
 // Written By: Michael
 ////////////////////
-void func_MOV_H_D() {
+void  func_MOV_H_D();() {
 
 	// Logic for: H <- D
-	func_MOV_Registers(i8080.state.registers.H, i8080.state.registers.D);
+	func_MOV_Registers(i8080.state.register.reg_H, i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -1593,10 +1594,10 @@ void func_MOV_H_D() {
 // Modifed Registers: H and E
 // Written By: Madison
 ////////////////////
-void func_MOV_H_E() {
+void  func_MOV_H_E();() {
 
 	// Logic for: H <- E
-	func_MOV_Registers(i8080.state.registers.H, i8080.state.registers.E);
+	func_MOV_Registers(i8080.state.register.reg_H, i8080.state.register.reg_E);
 
 	func_ClockCycles(5);
 
@@ -1609,10 +1610,10 @@ void func_MOV_H_E() {
 // Modifed Registers: H and H
 // Written By: Ruben 
 ////////////////////
-void func_MOV_H_H() {
+void  func_MOV_H_H();() {
 
 	// Logic for: H <- H
-	func_MOV_Registers(i8080.state.registers.H, i8080.state.registers.H);
+	func_MOV_Registers(i8080.state.register.reg_H, i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -1625,10 +1626,10 @@ void func_MOV_H_H() {
 // Modifed Registers: H and L
 // Written By: Michael
 ////////////////////
-void func_MOV_H_L() {
+void  func_MOV_H_L();() {
 
 	// Logic for: H <- L
-	func_MOV_Registers(i8080.state.registers.H, i8080.state.registers.L);
+	func_MOV_Registers(i8080.state.register.reg_H, i8080.state.register.reg_L);
 
 	func_ClockCycles(5);
 
@@ -1641,10 +1642,10 @@ void func_MOV_H_L() {
 // Modifed Registers: H and M
 // Written By: Madison
 ////////////////////
-void func_MOV_H_M() {
+void  func_MOV_H_M();() {
 
 	// Logic for: H <- (HL)
-	func_MOV_Registers(i8080.state.registers.H, i8080.state.registers.M);
+	func_MOV_Registers(i8080.state.register.reg_H, i8080.state.register.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1657,10 +1658,10 @@ void func_MOV_H_M() {
 // Modifed Registers: H and A
 // Written By: Ruben 
 ////////////////////
-void func_MOV_H_A() {
+void  func_MOV_H_A();() {
 
 	// Logic for: H <- A
-	func_MOV_Registers(i8080.state.registers.H, i8080.state.registers.A);
+	func_MOV_Registers(i8080.state.register.reg_H, i8080.state.register.reg_A);
 
 	func_ClockCycles(5);
 
@@ -1673,10 +1674,10 @@ void func_MOV_H_A() {
 // Modifed Registers: L and B
 // Written By: Michael
 ////////////////////
-void func_MOV_L_B() {
+void  func_MOV_L_B();() {
 
 	// Logic for: L <- B
-	func_MOV_Registers(i8080.state.registers.L, i8080.state.registers.B);
+	func_MOV_Registers(i8080.state.register.reg_L, i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -1689,10 +1690,10 @@ void func_MOV_L_B() {
 // Modifed Registers: L and C
 // Written By: Madison
 ////////////////////
-void func_MOV_L_C() {
+void  func_MOV_L_C();() {
 
 	// Logic for: L <- C
-	func_MOV_Registers(i8080.state.registers.L, i8080.state.registers.C);
+	func_MOV_Registers(i8080.state.register.reg_L, i8080.state.register.reg_C);
 
 	func_ClockCycles(5);
 
@@ -1705,10 +1706,10 @@ void func_MOV_L_C() {
 // Modifed Registers: L and D
 // Written By: Ruben 
 ////////////////////
-void func_MOV_L_D() {
+void  func_MOV_L_D();() {
 
 	// Logic for: L <- D
-	func_MOV_Registers(i8080.state.registers.L, i8080.state.registers.D);
+	func_MOV_Registers(i8080.state.register.reg_L, i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -1721,10 +1722,10 @@ void func_MOV_L_D() {
 // Modifed Registers: L and E
 // Written By: Michael
 ////////////////////
-void func_MOV_L_E() {
+void  func_MOV_L_E();() {
 
 	// Logic for: L <- E
-	func_MOV_Registers(i8080.state.registers.L, i8080.state.registers.E);
+	func_MOV_Registers(i8080.state.register.reg_L, i8080.state.register.reg_E);
 
 	func_ClockCycles(5);
 
@@ -1737,10 +1738,10 @@ void func_MOV_L_E() {
 // Modifed Registers: L and H
 // Written By: Madison
 ////////////////////
-void func_MOV_L_H() {
+void  func_MOV_L_H();() {
 
 	// Logic for: L <- H
-	func_MOV_Registers(i8080.state.registers.L, i8080.state.registers.H);
+	func_MOV_Registers(i8080.state.register.reg_L, i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -1753,10 +1754,10 @@ void func_MOV_L_H() {
 // Modifed Registers: L and L
 // Written By: Ruben 
 ////////////////////
-void func_MOV_L_L() {
+void  func_MOV_L_L();() {
 
 	// Logic for: L <- L
-	func_MOV_Registers(i8080.state.registers.L, i8080.state.registers.L);
+	func_MOV_Registers(i8080.state.register.reg_L, i8080.state.register.reg_L);
 
 	func_ClockCycles(5);
 
@@ -1769,10 +1770,10 @@ void func_MOV_L_L() {
 // Modifed Registers: L and M
 // Written By: Michael
 ////////////////////
-void func_MOV_L_M() {
+void  func_MOV_L_M();() {
 
 	// Logic for: L <- (HL)
-	func_MOV_Registers(i8080.state.registers.L, i8080.state.registers.M);
+	func_MOV_Registers(i8080.state.register.reg_L, i8080.state.register.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1785,10 +1786,10 @@ void func_MOV_L_M() {
 // Modifed Registers: L and A
 // Written By: Madison
 ////////////////////
-void func_MOV_L_A() {
+void  func_MOV_L_A();() {
 
 	// Logic for: L <- A
-	func_MOV_Registers(i8080.state.registers.L, i8080.state.registers.A);
+	func_MOV_Registers(i8080.state.register.reg_L, i8080.state.register.reg_A);
 
 	func_ClockCycles(5);
 
@@ -1801,10 +1802,10 @@ void func_MOV_L_A() {
 // Modifed Registers: M and B
 // Written By: Ruben 
 ////////////////////
-void func_MOV_M_B() {
+void  func_MOV_M_B();() {
 
 	// Logic for: (HL) <- B
-	func_MOV_Registers(i8080.state.registers.M, i8080.state.registers.B);
+	func_MOV_Registers(i8080.state.register.reg_M, i8080.state.register.reg_B);
 
 	func_ClockCycles(7);
 
@@ -1817,10 +1818,10 @@ void func_MOV_M_B() {
 // Modifed Registers: M and C
 // Written By: Michael
 ////////////////////
-void func_MOV_M_C() {
+void  func_MOV_M_C();() {
 
 	// Logic for: (HL) <- C
-	func_MOV_Registers(i8080.state.registers.M, i8080.state.registers.C);
+	func_MOV_Registers(i8080.state.register.reg_M, i8080.state.register.reg_C);
 
 	func_ClockCycles(7);
 
@@ -1833,10 +1834,10 @@ void func_MOV_M_C() {
 // Modifed Registers: M and D
 // Written By: Madison
 ////////////////////
-void func_MOV_M_D() {
+void  func_MOV_M_D();() {
 
 	// Logic for: (HL) <- D
-	func_MOV_Registers(i8080.state.registers.M, i8080.state.registers.D);
+	func_MOV_Registers(i8080.state.register.reg_M, i8080.state.register.reg_D);
 
 	func_ClockCycles(7);
 
@@ -1849,10 +1850,10 @@ void func_MOV_M_D() {
 // Modifed Registers: M and E
 // Written By: Ruben 
 ////////////////////
-void func_MOV_M_E() {
+void  func_MOV_M_E();() {
 
 	// Logic for: (HL) <- E
-	func_MOV_Registers(i8080.state.registers.M, i8080.state.registers.E);
+	func_MOV_Registers(i8080.state.register.reg_M, i8080.state.register.reg_E);
 
 	func_ClockCycles(7);
 
@@ -1865,10 +1866,10 @@ void func_MOV_M_E() {
 // Modifed Registers: M and H
 // Written By: Michael
 ////////////////////
-void func_MOV_M_H() {
+void  func_MOV_M_H();() {
 
 	// Logic for: (HL) <- H
-	func_MOV_Registers(i8080.state.registers.M, i8080.state.registers.H);
+	func_MOV_Registers(i8080.state.register.reg_M, i8080.state.register.reg_H);
 
 	func_ClockCycles(7);
 
@@ -1881,10 +1882,10 @@ void func_MOV_M_H() {
 // Modifed Registers: M and L
 // Written By: Madison
 ////////////////////
-void func_MOV_M_L() {
+void  func_MOV_M_L();() {
 
 	// Logic for: (HL) <- L
-	func_MOV_Registers(i8080.state.registers.M, i8080.state.registers.L);
+	func_MOV_Registers(i8080.state.register.reg_M, i8080.state.register.reg_L);
 
 	func_ClockCycles(7);
 
@@ -1897,7 +1898,7 @@ void func_MOV_M_L() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_HLT() {
+void  func_HLT();() {
 
 	// Logic for: special
 	// @TODO [Ruben ]: fill in logic
@@ -1913,10 +1914,10 @@ void func_HLT() {
 // Modifed Registers: M and A
 // Written By: Michael
 ////////////////////
-void func_MOV_M_A() {
+void  func_MOV_M_A();() {
 
 	// Logic for: (HL) <- C
-	func_MOV_Registers(i8080.state.registers.M, i8080.state.registers.A);
+	func_MOV_Registers(i8080.state.register.reg_M, i8080.state.register.reg_A);
 
 	func_ClockCycles(7);
 
@@ -1929,10 +1930,10 @@ void func_MOV_M_A() {
 // Modifed Registers: A and B
 // Written By: Madison
 ////////////////////
-void func_MOV_A_B() {
+void  func_MOV_A_B();() {
 
 	// Logic for: A <- B
-	func_MOV_Registers(i8080.state.registers.A, i8080.state.registers.B);
+	func_MOV_Registers(i8080.state.register.reg_A, i8080.state.register.reg_B);
 
 	func_ClockCycles(5);
 
@@ -1945,10 +1946,10 @@ void func_MOV_A_B() {
 // Modifed Registers: A and C
 // Written By: Ruben 
 ////////////////////
-void func_MOV_A_C() {
+void  func_MOV_A_C();() {
 
 	// Logic for: A <- C
-	func_MOV_Registers(i8080.state.registers.A, i8080.state.registers.C);
+	func_MOV_Registers(i8080.state.register.reg_A, i8080.state.register.reg_C);
 
 	func_ClockCycles(5);
 
@@ -1961,10 +1962,10 @@ void func_MOV_A_C() {
 // Modifed Registers: A and D
 // Written By: Michael
 ////////////////////
-void func_MOV_A_D() {
+void  func_MOV_A_D();() {
 
 	// Logic for: A <- D
-	func_MOV_Registers(i8080.state.registers.A, i8080.state.registers.D);
+	func_MOV_Registers(i8080.state.register.reg_A, i8080.state.register.reg_D);
 
 	func_ClockCycles(5);
 
@@ -1977,10 +1978,10 @@ void func_MOV_A_D() {
 // Modifed Registers: A and E
 // Written By: Madison
 ////////////////////
-void func_MOV_A_E() {
+void  func_MOV_A_E();() {
 
 	// Logic for: A <- E
-	func_MOV_Registers(i8080.state.registers.A, i8080.state.registers.E);
+	func_MOV_Registers(i8080.state.register.reg_A, i8080.state.register.reg_E);
 
 	func_ClockCycles(5);
 
@@ -1993,10 +1994,10 @@ void func_MOV_A_E() {
 // Modifed Registers: A and H
 // Written By: Ruben 
 ////////////////////
-void func_MOV_A_H() {
+void  func_MOV_A_H();() {
 
 	// Logic for: A <- H
-	func_MOV_Registers(i8080.state.registers.A, i8080.state.registers.H);
+	func_MOV_Registers(i8080.state.register.reg_A, i8080.state.register.reg_H);
 
 	func_ClockCycles(5);
 
@@ -2009,10 +2010,10 @@ void func_MOV_A_H() {
 // Modifed Registers: A and L
 // Written By: Michael
 ////////////////////
-void func_MOV_A_L() {
+void  func_MOV_A_L();() {
 
 	// Logic for: A <- L
-	func_MOV_Registers(i8080.state.registers.A, i8080.state.registers.L);
+	func_MOV_Registers(i8080.state.register.reg_A, i8080.state.register.reg_L);
 
 	func_ClockCycles(5);
 
@@ -2025,10 +2026,10 @@ void func_MOV_A_L() {
 // Modifed Registers: A and M
 // Written By: Madison
 ////////////////////
-void func_MOV_A_M() {
+void  func_MOV_A_M();() {
 
 	// Logic for: A <- (HL)
-	func_MOV_Registers(i8080.state.registers.A, i8080.state.registers.M);
+	func_MOV_Registers(i8080.state.register.reg_A, i8080.state.register.reg_M);
 
 	func_ClockCycles(7);
 
@@ -2041,10 +2042,10 @@ void func_MOV_A_M() {
 // Modifed Registers: A and A
 // Written By: Ruben 
 ////////////////////
-void func_MOV_A_A() {
+void  func_MOV_A_A();() {
 
 	// Logic for: A <- A
-	func_MOV_Registers(i8080.state.registers.A, i8080.state.registers.A);
+	func_MOV_Registers(i8080.state.register.reg_A, i8080.state.register.reg_A);
 
 	func_ClockCycles(5);
 
@@ -2057,10 +2058,10 @@ void func_MOV_A_A() {
 // Modifed Registers: B and A
 // Written By: Michael
 ////////////////////
-void func_ADD_B() {
+void  func_ADD_B();() {
 
 	// Logic for: A <- A + B
-	func_AD_Registers(i8080.state.registers.B, false);
+	func_ADD_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2076,10 +2077,10 @@ void func_ADD_B() {
 // Modifed Registers: C and A
 // Written By: Madison
 ////////////////////
-void func_ADD_C() {
+void  func_ADD_C();() {
 
 	// Logic for: A <- A + C
-	func_AD_Registers(i8080.state.registers.C, false);
+	func_ADD_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2095,10 +2096,10 @@ void func_ADD_C() {
 // Modifed Registers: D and A
 // Written By: Ruben 
 ////////////////////
-void func_ADD_D() {
+void  func_ADD_D();() {
 
 	// Logic for: A <- A + D
-	func_AD_Registers(i8080.state.registers.D, false);
+	func_ADD_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2114,10 +2115,10 @@ void func_ADD_D() {
 // Modifed Registers: E and A
 // Written By: Michael
 ////////////////////
-void func_ADD_E() {
+void  func_ADD_E();() {
 
 	// Logic for: A <- A + E
-	func_AD_Registers(i8080.state.registers.E, false);
+	func_ADD_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2133,10 +2134,10 @@ void func_ADD_E() {
 // Modifed Registers: H and A
 // Written By: Madison
 ////////////////////
-void func_ADD_H() {
+void  func_ADD_H();() {
 
 	// Logic for: A <- A + H
-	func_AD_Registers(i8080.state.registers.H, false);
+	func_ADD_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2152,10 +2153,10 @@ void func_ADD_H() {
 // Modifed Registers: L and A
 // Written By: Ruben 
 ////////////////////
-void func_ADD_L() {
+void  func_ADD_L();() {
 
 	// Logic for: A <- A + L
-	func_AD_Registers(i8080.state.registers.L, false);
+	func_ADD_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2171,10 +2172,10 @@ void func_ADD_L() {
 // Modifed Registers: M and A
 // Written By: Michael
 ////////////////////
-void func_ADD_M() {
+void  func_ADD_M();() {
 
 	// Logic for: A <- A + (HL)
-	func_AD_Registers(i8080.state.registers.M, false);
+	func_ADD_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2190,10 +2191,10 @@ void func_ADD_M() {
 // Modifed Registers: A and A
 // Written By: Madison
 ////////////////////
-void func_ADD_A() {
+void  func_ADD_A();() {
 
 	// Logic for: A <- A + A
-	func_AD_Registers(i8080.state.registers.A, false);
+	func_ADD_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2209,10 +2210,10 @@ void func_ADD_A() {
 // Modifed Registers: B and A
 // Written By: Ruben 
 ////////////////////
-void func_ADC_B() {
+void  func_ADC_B();() {
 
 	// Logic for: A <- A + B + CY
-	func_AD_Registers(i8080.state.registers.B, true);
+	func_ADC_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2228,10 +2229,10 @@ void func_ADC_B() {
 // Modifed Registers: C and A
 // Written By: Michael
 ////////////////////
-void func_ADC_C() {
+void  func_ADC_C();() {
 
 	// Logic for: A <- A + C + CY
-	func_AD_Registers(i8080.state.registers.C, true);
+	func_ADC_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2247,10 +2248,10 @@ void func_ADC_C() {
 // Modifed Registers: D and A
 // Written By: Madison
 ////////////////////
-void func_ADC_D() {
+void  func_ADC_D();() {
 
 	// Logic for: A <- A + D + CY
-	func_AD_Registers(i8080.state.registers.D, true);
+	func_ADC_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2266,10 +2267,10 @@ void func_ADC_D() {
 // Modifed Registers: E and A
 // Written By: Ruben 
 ////////////////////
-void func_ADC_E() {
+void  func_ADC_E();() {
 
 	// Logic for: A <- A + E + CY
-	func_AD_Registers(i8080.state.registers.E, true);
+	func_ADC_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2285,10 +2286,10 @@ void func_ADC_E() {
 // Modifed Registers: H and A
 // Written By: Michael
 ////////////////////
-void func_ADC_H() {
+void  func_ADC_H();() {
 
 	// Logic for: A <- A + H + CY
-	func_AD_Registers(i8080.state.registers.H, true);
+	func_ADC_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2304,10 +2305,10 @@ void func_ADC_H() {
 // Modifed Registers: L and A
 // Written By: Madison
 ////////////////////
-void func_ADC_L() {
+void  func_ADC_L();() {
 
 	// Logic for: A <- A + L + CY
-	func_AD_Registers(i8080.state.registers.L, true);
+	func_ADC_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2323,10 +2324,10 @@ void func_ADC_L() {
 // Modifed Registers: M and A
 // Written By: Ruben 
 ////////////////////
-void func_ADC_M() {
+void  func_ADC_M();() {
 
 	// Logic for: A <- A + (HL) + CY
-	func_AD_Registers(i8080.state.registers.M, true);
+	func_ADC_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2342,10 +2343,10 @@ void func_ADC_M() {
 // Modifed Registers: A and A
 // Written By: Michael
 ////////////////////
-void func_ADC_A() {
+void  func_ADC_A();() {
 
 	// Logic for: A <- A + A + CY
-	func_AD_Registers(i8080.state.registers.A, true);
+	func_ADC_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2361,10 +2362,10 @@ void func_ADC_A() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_SUB_B() {
+void  func_SUB_B();() {
 
 	// Logic for: A <- A - B
-	// @TODO [Madison]: fill in logic
+	func_SUB_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2378,10 +2379,10 @@ void func_SUB_B() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_SUB_C() {
+void  func_SUB_C();() {
 
 	// Logic for: A <- A - C
-	// @TODO [Ruben ]: fill in logic
+	func_SUB_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2395,10 +2396,10 @@ void func_SUB_C() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_SUB_D() {
+void  func_SUB_D();() {
 
 	// Logic for: A <- A + D
-	// @TODO [Michael]: fill in logic
+	func_SUB_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2412,10 +2413,10 @@ void func_SUB_D() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_SUB_E() {
+void  func_SUB_E();() {
 
 	// Logic for: A <- A - E
-	// @TODO [Madison]: fill in logic
+	func_SUB_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2429,10 +2430,10 @@ void func_SUB_E() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_SUB_H() {
+void  func_SUB_H();() {
 
 	// Logic for: A <- A + H
-	// @TODO [Ruben ]: fill in logic
+	func_SUB_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2446,10 +2447,10 @@ void func_SUB_H() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_SUB_L() {
+void  func_SUB_L();() {
 
 	// Logic for: A <- A - L
-	// @TODO [Michael]: fill in logic
+	func_SUB_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2463,10 +2464,10 @@ void func_SUB_L() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_SUB_M() {
+void  func_SUB_M();() {
 
 	// Logic for: A <- A + (HL)
-	// @TODO [Madison]: fill in logic
+	func_SUB_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -2480,10 +2481,10 @@ void func_SUB_M() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_SUB_A() {
+void  func_SUB_A();() {
 
 	// Logic for: A <- A - A
-	// @TODO [Ruben ]: fill in logic
+	func_SUB_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2497,10 +2498,10 @@ void func_SUB_A() {
 // Modifed Registers: B and 
 // Written By: Michael
 ////////////////////
-void func_SBB_B() {
+void  func_SBB_B();() {
 
 	// Logic for: A <- A - B - CY
-	func_SBB_Registers(i8080.state.registers.B);
+	func_SBB_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2514,10 +2515,10 @@ void func_SBB_B() {
 // Modifed Registers: C and 
 // Written By: Madison
 ////////////////////
-void func_SBB_C() {
+void  func_SBB_C();() {
 
 	// Logic for: A <- A - C - CY
-	func_SBB_Registers(i8080.state.registers.C);
+	func_SBB_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2531,10 +2532,10 @@ void func_SBB_C() {
 // Modifed Registers: D and 
 // Written By: Ruben 
 ////////////////////
-void func_SBB_D() {
+void  func_SBB_D();() {
 
 	// Logic for: A <- A - D - CY
-	func_SBB_Registers(i8080.state.registers.D);
+	func_SBB_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2548,10 +2549,10 @@ void func_SBB_D() {
 // Modifed Registers: E and 
 // Written By: Michael
 ////////////////////
-void func_SBB_E() {
+void  func_SBB_E();() {
 
 	// Logic for: A <- A - E - CY
-	func_SBB_Registers(i8080.state.registers.E);
+	func_SBB_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2565,10 +2566,10 @@ void func_SBB_E() {
 // Modifed Registers: H and 
 // Written By: Madison
 ////////////////////
-void func_SBB_H() {
+void  func_SBB_H();() {
 
 	// Logic for: A <- A - H - CY
-	func_SBB_Registers(i8080.state.registers.H);
+	func_SBB_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2582,10 +2583,10 @@ void func_SBB_H() {
 // Modifed Registers: L and 
 // Written By: Ruben 
 ////////////////////
-void func_SBB_L() {
+void  func_SBB_L();() {
 
 	// Logic for: A <- A - L - CY
-	func_SBB_Registers(i8080.state.registers.L);
+	func_SBB_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2599,10 +2600,10 @@ void func_SBB_L() {
 // Modifed Registers: M and 
 // Written By: Michael
 ////////////////////
-void func_SBB_M() {
+void  func_SBB_M();() {
 
 	// Logic for: A <- A - (HL) - CY
-	func_SBB_Registers(i8080.state.registers.M);
+	func_SBB_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -2616,10 +2617,10 @@ void func_SBB_M() {
 // Modifed Registers: A and 
 // Written By: Madison
 ////////////////////
-void func_SBB_A() {
+void  func_SBB_A();() {
 
 	// Logic for: A <- A - A - CY
-	func_SBB_Registers(i8080.state.registers.A);
+	func_SBB_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2633,10 +2634,10 @@ void func_SBB_A() {
 // Modifed Registers: B and A
 // Written By: Ruben 
 ////////////////////
-void func_ANA_B() {
+void  func_ANA_B();() {
 
 	// Logic for: A <- A & B
-	func_AND_Registers(i8080.state.registers.B);
+	func_ANA_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2650,10 +2651,10 @@ void func_ANA_B() {
 // Modifed Registers: C and A
 // Written By: Michael
 ////////////////////
-void func_ANA_C() {
+void  func_ANA_C();() {
 
 	// Logic for: A <- A & C
-	func_AND_Registers(i8080.state.registers.C);
+	func_ANA_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2667,10 +2668,10 @@ void func_ANA_C() {
 // Modifed Registers: D and A
 // Written By: Madison
 ////////////////////
-void func_ANA_D() {
+void  func_ANA_D();() {
 
 	// Logic for: A <- A & D
-	func_AND_Registers(i8080.state.registers.D);
+	func_ANA_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2684,10 +2685,10 @@ void func_ANA_D() {
 // Modifed Registers: E and A
 // Written By: Ruben 
 ////////////////////
-void func_ANA_E() {
+void  func_ANA_E();() {
 
 	// Logic for: A <- A & E
-	func_AND_Registers(i8080.state.registers.E);
+	func_ANA_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2701,10 +2702,10 @@ void func_ANA_E() {
 // Modifed Registers: H and A
 // Written By: Michael
 ////////////////////
-void func_ANA_H() {
+void  func_ANA_H();() {
 
 	// Logic for: A <- A & H
-	func_AND_Registers(i8080.state.registers.H);
+	func_ANA_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2718,10 +2719,10 @@ void func_ANA_H() {
 // Modifed Registers: L and A
 // Written By: Madison
 ////////////////////
-void func_ANA_L() {
+void  func_ANA_L();() {
 
 	// Logic for: A <- A & L
-	func_AND_Registers(i8080.state.registers.L);
+	func_ANA_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2735,10 +2736,10 @@ void func_ANA_L() {
 // Modifed Registers: M and A
 // Written By: Ruben 
 ////////////////////
-void func_ANA_M() {
+void  func_ANA_M();() {
 
 	// Logic for: A <- A & (HL)
-	func_AND_Registers(i8080.state.registers.M);
+	func_ANA_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -2752,10 +2753,10 @@ void func_ANA_M() {
 // Modifed Registers: A and A
 // Written By: Michael
 ////////////////////
-void func_ANA_A() {
+void  func_ANA_A();() {
 
 	// Logic for: A <- A & A
-	func_AND_Registers(i8080.state.registers.A);
+	func_ANA_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2769,10 +2770,10 @@ void func_ANA_A() {
 // Modifed Registers: B and 
 // Written By: Madison
 ////////////////////
-void func_XRA_B() {
+void  func_XRA_B();() {
 
 	// Logic for: A <- A ^ B
-	func_XRA_Registers(i8080.state.registers.B);
+	func_XRA_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2786,10 +2787,10 @@ void func_XRA_B() {
 // Modifed Registers: C and 
 // Written By: Ruben 
 ////////////////////
-void func_XRA_C() {
+void  func_XRA_C();() {
 
 	// Logic for: A <- A ^ C
-	func_XRA_Registers(i8080.state.registers.C);
+	func_XRA_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2803,10 +2804,10 @@ void func_XRA_C() {
 // Modifed Registers: D and 
 // Written By: Michael
 ////////////////////
-void func_XRA_D() {
+void  func_XRA_D();() {
 
 	// Logic for: A <- A ^ D
-	func_XRA_Registers(i8080.state.registers.D);
+	func_XRA_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2820,10 +2821,10 @@ void func_XRA_D() {
 // Modifed Registers: E and 
 // Written By: Madison
 ////////////////////
-void func_XRA_E() {
+void  func_XRA_E();() {
 
 	// Logic for: A <- A ^ E
-	func_XRA_Registers(i8080.state.registers.E);
+	func_XRA_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2837,10 +2838,10 @@ void func_XRA_E() {
 // Modifed Registers: H and 
 // Written By: Ruben 
 ////////////////////
-void func_XRA_H() {
+void  func_XRA_H();() {
 
 	// Logic for: A <- A ^ H
-	func_XRA_Registers(i8080.state.registers.H);
+	func_XRA_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2854,10 +2855,10 @@ void func_XRA_H() {
 // Modifed Registers: L and 
 // Written By: Michael
 ////////////////////
-void func_XRA_L() {
+void  func_XRA_L();() {
 
 	// Logic for: A <- A ^ L
-	func_XRA_Registers(i8080.state.registers.L);
+	func_XRA_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2871,10 +2872,10 @@ void func_XRA_L() {
 // Modifed Registers: M and 
 // Written By: Madison
 ////////////////////
-void func_XRA_M() {
+void  func_XRA_M();() {
 
 	// Logic for: A <- A ^ (HL)
-	func_XRA_Registers(i8080.state.registers.M);
+	func_XRA_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -2888,10 +2889,10 @@ void func_XRA_M() {
 // Modifed Registers: A and 
 // Written By: Ruben 
 ////////////////////
-void func_XRA_A() {
+void  func_XRA_A();() {
 
 	// Logic for: A <- A ^ A
-	func_XRA_Registers(i8080.state.registers.A);
+	func_XRA_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2905,10 +2906,10 @@ void func_XRA_A() {
 // Modifed Registers: B and 
 // Written By: Michael
 ////////////////////
-void func_ORA_B() {
+void  func_ORA_B();() {
 
 	// Logic for: A <- A | B
-	func_ORA_Registers(i8080.state.registers.B, i8080.state.registers.);
+	func_ORA_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2922,10 +2923,10 @@ void func_ORA_B() {
 // Modifed Registers: C and 
 // Written By: Madison
 ////////////////////
-void func_ORA_C() {
+void  func_ORA_C();() {
 
 	// Logic for: A <- A | C
-	func_ORA_Registers(i8080.state.registers.C, i8080.state.registers.);
+	func_ORA_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2939,10 +2940,10 @@ void func_ORA_C() {
 // Modifed Registers: D and 
 // Written By: Ruben 
 ////////////////////
-void func_ORA_D() {
+void  func_ORA_D();() {
 
 	// Logic for: A <- A | D
-	func_ORA_Registers(i8080.state.registers.D, i8080.state.registers.);
+	func_ORA_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2956,10 +2957,10 @@ void func_ORA_D() {
 // Modifed Registers: E and 
 // Written By: Michael
 ////////////////////
-void func_ORA_E() {
+void  func_ORA_E();() {
 
 	// Logic for: A <- A | E
-	func_ORA_Registers(i8080.state.registers.E, i8080.state.registers.);
+	func_ORA_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2973,10 +2974,10 @@ void func_ORA_E() {
 // Modifed Registers: H and 
 // Written By: Madison
 ////////////////////
-void func_ORA_H() {
+void  func_ORA_H();() {
 
 	// Logic for: A <- A | H
-	func_ORA_Registers(i8080.state.registers.H, i8080.state.registers.);
+	func_ORA_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -2990,10 +2991,10 @@ void func_ORA_H() {
 // Modifed Registers: L and 
 // Written By: Ruben 
 ////////////////////
-void func_ORA_L() {
+void  func_ORA_L();() {
 
 	// Logic for: A <- A | L
-	func_ORA_Registers(i8080.state.registers.L, i8080.state.registers.);
+	func_ORA_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3007,10 +3008,10 @@ void func_ORA_L() {
 // Modifed Registers: M and 
 // Written By: Michael
 ////////////////////
-void func_ORA_M() {
+void  func_ORA_M();() {
 
 	// Logic for: A <- A | (HL)
-	func_ORA_Registers(i8080.state.registers.M, i8080.state.registers.);
+	func_ORA_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -3024,10 +3025,10 @@ void func_ORA_M() {
 // Modifed Registers: A and 
 // Written By: Madison
 ////////////////////
-void func_ORA_A() {
+void  func_ORA_A();() {
 
 	// Logic for: A <- A | A
-	func_ORA_Registers(i8080.state.registers.A, i8080.state.registers.);
+	func_ORA_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3041,10 +3042,10 @@ void func_ORA_A() {
 // Modifed Registers: B and A
 // Written By: Ruben 
 ////////////////////
-void func_CMP_B() {
+void  func_CMP_B();() {
 
 	// Logic for: A - B
-	func_CMP_Registers(i8080.state.registers.B);
+	func_CMP_Registers(i8080.state.register.reg_B);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3058,10 +3059,10 @@ void func_CMP_B() {
 // Modifed Registers: C and A
 // Written By: Michael
 ////////////////////
-void func_CMP_C() {
+void  func_CMP_C();() {
 
 	// Logic for: A - C
-	func_CMP_Registers(i8080.state.registers.C);
+	func_CMP_Registers(i8080.state.register.reg_C);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3075,10 +3076,10 @@ void func_CMP_C() {
 // Modifed Registers: D and A
 // Written By: Madison
 ////////////////////
-void func_CMP_D() {
+void  func_CMP_D();() {
 
 	// Logic for: A - D
-	func_CMP_Registers(i8080.state.registers.D);
+	func_CMP_Registers(i8080.state.register.reg_D);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3092,10 +3093,10 @@ void func_CMP_D() {
 // Modifed Registers: E and A
 // Written By: Ruben 
 ////////////////////
-void func_CMP_E() {
+void  func_CMP_E();() {
 
 	// Logic for: A - E
-	func_CMP_Registers(i8080.state.registers.E);
+	func_CMP_Registers(i8080.state.register.reg_E);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3109,10 +3110,10 @@ void func_CMP_E() {
 // Modifed Registers: H and A
 // Written By: Michael
 ////////////////////
-void func_CMP_H() {
+void  func_CMP_H();() {
 
 	// Logic for: A - H
-	func_CMP_Registers(i8080.state.registers.H);
+	func_CMP_Registers(i8080.state.register.reg_H);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3126,10 +3127,10 @@ void func_CMP_H() {
 // Modifed Registers: L and A
 // Written By: Madison
 ////////////////////
-void func_CMP_L() {
+void  func_CMP_L();() {
 
 	// Logic for: A - L
-	func_CMP_Registers(i8080.state.registers.L);
+	func_CMP_Registers(i8080.state.register.reg_L);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3143,10 +3144,10 @@ void func_CMP_L() {
 // Modifed Registers: M and A
 // Written By: Ruben 
 ////////////////////
-void func_CMP_M() {
+void  func_CMP_M();() {
 
 	// Logic for: A - (HL)
-	func_CMP_Registers(i8080.state.registers.M);
+	func_CMP_Registers(i8080.state.register.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -3160,10 +3161,10 @@ void func_CMP_M() {
 // Modifed Registers: A and A
 // Written By: Michael
 ////////////////////
-void func_CMP_A() {
+void  func_CMP_A();() {
 
 	// Logic for: A - A
-	func_CMP_Registers(i8080.state.registers.A);
+	func_CMP_Registers(i8080.state.register.reg_A);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(4);
@@ -3177,7 +3178,7 @@ void func_CMP_A() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_RNZ() {
+void  func_RNZ();() {
 
 	// Logic for: if NZ, RET
 	// @TODO [Madison]: fill in logic
@@ -3193,10 +3194,10 @@ void func_RNZ() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_POP_B() {
+void  func_POP_B();() {
 
 	// Logic for: C <- (sp); B <- (sp+1); sp <- sp+2
-	// @TODO [Ruben ]: fill in logic
+	func_POP_Registers(i8080.state.register.reg_B);
 
 	func_ClockCycles(10);
 
@@ -3209,7 +3210,7 @@ void func_POP_B() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_JNZ_ADR() {
+void  func_JNZ_ADR();() {
 
 	// Logic for: if NZ, PC <- adr
 	// @TODO [Michael]: fill in logic
@@ -3228,7 +3229,7 @@ void func_JNZ_ADR() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_JMP_ADR() {
+void  func_JMP_ADR();() {
 
 	// Logic for: PC <= adr
 	// @TODO [Madison]: fill in logic
@@ -3247,7 +3248,7 @@ void func_JMP_ADR() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_CNZ_ADR() {
+void  func_CNZ_ADR();() {
 
 	// Logic for: if NZ, CALL adr
 	// @TODO [Ruben ]: fill in logic
@@ -3266,26 +3267,26 @@ void func_CNZ_ADR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_PUSH_B() {
+void  func_PUSH_B();() {
 
 	// Logic for: (sp-2)<-C; (sp-1)<-B; sp <- sp - 2
-	// @TODO [Michael]: fill in logic
+	func_PUSH_Registers(i8080.state.register.reg_B); & 
 
 	func_ClockCycles(11);
 
 }
 
 ////////////////////
-// Description: Add the two registers below
+// Description: 
 // OpCode: 0xc6	|| Size: 2 bit	|| Clock cycles: 7
 // Modifed Flags: Z, S, P, CY, AC
-// Modifed Registers: D and A
+// Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_ADI_D8() {
+void  func_ADI_D8();() {
 
 	// Logic for: A <- A + byte
-	func_AD_Registers(i8080.state.registers.D, false);
+	// @TODO [Madison]: fill in logic
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -3304,7 +3305,7 @@ void func_ADI_D8() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_RST_0() {
+void  func_RST_0();() {
 
 	// Logic for: CALL $0
 	// @TODO [Ruben ]: fill in logic
@@ -3320,7 +3321,7 @@ void func_RST_0() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_RZ() {
+void  func_RZ();() {
 
 	// Logic for: if Z, RET
 	// @TODO [Michael]: fill in logic
@@ -3336,7 +3337,7 @@ void func_RZ() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_RET() {
+void  func_RET();() {
 
 	// Logic for: PC.lo <- (sp); PC.hi<-(sp+1); SP <- SP+2
 	// @TODO [Madison]: fill in logic
@@ -3352,7 +3353,7 @@ void func_RET() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_JZ_ADR() {
+void  func_JZ_ADR();() {
 
 	// Logic for: if Z, PC <- adr
 	// @TODO [Ruben ]: fill in logic
@@ -3373,7 +3374,7 @@ void func_JZ_ADR() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_CZ_ADR() {
+void  func_CZ_ADR();() {
 
 	// Logic for: if Z, CALL adr
 	// @TODO [Madison]: fill in logic
@@ -3392,7 +3393,7 @@ void func_CZ_ADR() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_CALL_ADR() {
+void  func_CALL_ADR();() {
 
 	// Logic for: (SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP+2;PC=adr
 	// @TODO [Ruben ]: fill in logic
@@ -3411,10 +3412,9 @@ void func_CALL_ADR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_ACI_D8() {
+void  func_ACI_D8();() {
 
 	// Logic for: A <- A + data + CY
-	// @TODO [Michael]: fill in logic
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -3431,7 +3431,7 @@ void func_ACI_D8() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_RST_1() {
+void  func_RST_1();() {
 
 	// Logic for: CALL $8
 	// @TODO [Madison]: fill in logic
@@ -3447,7 +3447,7 @@ void func_RST_1() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_RNC() {
+void  func_RNC();() {
 
 	// Logic for: if NCY, RET
 	// @TODO [Ruben ]: fill in logic
@@ -3463,10 +3463,10 @@ void func_RNC() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_POP_D() {
+void  func_POP_D();() {
 
 	// Logic for: E <- (sp); D <- (sp+1); sp <- sp+2
-	// @TODO [Michael]: fill in logic
+	func_POP_Registers(i8080.state.register.reg_D);
 
 	func_ClockCycles(10);
 
@@ -3479,7 +3479,7 @@ void func_POP_D() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_JNC_ADR() {
+void  func_JNC_ADR();() {
 
 	// Logic for: if NCY, PC<-adr
 	// @TODO [Madison]: fill in logic
@@ -3498,7 +3498,7 @@ void func_JNC_ADR() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_OUT_D8() {
+void  func_OUT_D8();() {
 
 	// Logic for: special
 	// @TODO [Ruben ]: fill in logic
@@ -3517,7 +3517,7 @@ void func_OUT_D8() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_CNC_ADR() {
+void  func_CNC_ADR();() {
 
 	// Logic for: if NCY, CALL adr
 	// @TODO [Michael]: fill in logic
@@ -3536,10 +3536,10 @@ void func_CNC_ADR() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_PUSH_D() {
+void  func_PUSH_D();() {
 
 	// Logic for: (sp-2)<-E; (sp-1)<-D; sp <- sp - 2
-	// @TODO [Madison]: fill in logic
+	func_PUSH_Registers(i8080.state.register.reg_D); & 
 
 	func_ClockCycles(11);
 
@@ -3552,7 +3552,7 @@ void func_PUSH_D() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_SUI_D8() {
+void  func_SUI_D8();() {
 
 	// Logic for: A <- A - data
 	// @TODO [Ruben ]: fill in logic
@@ -3572,7 +3572,7 @@ void func_SUI_D8() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_RST_2() {
+void  func_RST_2();() {
 
 	// Logic for: CALL $10
 	// @TODO [Michael]: fill in logic
@@ -3588,7 +3588,7 @@ void func_RST_2() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_RC() {
+void  func_RC();() {
 
 	// Logic for: if CY, RET
 	// @TODO [Madison]: fill in logic
@@ -3606,7 +3606,7 @@ void func_RC() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_JC_ADR() {
+void  func_JC_ADR();() {
 
 	// Logic for: if CY, PC<-adr
 	// @TODO [Michael]: fill in logic
@@ -3625,7 +3625,7 @@ void func_JC_ADR() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_IN_D8() {
+void  func_IN_D8();() {
 
 	// Logic for: special
 	// @TODO [Madison]: fill in logic
@@ -3644,7 +3644,7 @@ void func_IN_D8() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_CC_ADR() {
+void  func_CC_ADR();() {
 
 	// Logic for: if CY, CALL adr
 	// @TODO [Ruben ]: fill in logic
@@ -3665,7 +3665,7 @@ void func_CC_ADR() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_SBI_D8() {
+void  func_SBI_D8();() {
 
 	// Logic for: A <- A - data - CY
 	// @TODO [Madison]: fill in logic
@@ -3685,7 +3685,7 @@ void func_SBI_D8() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_RST_3() {
+void  func_RST_3();() {
 
 	// Logic for: CALL $18
 	// @TODO [Ruben ]: fill in logic
@@ -3701,7 +3701,7 @@ void func_RST_3() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_RPO() {
+void  func_RPO();() {
 
 	// Logic for: if PO, RET
 	// @TODO [Michael]: fill in logic
@@ -3717,10 +3717,10 @@ void func_RPO() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_POP_H() {
+void  func_POP_H();() {
 
 	// Logic for: L <- (sp); H <- (sp+1); sp <- sp+2
-	// @TODO [Madison]: fill in logic
+	func_POP_Registers(i8080.state.register.reg_H);
 
 	func_ClockCycles(10);
 
@@ -3733,7 +3733,7 @@ void func_POP_H() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_JPO_ADR() {
+void  func_JPO_ADR();() {
 
 	// Logic for: if PO, PC <- adr
 	// @TODO [Ruben ]: fill in logic
@@ -3752,7 +3752,7 @@ void func_JPO_ADR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_XTHL() {
+void  func_XTHL();() {
 
 	// Logic for: L <-> (SP); H <-> (SP+1)
 	// @TODO [Michael]: fill in logic
@@ -3768,7 +3768,7 @@ void func_XTHL() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_CPO_ADR() {
+void  func_CPO_ADR();() {
 
 	// Logic for: if PO, CALL adr
 	// @TODO [Madison]: fill in logic
@@ -3787,10 +3787,10 @@ void func_CPO_ADR() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_PUSH_H() {
+void  func_PUSH_H();() {
 
 	// Logic for: (sp-2)<-L; (sp-1)<-H; sp <- sp - 2
-	// @TODO [Ruben ]: fill in logic
+	func_PUSH_Registers(i8080.state.register.reg_H); & 
 
 	func_ClockCycles(11);
 
@@ -3803,7 +3803,7 @@ void func_PUSH_H() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_ANI_D8() {
+void  func_ANI_D8();() {
 
 	// Logic for: A <- A & data
 	// @TODO [Michael]: fill in logic
@@ -3823,7 +3823,7 @@ void func_ANI_D8() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_RST_4() {
+void  func_RST_4();() {
 
 	// Logic for: CALL $20
 	// @TODO [Madison]: fill in logic
@@ -3839,7 +3839,7 @@ void func_RST_4() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_RPE() {
+void  func_RPE();() {
 
 	// Logic for: if PE, RET
 	// @TODO [Ruben ]: fill in logic
@@ -3855,7 +3855,7 @@ void func_RPE() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_PCHL() {
+void  func_PCHL();() {
 
 	// Logic for: PC.hi <- H; PC.lo <- L
 	// @TODO [Michael]: fill in logic
@@ -3871,7 +3871,7 @@ void func_PCHL() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_JPE_ADR() {
+void  func_JPE_ADR();() {
 
 	// Logic for: if PE, PC <- adr
 	// @TODO [Madison]: fill in logic
@@ -3890,7 +3890,7 @@ void func_JPE_ADR() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_XCHG() {
+void  func_XCHG();() {
 
 	// Logic for: H <-> D; L <-> E
 	// @TODO [Ruben ]: fill in logic
@@ -3906,7 +3906,7 @@ void func_XCHG() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_CPE_ADR() {
+void  func_CPE_ADR();() {
 
 	// Logic for: if PE, CALL adr
 	// @TODO [Michael]: fill in logic
@@ -3927,7 +3927,7 @@ void func_CPE_ADR() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_XRI_D8() {
+void  func_XRI_D8();() {
 
 	// Logic for: A <- A ^ data
 	// @TODO [Ruben ]: fill in logic
@@ -3947,7 +3947,7 @@ void func_XRI_D8() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_RST_5() {
+void  func_RST_5();() {
 
 	// Logic for: CALL $28
 	// @TODO [Michael]: fill in logic
@@ -3963,7 +3963,7 @@ void func_RST_5() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_RP() {
+void  func_RP();() {
 
 	// Logic for: if P, RET
 	// @TODO [Madison]: fill in logic
@@ -3979,10 +3979,10 @@ void func_RP() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_POP_PSW() {
+void  func_POP_PSW();() {
 
 	// Logic for: flags <- (sp); A <- (sp+1); sp <- sp+2
-	// @TODO [Ruben ]: fill in logic
+	func_POP_Registers(i8080.state.register.reg_P);
 
 	func_ClockCycles(10);
 
@@ -3995,7 +3995,7 @@ void func_POP_PSW() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_JP_ADR() {
+void  func_JP_ADR();() {
 
 	// Logic for: if P=1 PC <- adr
 	// @TODO [Michael]: fill in logic
@@ -4014,7 +4014,7 @@ void func_JP_ADR() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_DI() {
+void  func_DI();() {
 
 	// Logic for: special
 	// @TODO [Madison]: fill in logic
@@ -4030,7 +4030,7 @@ void func_DI() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_CP_ADR() {
+void  func_CP_ADR();() {
 
 	// Logic for: if P, PC <- adr
 	// @TODO [Ruben ]: fill in logic
@@ -4049,10 +4049,10 @@ void func_CP_ADR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_PUSH_PSW() {
+void  func_PUSH_PSW();() {
 
 	// Logic for: (sp-2)<-flags; (sp-1)<-A; sp <- sp - 2
-	// @TODO [Michael]: fill in logic
+	func_PUSH_Registers(i8080.state.register.reg_P); & 
 
 	func_ClockCycles(11);
 
@@ -4065,7 +4065,7 @@ void func_PUSH_PSW() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_ORI_D8() {
+void  func_ORI_D8();() {
 
 	// Logic for: A <- A | data
 	// @TODO [Madison]: fill in logic
@@ -4085,7 +4085,7 @@ void func_ORI_D8() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_RST_6() {
+void  func_RST_6();() {
 
 	// Logic for: CALL $30
 	// @TODO [Ruben ]: fill in logic
@@ -4101,7 +4101,7 @@ void func_RST_6() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_RM() {
+void  func_RM();() {
 
 	// Logic for: if M, RET
 	// @TODO [Michael]: fill in logic
@@ -4117,7 +4117,7 @@ void func_RM() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_SPHL() {
+void  func_SPHL();() {
 
 	// Logic for: SP=HL
 	// @TODO [Madison]: fill in logic
@@ -4133,7 +4133,7 @@ void func_SPHL() {
 // Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
-void func_JM_ADR() {
+void  func_JM_ADR();() {
 
 	// Logic for: if M, PC <- adr
 	// @TODO [Ruben ]: fill in logic
@@ -4152,7 +4152,7 @@ void func_JM_ADR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_EI() {
+void  func_EI();() {
 
 	// Logic for: special
 	// @TODO [Michael]: fill in logic
@@ -4168,7 +4168,7 @@ void func_EI() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_CM_ADR() {
+void  func_CM_ADR();() {
 
 	// Logic for: if M, CALL adr
 	// @TODO [Madison]: fill in logic
@@ -4189,7 +4189,7 @@ void func_CM_ADR() {
 // Modifed Registers: 
 // Written By: Michael
 ////////////////////
-void func_CPI_D8() {
+void  func_CPI_D8();() {
 
 	// Logic for: A - data
 	// @TODO [Michael]: fill in logic
@@ -4209,7 +4209,7 @@ void func_CPI_D8() {
 // Modifed Registers: 
 // Written By: Madison
 ////////////////////
-void func_RST_7() {
+void  func_RST_7();() {
 
 	// Logic for: CALL $38
 	// @TODO [Madison]: fill in logic
@@ -4217,4 +4217,5 @@ void func_RST_7() {
 	func_ClockCycles(11);
 
 }
+
 
