@@ -45,28 +45,36 @@ public:
  * Registers class
  * Intializes the Registers
  ********************************/
-class i8080_Registers {
+class i8080_Register {
 private:
 public:
-    double unint8_A;
+    double unint_A;
     double unint_get_A();
     void set_A(int A);
     int unint_PC();
-    int get_PC();
-    void set_PC();
+    
 
-    uint8_t   a;
-    uint8_t   b;
-    uint8_t   c;
-    uint8_t   d;
-    uint8_t   e;
-    uint8_t   h;
-    uint8_t   l;
-    uint16_t  sp;
-    uint16_t  pc;
+    int get_Reg();
+    void set_Reg(uint8_t i);
+
+    //registers
+    uint8_t reg_A;
+    uint8_t reg_B;
+    uint8_t reg_C;
+    uint8_t reg_D;
+    uint8_t reg_E;
+    uint8_t reg_H;
+    uint8_t reg_L;
+    uint16_t reg_SP;
+    uint16_t reg_PC;
+
+    //memory
     uint8_t   *memory;
+
+    //for flagas
     i8080_Flags  ConditionCodes;
-    uint8_t   int_enable;
+
+
 };
 
 /*********************************
@@ -78,15 +86,22 @@ public:
 class i8080_State {
 private:
 public:
+
+    //Constructor and destructor
     i8080_State();
     ~i8080_State();
-    uint8_t *memory;
+
+    //Class memebrs in state
     i8080_Flags flags;
-    i8080_Registers registers;
+    i8080_Register registers;
+
     int unint_SP();
     double get_SP();
     void set_SP(int SP);
     bool unset_AC();
+
+    //Memory
+    size_t memsize;
 };
 
 /*********************************
@@ -104,7 +119,7 @@ public:
     unsigned char ROM;
 
     uint8_t *memory;
-    size_t memsize;
+
 
     i8080_State setupEmulator();
 

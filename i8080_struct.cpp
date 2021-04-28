@@ -63,33 +63,30 @@ bool i8080_Flags::unset_AC()
     flag_AC = 0;
 }
 
-
-double i8080_Registers::unint_get_A()
+int i8080_Register::get_Reg()
 {
-    cout << "Get the A Register" << endl;
+    cout << "Get the Register" << endl;
+    return reg_A;
+
+}
+
+
+void i8080_Register::set_Reg(uint8_t i)
+{
+    cout << "Set the Register" << endl;
+    reg_A = i;
+}
+
+int i8080_Register::unint_PC() {
     return 0;
 }
 
+void i8080_Register::set_A(int A) {
 
-int i8080_Registers::get_PC()
-{
-    cout << "Get the PC Register" << endl;
+}
+
+double i8080_Register::unint_get_A() {
     return 0;
-}
-
-void i8080_Registers::set_A(int A)
-{
-    cout << "Set the A Register" << endl;
-}
-
-int i8080_Registers::unint_PC()
-{
-    return 0;
-}
-
-void i8080_Registers::set_PC()
-{
-    cout << "Set the PC Register" << endl;
 }
 
 
@@ -97,6 +94,9 @@ i8080_State::i8080_State()
 {
 
     cout << "Constructor: State has been initilized...." << endl;
+
+    registers.set_Reg(5);
+
     //i8080_State state;
     //size_t max_size = 1 << 15;
     //state.memory = (uint8_t*) malloc(max_size * sizeof(*state.memory));
@@ -133,10 +133,14 @@ bool i8080_State::unset_AC()
     cout << "UNSET AC" << endl;
 }
 
+
 //general contructor
 i8080_CPU::i8080_CPU()
 {
     cout << "Constructor: i8080_CPU has been initilized...." << endl;
+    this->state.memsize = state.memsize;
+    memory = new uint8_t[state.memsize];
+    cout << "Memory: has been to allocated" << endl;
 }
 
 /*****************************
@@ -145,6 +149,7 @@ i8080_CPU::i8080_CPU()
  * **************/
 i8080_CPU::~i8080_CPU()
 {
+    delete memory;
     cout << "Memory in i8080_CPU has been cleared " << endl;
 }
 
@@ -172,7 +177,7 @@ int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
     //While loop, used when the rom does exists loads the rom into the memor
     while (true)
     {
-        if ((offset + s) >= memsize)
+        if ((offset + s) >= state.memsize)
             break;
 
         //get the rom
@@ -191,21 +196,8 @@ int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
  * depending on the rom file then sets the starting point in
  * memory
  * **************/
-/*
-i8080_CPU::i8080_CPU(size_t memorySize, uint16_t beginPoint)
-{
-    //Find in memory
-    this->memsize = memorySize;
-
-    //allocate the memory set in specific point in memomory in an array
-
-    memory = new uint8_t[memorySize];
-
-    uint8_t pc = 1;
 
 
-}
-*/
 i8080_State i8080_CPU::setupEmulator()
 {
     cout << "Emulator is being set up" << endl;
