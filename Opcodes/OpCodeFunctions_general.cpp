@@ -16,8 +16,8 @@
 //********************************************************
 
 #include <stdio.h>
-#include "OpCodeFunctions.h"
-#include <cd../i8080_struct.h>
+//#include "OpCodeFunctions_general.h"
+#include "../i8080_struct.h"
 
 //***** REGISTERS *****//
 // 15 ... 8	7 ... 0		For 16 bit instructions
@@ -41,6 +41,13 @@
 // 1 = Not Used, Always One
 // CY = Carry Flag : Set to 1 when a carry out or borrow was used in the carry bit
 //
+
+// Generic Move Imediate 16 bit Function to pass the LXI OpCodes to
+void func_LXI_Registers(i8080_Register &reg_Source1, &reg_Source2)
+{
+	reg_Source1->set(i8080.state.opcode[2]);
+	reg_Source2->set(i8080.state.opcode[1]);
+};
 
 // Generic Increment Function to pass the INR OpCodes to
 void func_INR_Registers(i8080_Register &reg_Source)
@@ -230,6 +237,7 @@ void func_OR_Registers(i8080_Register &reg_Source)
 	
 };
 
+// Generic Compare Function to pass the CMP OpCodes to
 void func_CMP_Registers(i8080_Register &reg_Source)
 {
 	uint8_t uint8_InitialA = i8080.state.registers.get_A();

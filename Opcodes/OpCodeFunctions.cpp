@@ -110,7 +110,7 @@ void  func_DCR_B(); {
 void  func_MVI_B_D8(); {
 
 	// Logic for: B <- byte 2
-	func_MVI_Registers(i8080.state.register.reg_B, i8080.state.register.reg_ );
+	func_MVI_Registers(i8080.state.register.reg_B, i8080.state.opcode[1] );
 
 	func_ClockCycles(7);
 
@@ -231,7 +231,7 @@ void  func_DCR_C(); {
 void  func_MVI_C_D8(); {
 
 	// Logic for: C <- byte 2
-	func_MVI_Registers(i8080.state.register.reg_C, i8080.state.register.reg_D);
+	func_MVI_Registers(i8080.state.register.reg_C, i8080.state.opcode[1]);
 
 	func_ClockCycles(7);
 
@@ -269,7 +269,7 @@ void  func_RRC(); {
 void  func_LXI_D_D16(); {
 
 	// Logic for: D <- byte 3, E <- byte 2
-	func_LXI_Registers(i8080.state.register.reg_D, i8080.state.register.reg_D);
+	func_LXI_Registers(i8080.state.reg_D, i8080.state.reg_E);
 
 	func_ClockCycles(10);
 
@@ -374,8 +374,33 @@ void  func_RAL(); {
 
 	// Logic for: A = A << 1; bit 0 = prev CY; CY = prev bit 7
 	// @TODO [Michael]: fill in logic
+	uint8_t uint8_InitialA = i8080.state.reg_A.get();
+	bool bool_InitialCY = i8080.state.flag_CY.get();
+	
+	uint8_t uint8_ResultTemp;
+	bool bool_Result = 0;
+	
+	// Checks to see if the high order bit is 1 or 0. If it is a one the result
+	// value is changed, and will be used to set the carry flag
+	if (uint8_InitialA & 0x80 != 0x00){
+		bool_Result = 1;
+	}
+	
+	// The Accumulator value is shifted to the left one position
+	uint8_ResultTemp = uint8_InitialA << 1;
+	
+	// The least significant bit is set by what the carry flag was when the
+	// operation started
+	if (bool_InitialCY == true){
+		uint8_ResultTemp = uint8_ResultTemp | 0x01
+	}
+	
+	// The Accumulator is set to the shifted value
+	i8080.state.reg_A.set(uint8_ResultTemp);
 
 	// Set flags: CY
+	i8080.state.flag_CY.set(bool_Result);
+	
 	func_ClockCycles(4);
 
 }
