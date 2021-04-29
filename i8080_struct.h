@@ -59,6 +59,7 @@ public:
 
     //Class memebrs in state
     i8080_Flag flags;
+    i8080_Register registers;
 
     // Opcode Array
     uint8_t opCpde_Array[3];
