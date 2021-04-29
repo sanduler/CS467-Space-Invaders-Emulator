@@ -57,10 +57,15 @@ i8080_State::i8080_State()
 
     //set registers
     reg_A.set(0);
-    flag_S.set(0);
-    flag_P.set(0);
-    flag_C.set(0);
-    flag_AC.set(0);
+    reg_B.set(0);
+    reg_C.set(0);
+    reg_D.set(0);
+    reg_E.set(0);
+    reg_H.set(0);
+    reg_L.set(0);
+    reg_SP.set(0);
+    reg_PC.set(0);
+
 
 
     //i8080_State state;
