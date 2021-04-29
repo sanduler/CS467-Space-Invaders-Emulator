@@ -13,89 +13,55 @@
 using namespace  std;
 
 
-bool i8080_Flags::AC()
+void i8080_Flag::set(bool new_val)
 {
-    //debug
-    cout << "Flag is off" << endl;
+
+}
+
+bool i8080_Flag::get()
+{
     return false;
 }
 
-/*****************************
- * Function Type: i8080_Flags(), constructor
- * Discription: initilize the flags and set them to 0 in the contructor
- * **************/
-i8080_Flags::i8080_Flags()
+uint8_t i8080_Register::get_Large()
 {
-    cout << "Constructor: Flags have been initilized " << endl;
-    // Set Flags
-    flag_S = 0;
-    flag_Z = 0;
-    flag_AC = 0;
-    flag_P = 0;
-    flag_C = 0;
-}
-
-/*****************************
- * Function Type: destructor, ~i8080_Flags;
- * Discription: clears the allocated memory
- * **************/
-i8080_Flags::~i8080_Flags()
-{
-    cout << "Memory in Flags has been cleared " << endl;
-}
-
-double i8080_Flags::get_AC()
-{
-    cout << "Get the AC Flag" << endl;
-    flag_AC = 0;
     return 0;
 }
 
-bool i8080_Flags::set_AC()
+uint8_t i8080_Register::get()
 {
-    cout << "Set the AC Flag" << endl;
-    flag_AC = 0;
-}
-
-bool i8080_Flags::unset_AC()
-{
-    cout << "Unset the AC Flag" << endl;
-    flag_AC = 0;
-}
-
-int i8080_Register::get_Reg()
-{
-    cout << "Get the Register" << endl;
-    return reg_A;
-
-}
-
-
-void i8080_Register::set_Reg(uint8_t i)
-{
-    cout << "Set the Register" << endl;
-    reg_A = i;
-}
-
-int i8080_Register::unint_PC() {
     return 0;
 }
 
-void i8080_Register::set_A(int A) {
+void i8080_Register::set(uint8_t i)
+{
 
 }
 
-double i8080_Register::unint_get_A() {
-    return 0;
-}
+void i8080_Register::set_Large(uint16_t i)
+{
 
+}
 
 i8080_State::i8080_State()
 {
 
     cout << "Constructor: State has been initilized...." << endl;
 
-    registers.set_Reg(5);
+    // Set Flags
+    flag_Z.set(0);
+    flag_S.set(0);
+    flag_P.set(0);
+    flag_C.set(0);
+    flag_AC.set(0);
+
+    //set registers
+    reg_A.set(0);
+    flag_S.set(0);
+    flag_P.set(0);
+    flag_C.set(0);
+    flag_AC.set(0);
+
 
     //i8080_State state;
     //size_t max_size = 1 << 15;
@@ -111,28 +77,6 @@ i8080_State::~i8080_State()
 {
     cout << "Memory in State has been cleared " << endl;
 }
-int i8080_State::unint_SP()
-{
-    uint16_t SP;
-    SP = 0;
-}
-
-double i8080_State::get_SP()
-{
-    cout << "Get SP" << endl;
-    uint16_t  _sp;
-}
-
-void i8080_State::set_SP(int SP)
-{
-    cout << "SET SP" << endl;
-}
-
-bool i8080_State::unset_AC()
-{
-    cout << "UNSET AC" << endl;
-}
-
 
 //general contructor
 i8080_CPU::i8080_CPU()
@@ -209,4 +153,3 @@ void i8080_CPU::startEmulator(char *file)
     cout << "Emulator has started " << endl;
     //starts the emulator
 }
-
