@@ -10,99 +10,68 @@
 #include <cstdint>
 #include <cstring>
 #include <fstream>
+using namespace  std;
 
 
-bool i8080_Flags::AC()
+void i8080_Flag::set(bool new_val)
+{
+
+}
+
+bool i8080_Flag::get()
 {
     return false;
 }
 
-/*****************************
- * Function Type: i8080_Flags(), constructor
- * Discription: initilize the flags and set them to 0 in the contructor
- * **************/
-i8080_Flags::i8080_Flags()
-{
-    // Set Flags
-    flag_S = 0;
-    flag_Z = 0;
-    flag_AC = 0;
-    flag_P = 0;
-    flag_C = 0;
-}
-
-/*****************************
- * Function Type: destructor, ~i8080_Flags;
- * Discription: clears the allocated memory
- * **************/
-i8080_Flags::~i8080_Flags()
-{
-    delete[] memFlags;
-}
-
-double i8080_Flags::get_AC()
-{
-    flag_AC = 0;
-    return 0;
-}
-
-void i8080_Flags::set_AC(uint8_t)
-{
-    flag_AC = 1;
-}
-
-void i8080_Flags::unset_AC(uint8_t)
-{
-    flag_AC = 0;
-}
-
-i8080_Registers::i8080_Registers()
-{
-    i8080_Registers reg;
-
-    reg.a = 0;
-    reg.b = 0;
-    reg.c = 0;
-    reg.d = 0;
-    reg.e = 0;
-    reg.h = 0;
-    reg.l = 0;
-}
-
-double i8080_Registers::unint_get_A()
+uint8_t i8080_Register::get_Large()
 {
     return 0;
 }
 
-void i8080_Registers::set_A(uint8_t A)
-{
-
-}
-
-void i8080_Registers::unint_PC(uint8_t)
-{
-    pc = 0;
-}
-
-int i8080_Registers::get_PC()
+uint8_t i8080_Register::get()
 {
     return 0;
 }
 
-void i8080_Registers::set_PC(uint8_t pc)
+void i8080_Register::set(uint8_t i)
 {
-    i8080_Registers registers;
 
-    registers.pc = 1;
 }
 
+void i8080_Register::set_Large(uint16_t i)
+{
+
+}
 
 i8080_State::i8080_State()
 {
-    i8080_State state;
-    size_t max_size = 1 << 15;
-    state.memory = (uint8_t*) malloc(max_size * sizeof(*state.memory));
-    i8080_Registers registers;
+
+    cout << "Constructor: State has been initilized...." << endl;
+
+    // Set Flags
+    flag_Z.set(0);
+    flag_S.set(0);
+    flag_P.set(0);
+    flag_C.set(0);
+    flag_AC.set(0);
+
+    //set registers
+    reg_A.set(0);
+    reg_B.set(0);
+    reg_C.set(0);
+    reg_D.set(0);
+    reg_E.set(0);
+    reg_H.set(0);
+    reg_L.set(0);
+    reg_SP.set(0);
+    reg_PC.set(0);
+
+
+
+    //i8080_State state;
+    //size_t max_size = 1 << 15;
+    //state.memory = (uint8_t*) malloc(max_size * sizeof(*state.memory));
+
 }
 
 /*****************************
@@ -111,35 +80,16 @@ i8080_State::i8080_State()
  * **************/
 i8080_State::~i8080_State()
 {
-    delete[] memState;
-}
-int i8080_State::unint_SP()
-{
-    uint16_t SP;
-    SP = 0;
-    i8080_Registers(0) = SP;
-}
-
-double i8080_State::get_SP()
-{
-    uint16_t  _sp;
-}
-
-void i8080_State::set_SP(int SP)
-{
-    i8080_Registers(0) = SP;
-}
-
-void i8080_State::unset_AC(uint8_t)
-{
-    i8080_Flags flag;
-    flag.flag_AC = 0
+    cout << "Memory in State has been cleared " << endl;
 }
 
 //general contructor
 i8080_CPU::i8080_CPU()
 {
-
+    cout << "Constructor: i8080_CPU has been initilized...." << endl;
+    this->state.memsize = state.memsize;
+    memory = new uint8_t[state.memsize];
+    cout << "Memory: has been to allocated" << endl;
 }
 
 /*****************************
@@ -148,7 +98,8 @@ i8080_CPU::i8080_CPU()
  * **************/
 i8080_CPU::~i8080_CPU()
 {
-    delete[] memCPU;
+    delete memory;
+    cout << "Memory in i8080_CPU has been cleared " << endl;
 }
 
 /*****************************
@@ -158,7 +109,7 @@ i8080_CPU::~i8080_CPU()
  * **************/
 int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
 {
-
+    cout << "Start Loading the Rom " << endl;
     //sets the size in memory to 0 = false
     size_t s = 0;
 
@@ -175,7 +126,7 @@ int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
     //While loop, used when the rom does exists loads the rom into the memor
     while (true)
     {
-        if ((offset + s) >= memsize)
+        if ((offset + s) >= state.memsize)
             break;
 
         //get the rom
@@ -194,29 +145,16 @@ int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
  * depending on the rom file then sets the starting point in
  * memory
  * **************/
-i8080_CPU::i8080_CPU(size_t memorySize, uint16_t beginPoint)
-{
-    //Find in memory
-    this->memsize = memorySize;
 
-    //allocate the memory set in specific point in memomory in an array
-
-    memory = new uint8_t[memorySize];
-
-    uint8_t pc = 1;
-    
-    this->state.registers.set_PC(1);
-
-}
 
 i8080_State i8080_CPU::setupEmulator()
 {
+    cout << "Emulator is being set up" << endl;
     return i8080_State();
 }
 
 void i8080_CPU::startEmulator(char *file)
 {
+    cout << "Emulator has started " << endl;
     //starts the emulator
 }
-
-
