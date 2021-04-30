@@ -227,7 +227,7 @@ void func_OR_Registers(i8080_Register &reg_Source)
 	
 	i8080.state.reg_A.set(uint8_ResultTemp);
 	
-	// According to the i8080 Programming Manual the ANA instructions do not affect the AC Flag (pg 19)
+	// According to the i8080 Programming Manual the ORA instructions do not affect the AC Flag (pg 19)
 	// This differs from the documentation on other sites.
 	// S	Z	P	CY
 	i8080.state.flag_S.set(func_Check_Sign());
@@ -263,6 +263,24 @@ void func_CMP_Registers(i8080_Register &reg_Source)
 	// the result has to be negated also before setting/resetting the flag.
 	i8080.state.flag_CY.set(!func_Check_Carry(uint8_InitialA, uint8_RegisterTwosCompliment));
 	
+};
+
+// Generic Push Function to pass the PUSH OpCodes to
+void func_PUSH_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2)
+{
+	uint16_t uint16_TempSP = i8080.state.reg_SP.get_Large();
+	
+	uint16_TempSP = uint16_TempSP - 0x01;
+	
+	// Function to push data to memory
+	func_push_memory(uint16_TempSP, reg_Source1->get())
+	
+	uint16_TempSP = uint16_TempSP - 0x01;
+	
+	// Function to push data to memory
+	func_push_memory(uint16_TempSP, reg_Source2->get())
+	
+	i8080.state.reg_SP.set_Large(uint16_TempSP);
 };
 
 // Generic Check Sign Function to return the Sign of the Accumulator value
