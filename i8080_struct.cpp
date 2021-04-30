@@ -83,21 +83,21 @@ i8080_State::i8080_State()
 i8080_State::~i8080_State()
 {
     //cout << "Memory in State has been cleared " << endl;
-    cout << "START: ";
-    cout << __func__ ;
-    cout << "... END" << endl;;
+    //cout << "START: ";
+    //cout << __func__ ;
+    //cout << "... END" << endl;;
 }
 
 //general contructor
 i8080_CPU::i8080_CPU()
 {
     //cout << "Constructor: i8080_CPU has been initilized...." << endl;
-    cout << "START: ";
-    cout << __func__ ;
+    //cout << "START: ";
+    //cout << __func__ ;
     // COMMENTED OUT DUE TO ERROR - Woy
     //this->state.memsize = state.memsize;
     //memory = new uint8_t[state.memsize];
-    cout << "... END" << endl;;
+    //cout << "... END" << endl;;
     //cout << "Memory: has been to allocated" << endl;
 }
 
@@ -107,10 +107,10 @@ i8080_CPU::i8080_CPU()
  * **************/
 i8080_CPU::~i8080_CPU()
 {
-    cout << "START: ";
-    cout << __func__ ;
+    //cout << "START: ";
+    //cout << __func__ ;
     //delete memory;
-    cout << "... END" << endl;;
+    //cout << "... END" << endl;;
     //cout << "Memory in i8080_CPU has been cleared " << endl;
 }
 

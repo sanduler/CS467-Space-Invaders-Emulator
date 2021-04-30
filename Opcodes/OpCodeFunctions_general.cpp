@@ -342,7 +342,6 @@ void func_POP_Registers(i8080_Register &reg_Source)
 
 }
 
-
 // Generic Check Sign Function to return the Sign of the Accumulator value
 // Reference Material: https://www.cprogramming.com/tutorial/bitwise_operators.html
 bool func_Check_Sign()

@@ -22,6 +22,9 @@
 
 using namespace std;
 
+// CALLER FUNCTION
+void eval_opCode(unsigned char passed_code);
+
 // GENERAL FUNCTION PROTOTYPES
 void func_LXI_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2);
 void func_INR_Registers(i8080_Register &reg_Source);

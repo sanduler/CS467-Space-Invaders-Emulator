@@ -11,8 +11,7 @@ extern i8080_CPU i8080;
 ////////////////////
 void  func_NOP() {
 
-	// Logic for: 
-	// @TODO [Madison]: fill in logic
+	// NO ACTION
 
 	func_ClockCycles(4);
 
@@ -28,7 +27,7 @@ void  func_NOP() {
 void  func_LXI_B_D16() {
 
 	// Logic for: B <- byte 3, C <- byte 2
-	func_LXI_Registers(i8080.state.reg_B, i8080.state.reg_D);
+	//func_LXI_Registers(i8080.state.reg_B, i8080.state.reg_D);
 
 	func_ClockCycles(10);
 
