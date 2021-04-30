@@ -1,3 +1,6 @@
+#include "OpCodeFunctions.h"
+
+extern i8080_CPU i8080;
 
 ////////////////////
 // Description: 
@@ -44,7 +47,7 @@ void  func_LXI_B_D16() {
 void  func_STAX_B() {
 
 	// Logic for: (BC) <- A
-	func_STAX_Registers(i8080.state.reg_B); & 
+	func_STAX_Registers(i8080.state.reg_B); 
 
 	func_ClockCycles(7);
 
@@ -110,7 +113,7 @@ void  func_DCR_B() {
 void  func_MVI_B_D8() {
 
 	// Logic for: B <- byte 2
-	func_MVI_Registers(i8080.state.reg_B, i8080.state.opcode_Array[1] );
+	func_MVI_Registers(i8080.state.reg_B, i8080.state.opCode_Array[1] );
 
 	func_ClockCycles(7);
 
@@ -147,14 +150,14 @@ void  func_RLC() {
 	// The least significant bit is set by what the high order bit was when the
 	// operation started
 	if (bool_Result == true){
-		uint8_ResultTemp = uint8_ResultTemp | 0x01
+		uint8_ResultTemp = uint8_ResultTemp | 0x01;
 	}
 	
 	// The Accumulator is set to the shifted value
 	i8080.state.reg_A.set(uint8_ResultTemp);
 
 	// Set flags: CY
-	i8080.state.flag_CY.set(bool_Result);
+	i8080.state.flag_C.set(bool_Result);
 
 	func_ClockCycles(4);
 
@@ -189,7 +192,7 @@ void  func_DAD_B() {
 void  func_LDAX_B() {
 
 	// Logic for: A <- (BC)
-	func_LDAX_Registers(i8080.state.reg_B); & 
+	func_LDAX_Registers(i8080.state.reg_B);
 
 	func_ClockCycles(7);
 
@@ -255,7 +258,7 @@ void  func_DCR_C() {
 void  func_MVI_C_D8() {
 
 	// Logic for: C <- byte 2
-	func_MVI_Registers(i8080.state.reg_C, i8080.state.opcode_Array[1]);
+	func_MVI_Registers(i8080.state.reg_C, i8080.state.opCode_Array[1]);
 
 	func_ClockCycles(7);
 
@@ -292,14 +295,14 @@ void  func_RRC() {
 	// The most significant bit is set by what the low order bit was when the
 	// operation started
 	if (bool_Result == true){
-		uint8_ResultTemp = uint8_ResultTemp | 0x80
+		uint8_ResultTemp = uint8_ResultTemp | 0x80;
 	}
 	
 	// The Accumulator is set to the shifted value
 	i8080.state.reg_A.set(uint8_ResultTemp);
 
 	// Set flags: CY
-	i8080.state.flag_CY.set(bool_Result);
+	i8080.state.flag_C.set(bool_Result);
 
 	// Set flags: CY
 	func_ClockCycles(4);
@@ -337,7 +340,7 @@ void  func_LXI_D_D16() {
 void  func_STAX_D() {
 
 	// Logic for: (DE) <- A
-	func_STAX_Registers(i8080.state.reg_D); & 
+	func_STAX_Registers(i8080.state.reg_D);
 
 	func_ClockCycles(7);
 
@@ -403,7 +406,7 @@ void  func_DCR_D() {
 void  func_MVI_D_D8() {
 
 	// Logic for: D <- byte 2
-	func_MVI_Registers(i8080.state.reg_D, i8080.state.opcode_Array[1] );
+	func_MVI_Registers(i8080.state.reg_D, i8080.state.opCode_Array[1] );
 
 	func_ClockCycles(7);
 
@@ -425,7 +428,7 @@ void  func_RAL() {
 	// Logic for: A = A << 1; bit 0 = prev CY; CY = prev bit 7
 	// @TODO [Michael]: fill in logic
 	uint8_t uint8_InitialA = i8080.state.reg_A.get();
-	bool bool_InitialCY = i8080.state.flag_CY.get();
+	bool bool_InitialCY = i8080.state.flag_C.get();
 	
 	uint8_t uint8_ResultTemp;
 	bool bool_Result = 0;
@@ -442,14 +445,14 @@ void  func_RAL() {
 	// The least significant bit is set by what the carry flag was when the
 	// operation started
 	if (bool_InitialCY == true){
-		uint8_ResultTemp = uint8_ResultTemp | 0x01
+		uint8_ResultTemp = uint8_ResultTemp | 0x01;
 	}
 	
 	// The Accumulator is set to the shifted value
 	i8080.state.reg_A.set(uint8_ResultTemp);
 
 	// Set flags: CY
-	i8080.state.flag_CY.set(bool_Result);
+	i8080.state.flag_C.set(bool_Result);
 	
 	func_ClockCycles(4);
 
@@ -484,7 +487,7 @@ void  func_DAD_D() {
 void  func_LDAX_D() {
 
 	// Logic for: A <- (DE)
-	func_LDAX_Registers(i8080.state.reg_D); & 
+	func_LDAX_Registers(i8080.state.reg_D);
 
 	func_ClockCycles(7);
 
@@ -550,7 +553,7 @@ void  func_DCR_E() {
 void  func_MVI_E_D8() {
 
 	// Logic for: E <- byte 2
-	func_MVI_Registers(i8080.state.reg_E, i8080.state.opcode_Array[1]);
+	func_MVI_Registers(i8080.state.reg_E, i8080.state.opCode_Array[1]);
 
 	func_ClockCycles(7);
 
@@ -571,7 +574,7 @@ void  func_RAR() {
 	// Logic for: A = A >> 1; bit 7 = prev bit 7; CY = prev bit 0
 	// @TODO [Ruben ]: fill in logic
 	uint8_t uint8_InitialA = i8080.state.reg_A.get();
-	bool bool_InitialCY = i8080.state.flag_CY.get();
+	bool bool_InitialCY = i8080.state.flag_C.get();
 	
 	uint8_t uint8_ResultTemp;
 	bool bool_Result = false;
@@ -588,14 +591,14 @@ void  func_RAR() {
 	// The most significant bit is set by what the carry flag was when the
 	// operation started
 	if (bool_InitialCY == true){
-		uint8_ResultTemp = uint8_ResultTemp | 0x80
+		uint8_ResultTemp = uint8_ResultTemp | 0x80;
 	}
 	
 	// The Accumulator is set to the shifted value
 	i8080.state.reg_A.set(uint8_ResultTemp);
 
 	// Set flags: CY
-	i8080.state.flag_CY.set(bool_Result);
+	i8080.state.flag_C.set(bool_Result);
 
 	// Set flags: CY
 	func_ClockCycles(4);
@@ -716,7 +719,7 @@ void  func_DCR_H() {
 void  func_MVI_H_D8() {
 
 	// Logic for: L <- byte 2
-	func_MVI_Registers(i8080.state.reg_H, i8080.state.opcode_Array[1]);
+	func_MVI_Registers(i8080.state.reg_H, i8080.state.opCode_Array[1]);
 
 	func_ClockCycles(7);
 
@@ -741,14 +744,14 @@ void  func_DAA() {
 	uint8_t uint8_ResultTemp1;
 	uint8_t uint8_ResultTemp2;
 	bool bool_InitialAC = i8080.state.flag_AC.get();
-	bool bool_InitialCY = i8080.state.flag_CY.get();
+	bool bool_InitialCY = i8080.state.flag_C.get();
 	bool bool_Result1 = false;
 	bool bool_Result2 = false;
 	
 	//(1) If the least significant four bits of the accumulator
 	//represents a number greater than 9, or if the Auxiliary
 	//Carry bit is equal to one, the accumulator is incremented by six. Otherwise, no incrementing occurs.
-	if (((uint8_InitialA & 0x0F) > 0x09) || (bool_InitialAC == true) {
+	if (((uint8_InitialA & 0x0F) > 0x09) || (bool_InitialAC == true)) {
 		// Increments the Accumulator by 6
 		uint8_ResultTemp1 = uint8_InitialA + 0x06;
 		
@@ -760,7 +763,7 @@ void  func_DAA() {
 	//(2) If the most significant four bits of the accumulator
 	//now represent a number greater than 9, or if the normal carry bit is equal to one, the most sign ificant four
 	//bits of the accumulator are incremented by six. Otherwise, no incrementing occurs.
-	if (((uint8_ResultTemp1 & 0xF0) > 0x90) || (bool_InitialCY == true) {
+	if (((uint8_ResultTemp1 & 0xF0) > 0x90) || (bool_InitialCY == true)) {
 		// Increments the Accumulator by 6 in the upper byte
 		uint8_ResultTemp2 = uint8_ResultTemp1 + 0x60;
 		
@@ -772,7 +775,7 @@ void  func_DAA() {
 	i8080.state.flag_AC.set(bool_Result1);
 	
 	if (bool_Result2 == true) {
-		i8080.state.flag_CY.set(true);
+		i8080.state.flag_C.set(true);
 	}
 
 	func_ClockCycles(4);
@@ -877,7 +880,7 @@ void  func_DCR_L() {
 void  func_MVI_L_D8() {
 
 	// Logic for: L <- byte 2
-	func_MVI_Registers(i8080.state.reg_L, i8080.state.opcode_Array[1]);
+	func_MVI_Registers(i8080.state.reg_L, i8080.state.opCode_Array[1]);
 
 	func_ClockCycles(7);
 
@@ -928,7 +931,7 @@ void  func_SIM() {
 void  func_LXI_SP_D16() {
 
 	// Logic for: SP.hi <- byte 3, SP.lo <- byte 2
-	func_LXI_Registers(i8080.state.reg_S, i8080.state.reg_ );
+	//func_LXI_Registers(i8080.state.reg_SP, i8080.state.reg_ );
 
 	func_ClockCycles(10);
 
@@ -966,7 +969,7 @@ void  func_STA_ADR() {
 void  func_INX_SP() {
 
 	// Logic for: SP = SP + 1
-	func_INX_Registers(i8080.state.reg_S);
+	func_INX_Registers(i8080.state.reg_SP);
 
 	func_ClockCycles(5);
 
@@ -976,13 +979,12 @@ void  func_INX_SP() {
 // Description: Increments the register below
 // OpCode: 0x34	|| Size: 1 bit	|| Clock cycles: 10
 // Modifed Flags: Z, S, P, AC
-// Modifed Registers: M and A
+// Modifed Registers: 
 // Written By: Ruben 
 ////////////////////
 void  func_INR_M() {
 
 	// Logic for: (HL) <- (HL)+1
-	func_INR_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(10);
@@ -999,7 +1001,6 @@ void  func_INR_M() {
 void  func_DCR_M() {
 
 	// Logic for: (HL) <- (HL)-1
-	func_DCR_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, AC
 	func_ClockCycles(10);
@@ -1016,7 +1017,7 @@ void  func_DCR_M() {
 void  func_MVI_M_D8() {
 
 	// Logic for: (HL) <- byte 2
-	func_MVI_Registers(i8080.state.reg_M, i8080.state.reg_D);
+	//func_MVI_Registers(i8080.state.reg_M, i8080.state.reg_D);
 
 	func_ClockCycles(10);
 
@@ -1054,7 +1055,7 @@ void  func_STC() {
 void  func_DAD_SP() {
 
 	// Logic for: HL = HL + SP
-	func_DAD_Registers(i8080.state.reg_S);
+	//func_DAD_Registers(i8080.state.reg_SP);
 
 	// Set flags: CY
 	func_ClockCycles(10);
@@ -1090,7 +1091,7 @@ void  func_LDA_ADR() {
 void  func_DCX_SP() {
 
 	// Logic for: SP = SP-1
-	func_DCX_Registers(i8080.state.reg_S);
+	//func_DCX_Registers(i8080.state.reg_SP);
 
 	func_ClockCycles(5);
 
@@ -1140,7 +1141,7 @@ void  func_DCR_A() {
 void  func_MVI_A_D8() {
 
 	// Logic for: A <- byte 2
-	func_MVI_Registers(i8080.state.reg_A, i8080.state.opcode_Array[1]);
+	func_MVI_Registers(i8080.state.reg_A, i8080.state.opCode_Array[1]);
 
 	func_ClockCycles(7);
 
@@ -1272,7 +1273,7 @@ void  func_MOV_B_L() {
 void  func_MOV_B_M() {
 
 	// Logic for: B <- (HL)
-	func_MOV_Registers(i8080.state.reg_B, i8080.state.reg_M);
+	//func_MOV_Registers(i8080.state.reg_B, i8080.state.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1400,7 +1401,7 @@ void  func_MOV_C_L() {
 void  func_MOV_C_M() {
 
 	// Logic for: C <- (HL)
-	func_MOV_Registers(i8080.state.reg_C, i8080.state.reg_M);
+	//func_MOV_Registers(i8080.state.reg_C, i8080.state.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1528,7 +1529,7 @@ void  func_MOV_D_L() {
 void  func_MOV_D_M() {
 
 	// Logic for: D <- (HL)
-	func_MOV_Registers(i8080.state.reg_D, i8080.state.reg_M);
+	//func_MOV_Registers(i8080.state.reg_D, i8080.state.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1656,7 +1657,7 @@ void  func_MOV_E_L() {
 void  func_MOV_E_M() {
 
 	// Logic for: E <- (HL)
-	func_MOV_Registers(i8080.state.reg_E, i8080.state.reg_M);
+	//func_MOV_Registers(i8080.state.reg_E, i8080.state.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1784,7 +1785,7 @@ void  func_MOV_H_L() {
 void  func_MOV_H_M() {
 
 	// Logic for: H <- (HL)
-	func_MOV_Registers(i8080.state.reg_H, i8080.state.reg_M);
+	//func_MOV_Registers(i8080.state.reg_H, i8080.state.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1912,7 +1913,7 @@ void  func_MOV_L_L() {
 void  func_MOV_L_M() {
 
 	// Logic for: L <- (HL)
-	func_MOV_Registers(i8080.state.reg_L, i8080.state.reg_M);
+	//func_MOV_Registers(i8080.state.reg_L, i8080.state.reg_M);
 
 	func_ClockCycles(7);
 
@@ -1944,7 +1945,7 @@ void  func_MOV_L_A() {
 void  func_MOV_M_B() {
 
 	// Logic for: (HL) <- B
-	func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_B);
+	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_B);
 
 	func_ClockCycles(7);
 
@@ -1960,7 +1961,7 @@ void  func_MOV_M_B() {
 void  func_MOV_M_C() {
 
 	// Logic for: (HL) <- C
-	func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_C);
+	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_C);
 
 	func_ClockCycles(7);
 
@@ -1976,7 +1977,7 @@ void  func_MOV_M_C() {
 void  func_MOV_M_D() {
 
 	// Logic for: (HL) <- D
-	func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_D);
+	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_D);
 
 	func_ClockCycles(7);
 
@@ -1992,7 +1993,7 @@ void  func_MOV_M_D() {
 void  func_MOV_M_E() {
 
 	// Logic for: (HL) <- E
-	func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_E);
+	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_E);
 
 	func_ClockCycles(7);
 
@@ -2008,7 +2009,7 @@ void  func_MOV_M_E() {
 void  func_MOV_M_H() {
 
 	// Logic for: (HL) <- H
-	func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_H);
+	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_H);
 
 	func_ClockCycles(7);
 
@@ -2024,7 +2025,7 @@ void  func_MOV_M_H() {
 void  func_MOV_M_L() {
 
 	// Logic for: (HL) <- L
-	func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_L);
+	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_L);
 
 	func_ClockCycles(7);
 
@@ -2056,7 +2057,7 @@ void  func_HLT() {
 void  func_MOV_M_A() {
 
 	// Logic for: (HL) <- C
-	func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_A);
+	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_A);
 
 	func_ClockCycles(7);
 
@@ -2168,7 +2169,7 @@ void  func_MOV_A_L() {
 void  func_MOV_A_M() {
 
 	// Logic for: A <- (HL)
-	func_MOV_Registers(i8080.state.reg_A, i8080.state.reg_M);
+	//func_MOV_Registers(i8080.state.reg_A, i8080.state.reg_M);
 
 	func_ClockCycles(7);
 
@@ -2314,7 +2315,7 @@ void  func_ADD_L() {
 void  func_ADD_M() {
 
 	// Logic for: A <- A + (HL)
-	func_ADD_Registers(i8080.state.reg_M);
+	//func_ADD_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2466,7 +2467,7 @@ void  func_ADC_L() {
 void  func_ADC_M() {
 
 	// Logic for: A <- A + (HL) + CY
-	func_ADC_Registers(i8080.state.reg_M);
+	//func_ADC_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	// Flags set in AD function
@@ -2606,7 +2607,7 @@ void  func_SUB_L() {
 void  func_SUB_M() {
 
 	// Logic for: A <- A + (HL)
-	func_SUB_Registers(i8080.state.reg_M);
+	//func_SUB_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -2742,7 +2743,7 @@ void  func_SBB_L() {
 void  func_SBB_M() {
 
 	// Logic for: A <- A - (HL) - CY
-	func_SBB_Registers(i8080.state.reg_M);
+	//func_SBB_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -2878,7 +2879,7 @@ void  func_ANA_L() {
 void  func_ANA_M() {
 
 	// Logic for: A <- A & (HL)
-	func_ANA_Registers(i8080.state.reg_M);
+	//func_ANA_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -3014,7 +3015,7 @@ void  func_XRA_L() {
 void  func_XRA_M() {
 
 	// Logic for: A <- A ^ (HL)
-	func_XRA_Registers(i8080.state.reg_M);
+	//func_XRA_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -3150,7 +3151,7 @@ void  func_ORA_L() {
 void  func_ORA_M() {
 
 	// Logic for: A <- A | (HL)
-	func_ORA_Registers(i8080.state.reg_M);
+	//func_ORA_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -3286,7 +3287,7 @@ void  func_CMP_L() {
 void  func_CMP_M() {
 
 	// Logic for: A - (HL)
-	func_CMP_Registers(i8080.state.reg_M);
+	//func_CMP_Registers(i8080.state.reg_M);
 
 	// Set flags: Z, S, P, CY, AC
 	func_ClockCycles(7);
@@ -3392,7 +3393,7 @@ void  func_CNZ_ADR() {
 	// Logic for: if NZ, CALL adr
 	// @TODO [Ruben ]: fill in logic
 
-	func_ClockCycles(17/11);
+	//func_ClockCycles(17/11);
 
 	// Inc PC to account for additional size
 	func_Inc_PC(2);
@@ -3518,7 +3519,7 @@ void  func_CZ_ADR() {
 	// Logic for: if Z, CALL adr
 	// @TODO [Madison]: fill in logic
 
-	func_ClockCycles(17/11);
+	//func_ClockCycles(17/11);
 
 	// Inc PC to account for additional size
 	func_Inc_PC(2);
@@ -3661,7 +3662,7 @@ void  func_CNC_ADR() {
 	// Logic for: if NCY, CALL adr
 	// @TODO [Michael]: fill in logic
 
-	func_ClockCycles(17/11);
+	//func_ClockCycles(17/11);
 
 	// Inc PC to account for additional size
 	func_Inc_PC(2);
@@ -3788,7 +3789,7 @@ void  func_CC_ADR() {
 	// Logic for: if CY, CALL adr
 	// @TODO [Ruben ]: fill in logic
 
-	func_ClockCycles(17/11);
+	//func_ClockCycles(17/11);
 
 	// Inc PC to account for additional size
 	func_Inc_PC(2);
@@ -3912,7 +3913,7 @@ void  func_CPO_ADR() {
 	// Logic for: if PO, CALL adr
 	// @TODO [Madison]: fill in logic
 
-	func_ClockCycles(17/11);
+	//func_ClockCycles(17/11);
 
 	// Inc PC to account for additional size
 	func_Inc_PC(2);
@@ -4050,7 +4051,7 @@ void  func_CPE_ADR() {
 	// Logic for: if PE, CALL adr
 	// @TODO [Michael]: fill in logic
 
-	func_ClockCycles(17/11);
+	//func_ClockCycles(17/11);
 
 	// Inc PC to account for additional size
 	func_Inc_PC(2);
@@ -4121,7 +4122,7 @@ void  func_RP() {
 void  func_POP_PSW() {
 
 	// Logic for: flags <- (sp); A <- (sp+1); sp <- sp+2
-	func_POP_Registers(i8080.state.reg_P);
+	//func_POP_Registers(i8080.state.reg_P);
 
 	func_ClockCycles(10);
 
@@ -4174,7 +4175,7 @@ void  func_CP_ADR() {
 	// Logic for: if P, PC <- adr
 	// @TODO [Ruben ]: fill in logic
 
-	func_ClockCycles(17/11);
+	//func_ClockCycles(17/11);
 
 	// Inc PC to account for additional size
 	func_Inc_PC(2);
@@ -4194,7 +4195,7 @@ void  func_PUSH_PSW() {
 	
 	////////////////////////////////////////////
 	// Need to move this portion to the PSW.get function
-	uint8_RegPSW = 0x00;
+	uint8_t uint8_RegPSW = 0x00;
 	
 	if (i8080.state.flag_S.get() == true) {
 		uint8_RegPSW = uint8_RegPSW | 0x01;
@@ -4224,14 +4225,14 @@ void  func_PUSH_PSW() {
 	uint8_RegPSW = uint8_RegPSW | 0x01;
 	uint8_RegPSW = uint8_RegPSW << 1;
 	
-	if (i8080.state.flag_CY.get() == true) {
+	if (i8080.state.flag_C.get() == true) {
 		uint8_RegPSW = uint8_RegPSW | 0x01;
 	}
 	
 	/////////////////////////
 	
 	 
-	func_PUSH_Registers(i8080.state.reg_A, i8080.state.reg_PSW);
+	//func_PUSH_Registers(i8080.state.reg_A, i8080.state.reg_PSW);
 
 	func_ClockCycles(11);
 
@@ -4248,7 +4249,7 @@ void  func_ORI_D8() {
 
 	// Logic for: A <- A | data
 	// @TODO [Madison]: fill in logic
-	uint8_t uint8_ResultTemp = i8080.state.reg_A.get() | opcode_Array[1];
+	uint8_t uint8_ResultTemp = i8080.state.reg_A.get() | i8080.state.opCode_Array[1];
 	
 	i8080.state.reg_A.set(uint8_ResultTemp);
 	
@@ -4258,7 +4259,7 @@ void  func_ORI_D8() {
 	i8080.state.flag_S.set(func_Check_Sign());
 	i8080.state.flag_Z.set(func_Check_Zero());
 	i8080.state.flag_P.set(func_Check_Parity());
-	i8080.state.flag_CY.set(0);
+	i8080.state.flag_C.set(0);
 
 	
 	func_ClockCycles(7);
@@ -4302,12 +4303,12 @@ void  func_RM() {
 	
 	if (i8080.state.flag_S.get() == true) {
 		// Function to pull data out of memory
-		uint8_ResultTemp1 = func_pull_memory(uint16_InitialSP);
+		//uint8_ResultTemp1 = func_pull_memory(uint16_InitialSP); !!! NOT DEFINED?
 		
 		uint16_InitialSP = uint16_InitialSP + 0x0001;
 		
 		// Function to pull data out of memory
-		uint8_ResultTemp2 = func_pull_memory(uint16_InitialSP);
+		//uint8_ResultTemp2 = func_pull_memory(uint16_InitialSP); !!! NOT DEFINED?
 		
 		uint16_InitialSP = uint16_InitialSP + 0x0001;
 		
@@ -4406,7 +4407,7 @@ void  func_CM_ADR() {
 	// Logic for: if M, CALL adr
 	// @TODO [Madison]: fill in logic
 
-	func_ClockCycles(17/11);
+	//func_ClockCycles(17/11);
 
 	// Inc PC to account for additional size
 	func_Inc_PC(2);

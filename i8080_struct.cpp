@@ -15,38 +15,40 @@ using namespace  std;
 
 void i8080_Flag::set(bool new_val)
 {
-
+    //cout << "Attempt to set flag (" + to_string(new_val) + ")...";
+    val = new_val;
+    //cout << "Success: " + to_string(val) << endl;
 }
 
 bool i8080_Flag::get()
 {
-    return false;
+    return val;
 }
 
 uint8_t i8080_Register::get_Large()
 {
-    return 0;
+    return large_val;
 }
 
 uint8_t i8080_Register::get()
 {
-    return 0;
+    return val;
 }
 
 void i8080_Register::set(uint8_t i)
 {
-
+    val = i;
 }
 
 void i8080_Register::set_Large(uint16_t i)
 {
-
+    large_val = i;
 }
 
 i8080_State::i8080_State()
 {
 
-    cout << "Constructor: State has been initilized...." << endl;
+    //cout << "Constructor: State has been initilized...." << endl;
 
     // Set Flags
     flag_Z.set(0);
@@ -80,16 +82,23 @@ i8080_State::i8080_State()
  * **************/
 i8080_State::~i8080_State()
 {
-    cout << "Memory in State has been cleared " << endl;
+    //cout << "Memory in State has been cleared " << endl;
+    cout << "START: ";
+    cout << __func__ ;
+    cout << "... END" << endl;;
 }
 
 //general contructor
 i8080_CPU::i8080_CPU()
 {
-    cout << "Constructor: i8080_CPU has been initilized...." << endl;
-    this->state.memsize = state.memsize;
-    memory = new uint8_t[state.memsize];
-    cout << "Memory: has been to allocated" << endl;
+    //cout << "Constructor: i8080_CPU has been initilized...." << endl;
+    cout << "START: ";
+    cout << __func__ ;
+    // COMMENTED OUT DUE TO ERROR - Woy
+    //this->state.memsize = state.memsize;
+    //memory = new uint8_t[state.memsize];
+    cout << "... END" << endl;;
+    //cout << "Memory: has been to allocated" << endl;
 }
 
 /*****************************
@@ -98,8 +107,11 @@ i8080_CPU::i8080_CPU()
  * **************/
 i8080_CPU::~i8080_CPU()
 {
-    delete memory;
-    cout << "Memory in i8080_CPU has been cleared " << endl;
+    cout << "START: ";
+    cout << __func__ ;
+    //delete memory;
+    cout << "... END" << endl;;
+    //cout << "Memory in i8080_CPU has been cleared " << endl;
 }
 
 /*****************************
@@ -109,7 +121,7 @@ i8080_CPU::~i8080_CPU()
  * **************/
 int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
 {
-    cout << "Start Loading the Rom " << endl;
+    //cout << "Start Loading the Rom " << endl;
     //sets the size in memory to 0 = false
     size_t s = 0;
 

@@ -18,22 +18,48 @@
 #ifndef _OpCodeFunctions_H
 #define _OpCodeFunctions_H
 
-#include "i8080_struct.h"
+#include "../i8080_struct.h"
 
 using namespace std;
 
 // GENERAL FUNCTION PROTOTYPES
+void func_LXI_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2);
+void func_INR_Registers(i8080_Register &reg_Source);
+void func_DCR_Registers(i8080_Register &reg_Source);
+void func_MOV_Registers(i8080_Register &reg_Destination, i8080_Register &reg_Source);
+void func_MVI_Registers(i8080_Register &reg_Destination, uint8_t uint8_Source);
+void func_ADD_Registers(i8080_Register &reg_Source);
+void func_ADC_Registers(i8080_Register &reg_Source);
+void func_SUB_Registers(i8080_Register &reg_Source);
+void func_SBB_Registers(i8080_Register &reg_Source);
+void func_AND_Registers(i8080_Register &reg_Source);
+void func_XOR_Registers(i8080_Register &reg_Source);
+void func_OR_Registers(i8080_Register &reg_Source);
+void func_CMP_Registers(i8080_Register &reg_Source);
+void func_PUSH_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2);
+void func_STAX_Registers(i8080_Register &reg_Source);
+void func_INX_Registers(i8080_Register &reg_Source);
+void func_DAD_Registers(i8080_Register &reg_Source);
+void func_LDAX_Registers(i8080_Register &reg_Source);
+void func_DCX_Registers(i8080_Register &reg_Source);
+void func_ANA_Registers(i8080_Register &reg_Source);
+void func_XRA_Registers(i8080_Register &reg_Source);
+void func_ORA_Registers(i8080_Register &reg_Source);
+void func_POP_Registers(i8080_Register &reg_Source);
+
+// FLAG FUNCTIONS
+bool func_Check_Sign();
+bool func_Check_Sign(uint8_t uint8_Register);
+bool func_Check_Zero();
+bool func_Check_Zero(uint8_t uint8_Register);
+bool func_Check_AuxCarry(uint8_t uint8_Source1, uint8_t uint8_Source2);
+bool func_Check_Parity();
+bool func_Check_Parity(uint8_t uint8_Register);
+bool func_Check_Carry(uint8_t uint8_Source1, uint8_t uint8_Source2);
+
+// GENERAL FUNCTIONS
+void func_ClockCycles(int intClockCycles);
 void func_ClockCycles(int cycles);
-void func_MOV_Registers(i8080_Registers *reg_1, i8080_Registers *reg_2);
-void func_CMP_Registers(i8080_Registers *reg);
-void func_DCR_Registers(i8080_Registers *reg);
-void func_AD_Registers(i8080_Registers *reg, bool ADC_flag);
-void func_AND_Registers(i8080_Registers *reg);
-void func_INR_Registers(i8080_Registers *reg);
-void func_MVI_Registers(i8080_Registers *reg);
-void func_ORA_Registers(i8080_Registers *reg_1, i8080_Registers *reg_2);
-void func_XRA_Registers(i8080_Registers *reg);
-void func_SBB_Registers(i8080_Registers *reg);
 void func_Inc_PC(int steps);
 
 

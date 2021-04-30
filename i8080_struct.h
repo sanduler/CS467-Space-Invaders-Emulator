@@ -57,12 +57,8 @@ public:
     i8080_State();
     ~i8080_State();
 
-    //Class memebrs in state
-    i8080_Flag flags;
-    i8080_Register registers;
-
     // Opcode Array
-    uint8_t opCpde_Array[3];
+    uint8_t opCode_Array[3];
 
     // Registers
     i8080_Register reg_A;
