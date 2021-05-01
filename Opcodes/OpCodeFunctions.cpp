@@ -276,7 +276,6 @@ void  func_MVI_C_D8() {
 void  func_RRC() {
 
 	// Logic for: A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0
-	// @TODO [Madison]: fill in logic
 	uint8_t uint8_InitialA = i8080.state.reg_A.get();
 	
 	uint8_t uint8_ResultTemp;
@@ -355,7 +354,7 @@ void  func_STAX_D() {
 void  func_INX_D() {
 
 	// Logic for: DE <- DE + 1
-	func_INX_Registers(i8080.state.reg_D, i8080.state.reg_E);
+	i8080.state.set_DE(i8080.state.get_DE() + 1);
 
 	func_ClockCycles(5);
 
@@ -654,7 +653,7 @@ void  func_SHLD_ADR() {
 void  func_INX_H() {
 
 	// Logic for: HL <- HL + 1
-	func_INX_Registers(i8080.state.reg_H, i8080.state.reg_L);
+	i8080.state.set_HL(i8080.state.get_HL() + 1);
 
 	func_ClockCycles(5);
 
@@ -725,7 +724,6 @@ void  func_MVI_H_D8() {
 void  func_DAA() {
 
 	// Logic for: Decimal Adjust Accumulator
-	// @TODO [Madison]: fill in logic
 	
 	uint8_t uint8_InitialA = i8080.state.reg_A.get();
 	uint8_t uint8_ResultTemp1;
@@ -963,7 +961,6 @@ void  func_STA_ADR() {
 void  func_INX_SP() {
 
 	// Logic for: SP = SP + 1
-	//func_INX_Registers(i8080.state.reg_SP);
 	uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
 
 	uint16_t uint16_RegisterTemp = 0x0000;
@@ -973,8 +970,6 @@ void  func_INX_SP() {
 	}
 
 	i8080.state.reg_SP.set_Large(uint16_RegisterTemp);
-
-
 
 	func_ClockCycles(5);
 
@@ -1165,7 +1160,7 @@ void  func_MVI_A_D8() {
 void  func_CMC() {
 
 	// Logic for: CY=!CY
-	// @TODO [Madison]: fill in logic
+	i8080.state.flag_C.set(!(i8080.state.flag_C.get()));
 
 	// Set flags: CY
 	func_ClockCycles(4);
@@ -3326,7 +3321,10 @@ void  func_CMP_A() {
 void  func_RNZ() {
 
 	// Logic for: if NZ, RET
-	// @TODO [Madison]: fill in logic
+	if (i8080.state.flag_Z.get() == 1) {
+		uint16_t sp_val = i8080.state.reg_SP.get_Large();
+		i8080.state.reg_PC.set_Large(i8080.state.get_Memory(sp_val) | i8080.state.get_Memory(sp_val + 1));
+	}
 
 	func_ClockCycles(44505);
 

@@ -365,7 +365,7 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x27:
             // special
-            incomplete();
+            // Nothing
             break;
         case 0x28: break;        // NOT IMPLEMENTED
         case 0x29:
