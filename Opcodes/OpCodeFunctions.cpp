@@ -7,7 +7,7 @@ extern i8080_CPU i8080;
 // OpCode: 0x00	|| Size: 1 bit	|| Clock cycles: 4
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_NOP() {
 
@@ -46,7 +46,7 @@ void  func_LXI_B_D16() {
 void  func_STAX_B() {
 
 	// Logic for: (BC) <- A
-	func_STAX_Registers(i8080.state.reg_B); 
+	i8080.state.set_Memory(i8080.state.get_BC(), i8080.state.reg_A.get());
 
 	func_ClockCycles(7);
 
@@ -57,7 +57,7 @@ void  func_STAX_B() {
 // OpCode: 0x03	|| Size: 1 bit	|| Clock cycles: 5
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_INX_B() {
 
@@ -107,7 +107,7 @@ void  func_DCR_B() {
 // OpCode: 0x06	|| Size: 2 bit	|| Clock cycles: 7
 // Modifed Flags: No Flags Effected
 // Modifed Registers: B and A
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_MVI_B_D8() {
 
@@ -169,14 +169,17 @@ void  func_RLC() {
 // OpCode: 0x09	|| Size: 1 bit	|| Clock cycles: 10
 // Modifed Flags: CY
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - FAILED
 ////////////////////
 void  func_DAD_B() {
 
 	// Logic for: HL = HL + BC
-	func_DAD_Registers(i8080.state.reg_B);
+	uint16_t initial_HL = i8080.state.get_HL();
+	i8080.state.set_HL(i8080.state.get_HL() + i8080.state.get_BC());
 
 	// Set flags: CY
+	i8080.state.flag_C.set(func_Check_Carry(initial_HL, i8080.state.get_BC()));
+
 	func_ClockCycles(10);
 
 }
@@ -191,7 +194,7 @@ void  func_DAD_B() {
 void  func_LDAX_B() {
 
 	// Logic for: A <- (BC)
-	func_LDAX_Registers(i8080.state.reg_B);
+	i8080.state.reg_A.set(i8080.state.get_Memory(i8080.state.get_BC()));
 
 	func_ClockCycles(7);
 
@@ -207,7 +210,7 @@ void  func_LDAX_B() {
 void  func_DCX_B() {
 
 	// Logic for: BC = BC-1
-	func_DCX_Registers(i8080.state.reg_B);
+	i8080.state.set_BC(i8080.state.get_BC() - 1);
 
 	func_ClockCycles(5);
 
@@ -218,7 +221,7 @@ void  func_DCX_B() {
 // OpCode: 0x0c	|| Size: 1 bit	|| Clock cycles: 5
 // Modifed Flags: Z, S, P, AC
 // Modifed Registers: C and A
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_INR_C() {
 
@@ -271,7 +274,7 @@ void  func_MVI_C_D8() {
 // OpCode: 0x0f	|| Size: 1 bit	|| Clock cycles: 4
 // Modifed Flags: CY
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_RRC() {
 
@@ -333,12 +336,12 @@ void  func_LXI_D_D16() {
 // OpCode: 0x12	|| Size: 1 bit	|| Clock cycles: 7
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - FAILED
 ////////////////////
 void  func_STAX_D() {
 
 	// Logic for: (DE) <- A
-	func_STAX_Registers(i8080.state.reg_D);
+	i8080.state.set_Memory(i8080.state.get_DE(), i8080.state.reg_A.get());
 
 	func_ClockCycles(7);
 
@@ -382,7 +385,7 @@ void  func_INR_D() {
 // OpCode: 0x15	|| Size: 1 bit	|| Clock cycles: 5
 // Modifed Flags: Z, S, P, AC
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - FAILED
 ////////////////////
 void  func_DCR_D() {
 
@@ -468,7 +471,11 @@ void  func_RAL() {
 void  func_DAD_D() {
 
 	// Logic for: HL = HL + DE
-	func_DAD_Registers(i8080.state.reg_D);
+	uint16_t initial_HL = i8080.state.get_HL();
+	i8080.state.set_HL(i8080.state.get_HL() + i8080.state.get_DE());
+
+	// Set flags: CY
+	i8080.state.flag_C.set(func_Check_Carry(initial_HL, i8080.state.get_DE()));
 
 	// Set flags: CY
 	func_ClockCycles(10);
@@ -485,7 +492,7 @@ void  func_DAD_D() {
 void  func_LDAX_D() {
 
 	// Logic for: A <- (DE)
-	func_LDAX_Registers(i8080.state.reg_D);
+	i8080.state.reg_A.set(i8080.state.get_Memory(i8080.state.get_DE()));
 
 	func_ClockCycles(7);
 
@@ -496,12 +503,12 @@ void  func_LDAX_D() {
 // OpCode: 0x1b	|| Size: 1 bit	|| Clock cycles: 5
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - FAILED
 ////////////////////
 void  func_DCX_D() {
 
 	// Logic for: DE = DE-1
-	func_DCX_Registers(i8080.state.reg_D);
+	i8080.state.set_DE(i8080.state.get_DE() - 1);
 
 	func_ClockCycles(5);
 
@@ -546,7 +553,7 @@ void  func_DCR_E() {
 // OpCode: 0x1e	|| Size: 2 bit	|| Clock cycles: 7
 // Modifed Flags: No Flags Effected
 // Modifed Registers: E and A
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_MVI_E_D8() {
 
@@ -610,7 +617,7 @@ void  func_RAR() {
 // OpCode: 0x21	|| Size: 3 bit	|| Clock cycles: 10
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_LXI_H_D16() {
 
@@ -664,7 +671,7 @@ void  func_INX_H() {
 // OpCode: 0x24	|| Size: 1 bit	|| Clock cycles: 5
 // Modifed Flags: Z, S, P, AC
 // Modifed Registers: H and A
-// Written By: Madison
+// Written By: Madison - FAILED
 ////////////////////
 void  func_INR_H() {
 
@@ -719,7 +726,7 @@ void  func_MVI_H_D8() {
 // OpCode: 0x27	|| Size: 1 bit	|| Clock cycles: 4
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison*
+// Written By: Madison* - PASSED
 ////////////////////
 void  func_DAA() {
 
@@ -779,7 +786,11 @@ void  func_DAA() {
 void  func_DAD_H() {
 
 	// Logic for: HL = HL + HI
-	func_DAD_Registers(i8080.state.reg_H);
+	uint16_t initial_HL = i8080.state.get_HL();
+	i8080.state.set_HL(i8080.state.get_HL() + i8080.state.get_HL());
+
+	// Set flags: CY
+	i8080.state.flag_C.set(func_Check_Carry(initial_HL, i8080.state.get_HL()));
 
 	// Set flags: CY
 	func_ClockCycles(10);
@@ -791,12 +802,13 @@ void  func_DAD_H() {
 // OpCode: 0x2a	|| Size: 3 bit	|| Clock cycles: 16
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_LHLD_ADR() {
 
 	// Logic for: L <- (adr); H<-(adr+1)
-	// @TODO [Madison]: fill in logic
+	i8080.state.reg_L.set(i8080.state.get_Memory(i8080.state.get_Adr()));
+	i8080.state.reg_H.set(i8080.state.get_Memory(i8080.state.get_Adr() + 1));
 
 	func_ClockCycles(16);
 
@@ -815,7 +827,7 @@ void  func_LHLD_ADR() {
 void  func_DCX_H() {
 
 	// Logic for: HL = HL-1
-	func_DCX_Registers(i8080.state.reg_H);
+	i8080.state.set_HL(i8080.state.get_HL() - 1);
 
 	func_ClockCycles(5);
 
@@ -843,7 +855,7 @@ void  func_INR_L() {
 // OpCode: 0x2d	|| Size: 1 bit	|| Clock cycles: 5
 // Modifed Flags: Z, S, P, AC
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - FAILED
 ////////////////////
 void  func_DCR_L() {
 
@@ -895,12 +907,12 @@ void  func_CMA() {
 // OpCode: 0x30	|| Size: 1 bit	|| Clock cycles: 4
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - NOT IMPLEMENTED
+// NOTE: This was not in the instruction manual and looks like it is not needed
 ////////////////////
 void  func_SIM() {
 
-	// Logic for: special
-	// @TODO [Madison]: fill in logic
+	// Logic for: special SEE NOTE ^^^
 
 	func_ClockCycles(4);
 
@@ -956,7 +968,7 @@ void  func_STA_ADR() {
 // OpCode: 0x33	|| Size: 1 bit	|| Clock cycles: 5
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison - PASSED
 ////////////////////
 void  func_INX_SP() {
 
@@ -1055,7 +1067,11 @@ void  func_STC() {
 void  func_DAD_SP() {
 
 	// Logic for: HL = HL + SP
-	//func_DAD_Registers(i8080.state.reg_SP);
+	uint16_t initial_HL = i8080.state.get_HL();
+	i8080.state.set_HL(i8080.state.get_HL() + i8080.state.reg_SP.get_Large());
+
+	// Set flags: CY
+	i8080.state.flag_C.set(func_Check_Carry(initial_HL, i8080.state.reg_SP.get_Large()));
 
 	// Set flags: CY
 	func_ClockCycles(10);
@@ -1091,7 +1107,7 @@ void  func_LDA_ADR() {
 void  func_DCX_SP() {
 
 	// Logic for: SP = SP-1
-	//func_DCX_Registers(i8080.state.reg_SP);
+	i8080.state.reg_SP.set_Large(i8080.state.reg_SP.get_Large() - 1);
 
 	func_ClockCycles(5);
 

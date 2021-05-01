@@ -225,7 +225,7 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x05:
             // B <- B-1
-            cs->reg_B.set(0b00000010);
+            cs->reg_B.set(0b00000001);
             break;
         case 0x06:
             // B <- byte 2
@@ -239,7 +239,7 @@ void test_opCode(unsigned char passed_code) {
         case 0x09:
             // HL = HL + BC = 00001000 00001010
             cs->reg_H.set(0b00001000);
-            cs->reg_B.set(0b00001010);
+            cs->reg_L.set(0x0a);
             break;
         case 0x0a:
             // A <- (BC)
@@ -254,7 +254,6 @@ void test_opCode(unsigned char passed_code) {
         case 0x0c:
             // C <- C+1
             cs->reg_C.set(0b0000100);
-            cs->flag_P.set(true);
             break;
         case 0x0d:
             // C <-C-1
@@ -375,7 +374,8 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x2a:
             // L <- (adr); H<-(adr+1)
-            incomplete();
+            cs->reg_L.set(0x00);
+            cs->reg_H.set(0x00);    
             break;
         case 0x2b:
             // HL = HL-1 = 00000110 00000110
