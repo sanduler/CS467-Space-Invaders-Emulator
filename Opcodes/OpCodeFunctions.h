@@ -64,6 +64,7 @@ bool func_Check_Carry(uint8_t uint8_Source1, uint8_t uint8_Source2);
 void func_ClockCycles(int intClockCycles);
 void func_ClockCycles(int cycles);
 void func_Inc_PC(int steps);
+void func_General_RET();
 
 
 // OP CODE PROTOTYPES
