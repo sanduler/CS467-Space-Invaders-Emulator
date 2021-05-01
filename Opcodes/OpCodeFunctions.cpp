@@ -62,7 +62,7 @@ void  func_STAX_B() {
 void  func_INX_B() {
 
 	// Logic for: BC <- BC+1
-	func_INX_Registers(i8080.state.reg_B, i8080.state.reg_C);
+	i8080.state.set_BC(i8080.state.get_BC() + 1);
 
 	func_ClockCycles(5);
 

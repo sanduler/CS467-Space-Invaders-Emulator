@@ -86,6 +86,41 @@ void i8080_State::set_Memory(uint16_t index, uint8_t val)
     mem_Array[index] = val;
 }
 
+uint16_t i8080_State::get_BC() 
+{
+    return (reg_B.get() << 8) | reg_C.get();
+}
+
+uint16_t i8080_State::get_HL()
+{
+    return (reg_H.get() << 8) | reg_L.get();
+}
+
+uint16_t i8080_State::get_DE()
+{
+    return (reg_D.get() << 8) | reg_E.get();
+}
+
+void i8080_State::set_BC(uint16_t val)
+{
+    // Split the passed val to the two 8 bit registers
+    reg_C.set(val & 0xff); 
+    reg_B.set((val >> 8) & 0xff);
+}
+
+void i8080_State::set_HL(uint16_t val)
+{
+    reg_L.set(val & 0xff); 
+    reg_H.set((val >> 8) & 0xff);
+}
+
+void i8080_State::set_DE(uint16_t val)
+{
+    reg_E.set(val & 0xff); 
+    reg_D.set((val >> 8) & 0xff);
+}
+
+
 uint8_t i8080_State::get_PSW()
 {
 	uint8_t uint8_RegPSW = 0x00;
