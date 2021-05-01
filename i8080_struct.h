@@ -98,6 +98,9 @@ public:
     uint8_t get_Memory(uint16_t index);
     void set_Memory(uint16_t index, uint8_t val);
     std::array<uint8_t, 65536> mem_Array;
+
+    uint16_t get_Adr();
+    uint8_t get_M();
 };
 
 /*********************************
