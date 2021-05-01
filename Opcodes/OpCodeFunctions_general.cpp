@@ -564,7 +564,7 @@ void func_Inc_PC(int steps)
 
 }
 
-void func_RET()
+void func_General_RET()
 {
 	uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
 	uint8_t uint8_ResultTemp1 = 0x00;
