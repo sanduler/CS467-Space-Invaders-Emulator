@@ -18,7 +18,7 @@ void  func_NOP() {
 }
 
 ////////////////////
-// Description: 
+// Description: 16 Bit Immediate Load from Memory
 // OpCode: 0x01	|| Size: 3 bit	|| Clock cycles: 10
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
@@ -27,7 +27,7 @@ void  func_NOP() {
 void  func_LXI_B_D16() {
 
 	// Logic for: B <- byte 3, C <- byte 2
-	//func_LXI_Registers(i8080.state.reg_B, i8080.state.reg_D);
+	func_LXI_Registers(i8080.state.reg_B, i8080.state.reg_C);
 
 	func_ClockCycles(10);
 
@@ -62,7 +62,7 @@ void  func_STAX_B() {
 void  func_INX_B() {
 
 	// Logic for: BC <- BC+1
-	func_INX_Registers(i8080.state.reg_B);
+	func_INX_Registers(i8080.state.reg_B, i8080.state.reg_C);
 
 	func_ClockCycles(5);
 
@@ -355,7 +355,7 @@ void  func_STAX_D() {
 void  func_INX_D() {
 
 	// Logic for: DE <- DE + 1
-	func_INX_Registers(i8080.state.reg_D);
+	func_INX_Registers(i8080.state.reg_D, i8080.state.reg_E);
 
 	func_ClockCycles(5);
 
@@ -616,7 +616,7 @@ void  func_RAR() {
 void  func_LXI_H_D16() {
 
 	// Logic for: H <- byte 3, L <- byte 2
-	func_LXI_Registers(i8080.state.reg_H, i8080.state.reg_D);
+	func_LXI_Registers(i8080.state.reg_H, i8080.state.reg_L);
 
 	func_ClockCycles(10);
 
@@ -654,7 +654,7 @@ void  func_SHLD_ADR() {
 void  func_INX_H() {
 
 	// Logic for: HL <- HL + 1
-	func_INX_Registers(i8080.state.reg_H);
+	func_INX_Registers(i8080.state.reg_H, i8080.state.reg_L);
 
 	func_ClockCycles(5);
 
@@ -714,11 +714,13 @@ void  func_MVI_H_D8() {
 }
 
 ////////////////////
-// Description: 
+// Description: Decimal Adjust Accumulator - breaks the 8 bit Accumulator into 2, 4 bit numbers. The values
+//				are compared to see if they are greater than 9 (ie A, B, C, D, E, or F). If they are the value
+//				is increased by 6.  
 // OpCode: 0x27	|| Size: 1 bit	|| Clock cycles: 4
 // Modifed Flags: No Flags Effected
 // Modifed Registers: 
-// Written By: Madison
+// Written By: Madison*
 ////////////////////
 void  func_DAA() {
 
@@ -917,6 +919,13 @@ void  func_LXI_SP_D16() {
 
 	// Logic for: SP.hi <- byte 3, SP.lo <- byte 2
 	//func_LXI_Registers(i8080.state.reg_SP, i8080.state.reg_ );
+	uint16_t uint16_RegisterTemp = 0x0000;
+
+	uint16_RegisterTemp = uint16_RegisterTemp | i8080.state.opCode_Array[2];
+	uint16_RegisterTemp = uint16_RegisterTemp << 8;
+	uint16_RegisterTemp = uint16_RegisterTemp | i8080.state.opCode_Array[1];
+
+	i8080.state.reg_SP.set_Large(uint16_RegisterTemp);
 
 	func_ClockCycles(10);
 
@@ -954,7 +963,18 @@ void  func_STA_ADR() {
 void  func_INX_SP() {
 
 	// Logic for: SP = SP + 1
-	func_INX_Registers(i8080.state.reg_SP);
+	//func_INX_Registers(i8080.state.reg_SP);
+	uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+
+	uint16_t uint16_RegisterTemp = 0x0000;
+
+	if (uint16_InitialSP != 0xFFFF) {
+		uint16_RegisterTemp = uint16_InitialSP + 0x0001;
+	}
+
+	i8080.state.reg_SP.set_Large(uint16_RegisterTemp);
+
+
 
 	func_ClockCycles(5);
 
