@@ -52,6 +52,34 @@ void func_LXI_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2
 	reg_Source2.set(i8080.state.opCode_Array[1]);
 };
 
+//!!! NEEDS TO BE FILLED OUT
+void func_STAX_Registers(i8080_Register &reg_Source) 
+{
+
+}
+
+//!!! NEEDS TO BE FILLED OUT
+// Generic Increment 16 bit Function to pass the INX 8bit OpCodes to
+void func_INX_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2) 
+{
+	uint8_t uint8_Source1Temp = reg_Source1.get();
+	uint8_t uint8_Source2Temp = reg_Source2.get();
+
+	uint16_t uint16_RegisterTemp = 0x0000;
+
+	uint16_RegisterTemp = uint16_RegisterTemp | uint8_Source1Temp;
+	uint16_RegisterTemp = uint16_RegisterTemp << 8;
+
+	uint16_RegisterTemp = uint16_RegisterTemp | uint8_Source2Temp;
+
+	uint16_RegisterTemp = uint16_RegisterTemp + 0x0001;
+
+	reg_Source2.set(uint16_RegisterTemp);
+
+	reg_Source1.set(uint16_RegisterTemp >> 8);
+
+}
+
 // Generic Increment Function to pass the INR OpCodes to
 void func_INR_Registers(i8080_Register &reg_Source)
 {
@@ -189,7 +217,7 @@ void func_SBB_Registers(i8080_Register &reg_Source)
 };
 
 // Generic And Function to pass the ANA OpCodes to
-void func_AND_Registers(i8080_Register &reg_Source)
+void func_ANA_Registers(i8080_Register &reg_Source)
 {
 	uint8_t uint8_ResultTemp = i8080.state.reg_A.get() & reg_Source.get();
 	
@@ -206,7 +234,7 @@ void func_AND_Registers(i8080_Register &reg_Source)
 };
 
 // Generic Exclusive OR Function to pass XRA OpCodes to
-void func_XOR_Registers(i8080_Register &reg_Source)
+void func_XRA_Registers(i8080_Register &reg_Source)
 {
 	uint8_t uint8_ResultTemp = i8080.state.reg_A.get() ^ reg_Source.get();
 	
@@ -224,7 +252,7 @@ void func_XOR_Registers(i8080_Register &reg_Source)
 };
 
 // Generic Or Function to pass the ORA OpCodes to
-void func_OR_Registers(i8080_Register &reg_Source)
+void func_ORA_Registers(i8080_Register &reg_Source)
 {
 	uint8_t uint8_ResultTemp = i8080.state.reg_A.get() | reg_Source.get();
 	
@@ -288,17 +316,7 @@ void func_PUSH_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source
 	i8080.state.reg_SP.set_Large(uint16_TempSP);
 };
 
-//!!! NEEDS TO BE FILLED OUT
-void func_STAX_Registers(i8080_Register &reg_Source) 
-{
 
-}
-
-//!!! NEEDS TO BE FILLED OUT
-void func_INX_Registers(i8080_Register &reg_Source) 
-{
-
-}
 
 //!!! NEEDS TO BE FILLED OUT
 void func_DAD_Registers(i8080_Register &reg_Source) 
@@ -319,22 +337,22 @@ void func_DCX_Registers(i8080_Register &reg_Source)
 }
 
 //!!! NEEDS TO BE FILLED OUT
-void func_ANA_Registers(i8080_Register &reg_Source) 
-{
-
-}
-
-//!!! NEEDS TO BE FILLED OUT
-void func_XRA_Registers(i8080_Register &reg_Source) 
-{
-
-}
+//void func_ANA_Registers(i8080_Register &reg_Source) 
+//{
+//
+//}
 
 //!!! NEEDS TO BE FILLED OUT
-void func_ORA_Registers(i8080_Register &reg_Source) 
-{
+//void func_XRA_Registers(i8080_Register &reg_Source) 
+//{
+//
+//}
 
-}
+//!!! NEEDS TO BE FILLED OUT
+//void func_ORA_Registers(i8080_Register &reg_Source) 
+//{
+//
+//}
 
 //!!! NEEDS TO BE FILLED OUT
 void func_POP_Registers(i8080_Register &reg_Source) 
