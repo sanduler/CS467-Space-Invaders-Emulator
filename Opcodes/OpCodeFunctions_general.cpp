@@ -53,7 +53,7 @@ void func_LXI_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2
 };
 
 //!!! NEEDS TO BE FILLED OUT
-void func_STAX_Registers(i8080_Register &reg_Source) 
+void func_STAX_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2) 
 {
 	uint8_t uint8_InitialA = i8080.state.reg_A.get();
 	uint16_t uint16_RegisterTemp = 0x0000;

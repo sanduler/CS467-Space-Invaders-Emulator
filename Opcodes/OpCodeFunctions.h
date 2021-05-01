@@ -40,7 +40,7 @@ void func_XOR_Registers(i8080_Register &reg_Source);
 void func_OR_Registers(i8080_Register &reg_Source);
 void func_CMP_Registers(i8080_Register &reg_Source);
 void func_PUSH_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2);
-void func_STAX_Registers(i8080_Register &reg_Source);
+void func_STAX_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2);
 void func_INX_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2);
 void func_DAD_Registers(i8080_Register &reg_Source);
 void func_LDAX_Registers(i8080_Register &reg_Source);
