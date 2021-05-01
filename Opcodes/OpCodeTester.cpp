@@ -17,5 +17,5 @@ int main(int argc, char* argv[])
 {
     printf("Hello World\n");
     printf("%d\n", i8080_control.state.flags.flag_Z);
-	return 0;
+    return 0;
 }

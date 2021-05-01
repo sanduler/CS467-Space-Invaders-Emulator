@@ -10,60 +10,37 @@
 #define I8080_STRUCT_H
 #include <cstdint>
 #include <stdint.h>
+#include <cstddef>
+#include <iostream>
+
 
 
 /*********************************
  * Flags class
  * Sets the flags for the opcodes
  ********************************/
-class i8080_Flags{
+class i8080_Flag
+{
 private:
+    bool val;
 public:
-    i8080_Flags();
-    ~i8080_Flags();
-    bool S;
-    bool Z;
-    bool ZeroValue = 0;
-    bool OneValue = 1;
-    bool AC();
-    double get_AC();
-    double set_AC();
-    bool unset_AC();
-    // Flags
-    uint8_t FlagZSP[0x100]; // Precalculated ZSP
-    uint8_t flag_Z; // Zero
-    uint8_t flag_S; // Sign
-    uint8_t flag_P; // Parity
-    uint8_t flag_C; // Carry
-    uint8_t flag_AC; // Auxiliar Carry
+    void set(bool new_val);
+    bool get();
 };
 
 /*********************************
  * Registers class
  * Intializes the Registers
  ********************************/
-class i8080_Registers {
+class i8080_Register {
 private:
+    uint8_t val;
+    uint16_t large_val;
 public:
-    double unint8_A;
-    double unint_get_A();
-    void set_A(int A);
-    int unint_PC();
-    int get_PC();
-    void set_PC(int PC);
-
-    uint8_t   a;
-    uint8_t   b;
-    uint8_t   c;
-    uint8_t   d;
-    uint8_t   e;
-    uint8_t   h;
-    uint8_t   l;
-    uint16_t  sp;
-    uint16_t  pc;
-    uint8_t   *memory;
-    i8080_Flags  ConditionCodes;
-    uint8_t   int_enable;
+    uint8_t get_Large();
+    uint8_t get();
+    void set(uint8_t i);
+    void set_Large(uint16_t i);
 };
 
 /*********************************
@@ -75,14 +52,39 @@ public:
 class i8080_State {
 private:
 public:
+
+    //Constructor and destructor
     i8080_State();
     ~i8080_State();
-    i8080_Flags flags;
-    i8080_Registers registers;
-    int unint_SP();
-    double get_SP();
-    void set_SP(int SP);
-    int unset_AC();
+
+    //Class memebrs in state
+    i8080_Flag flags;
+    i8080_Register registers;
+
+    // Opcode Array
+    uint8_t opCpde_Array[3];
+
+    // Registers
+    i8080_Register reg_A;
+    i8080_Register reg_B;
+    i8080_Register reg_C;
+    i8080_Register reg_D;
+    i8080_Register reg_E;
+    i8080_Register reg_H;
+    i8080_Register reg_L;
+    i8080_Register reg_SP;
+    i8080_Register reg_PC;
+
+    // Flags
+    //uint8_t FlagZSP[0x100]; // Precalculated ZSP
+    i8080_Flag flag_Z; // Zero
+    i8080_Flag flag_S; // Sign
+    i8080_Flag flag_P; // Parity
+    i8080_Flag flag_C; // Carry
+    i8080_Flag flag_AC; // Auxiliar Carry
+
+    //Memory
+    size_t memsize;
 };
 
 /*********************************
@@ -93,13 +95,13 @@ public:
 class i8080_CPU {
 private:
 public:
+    i8080_CPU();
     i8080_State state;
-    //i8080_CPU(); This is ambiguous with the function directly below
-    i8080_CPU(size_t memsize = 0x10000, uint16_t startpoint = 0);
+    //i8080_CPU(size_t memsize = 0x10000, uint16_t startpoint = 0);
     ~i8080_CPU();
     unsigned char ROM;
-    double memory;
 
+    uint8_t *memory;
     i8080_State setupEmulator();
 
     //Loads the rom into the emulator
@@ -109,4 +111,4 @@ public:
 };
 
 
-#endif //I8080_H
+#endif
