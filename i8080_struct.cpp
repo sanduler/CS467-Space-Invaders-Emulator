@@ -65,15 +65,64 @@ i8080_State::i8080_State()
     reg_E.set(0);
     reg_H.set(0);
     reg_L.set(0);
-    reg_SP.set(0);
-    reg_PC.set(0);
-
+    reg_SP.set_Large(0);
+    reg_PC.set_Large(0);
+    reg_PSW.set(0);
 
 
     //i8080_State state;
     //size_t max_size = 1 << 15;
     //state.memory = (uint8_t*) malloc(max_size * sizeof(*state.memory));
 
+}
+
+uint8_t i8080_State::get_Memory(uint16_t index)
+{
+    return mem_Array[index];
+}
+
+void i8080_State::set_Memory(uint16_t index, uint8_t val)
+{
+    mem_Array[index] = val;
+}
+
+uint8_t i8080_State::get_PSW()
+{
+	uint8_t uint8_RegPSW = 0x00;
+	
+	if (flag_S.get() == true) {
+		uint8_RegPSW = uint8_RegPSW | 0x01;
+
+	}
+	
+	uint8_RegPSW = uint8_RegPSW << 1;
+	
+	if (flag_Z.get() == true) {
+		uint8_RegPSW = uint8_RegPSW | 0x01;
+		
+	}
+	
+	uint8_RegPSW = uint8_RegPSW << 2;
+	
+	if (flag_AC.get() == true) {
+		uint8_RegPSW = uint8_RegPSW | 0x01;
+	}
+	
+	uint8_RegPSW = uint8_RegPSW << 2;
+	
+	if (flag_P.get() == true) {
+		uint8_RegPSW = uint8_RegPSW | 0x01;
+	}
+	
+	uint8_RegPSW = uint8_RegPSW << 1;
+	uint8_RegPSW = uint8_RegPSW | 0x01;
+	uint8_RegPSW = uint8_RegPSW << 1;
+	
+	if (flag_C.get() == true) {
+		uint8_RegPSW = uint8_RegPSW | 0x01;
+	}
+
+    return uint8_RegPSW;
 }
 
 /*****************************
@@ -136,18 +185,18 @@ int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
     }
 
     //While loop, used when the rom does exists loads the rom into the memor
-    while (true)
-    {
-        if ((offset + s) >= state.memsize)
-            break;
+    //while (true)
+    //{
+    //   if ((offset + s) >= state.memsize)
+    //        break;
 
         //get the rom
-        auto i = rom.get();
-        if (i == EOF)
-            break;
-        memory[offset + s] = i;
-        ++s;
-    }
+      //  auto i = rom.get();
+      //  if (i == EOF)
+      //      break;
+      //  memory[offset + s] = i;
+      //  ++s;
+   // }
     return s;
 }
 

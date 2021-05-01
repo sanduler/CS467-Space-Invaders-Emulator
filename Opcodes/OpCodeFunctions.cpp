@@ -604,21 +604,7 @@ void  func_RAR() {
 
 }
 
-////////////////////
-// Description: Should be NOP
-// OpCode: 0x20	|| Size: 1 bit	|| Clock cycles: 4
-// Modifed Flags: No Flags Effected
-// Modifed Registers: 
-// Written By: Michael
-////////////////////
-void  func_RIM() {
-
-	// Logic for: special
-	// @TODO [Michael]: fill in logic
-
-	func_ClockCycles(4);
-
-}
+// 0x20 NOT IMPLEMENTED
 
 ////////////////////
 // Description: 
@@ -4192,43 +4178,7 @@ void  func_PUSH_PSW() {
 
 	// Logic for: (sp-2)<-flags; (sp-1)<-A; sp <- sp - 2
 	
-	////////////////////////////////////////////
-	// Need to move this portion to the PSW.get function
-	uint8_t uint8_RegPSW = 0x00;
-	
-	if (i8080.state.flag_S.get() == true) {
-		uint8_RegPSW = uint8_RegPSW | 0x01;
 
-	}
-	
-	uint8_RegPSW = uint8_RegPSW << 1;
-	
-	if (i8080.state.flag_Z.get() == true) {
-		uint8_RegPSW = uint8_RegPSW | 0x01;
-		
-	}
-	
-	uint8_RegPSW = uint8_RegPSW << 2;
-	
-	if (i8080.state.flag_AC.get() == true) {
-		uint8_RegPSW = uint8_RegPSW | 0x01;
-	}
-	
-	uint8_RegPSW = uint8_RegPSW << 2;
-	
-	if (i8080.state.flag_P.get() == true) {
-		uint8_RegPSW = uint8_RegPSW | 0x01;
-	}
-	
-	uint8_RegPSW = uint8_RegPSW << 1;
-	uint8_RegPSW = uint8_RegPSW | 0x01;
-	uint8_RegPSW = uint8_RegPSW << 1;
-	
-	if (i8080.state.flag_C.get() == true) {
-		uint8_RegPSW = uint8_RegPSW | 0x01;
-	}
-	
-	/////////////////////////
 	
 	 
 	//func_PUSH_Registers(i8080.state.reg_A, i8080.state.reg_PSW);

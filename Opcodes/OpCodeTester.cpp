@@ -19,6 +19,7 @@ void setVariableTestState();
 bool compareCPUs();
 void test_opCode(unsigned char passed_code);
 void resetCpu(i8080_CPU *cpu);
+void printStates();
 
 int main(int argc, char* argv[])
 {
@@ -26,7 +27,7 @@ int main(int argc, char* argv[])
     for( int i = 0; i <= 0xff; i++ ) 
     {
         test_implemented = true;
-        
+
         // Send the Op Code to the main switch statement to act on i8080
         eval_opCode(i);
 
@@ -44,6 +45,10 @@ int main(int argc, char* argv[])
             }
         } else if (!compareCPUs()) {
             printf( "UNIMPLEMENTED TEST %04x FAILED\n", i);
+        }
+
+        if (i == 0x1c) {
+            printStates();
         }
         
         // Reset both CPUs to their initial testing state
@@ -71,20 +76,40 @@ void resetCpu(i8080_CPU *cpu)
     cpu->state.flag_C.set(0);
     cpu->state.flag_AC.set(0);
 
-    // Registers
-    cpu->state.reg_A.set(1);
-    cpu->state.reg_B.set(2);
-    cpu->state.reg_C.set(3);
-    cpu->state.reg_D.set(4);
-    cpu->state.reg_E.set(5);
-    cpu->state.reg_H.set(6);
-    cpu->state.reg_L.set(7);
-    cpu->state.reg_SP.set(8);
-    cpu->state.reg_PC.set(9);
+    // DO NOT CHANGE =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    cpu->state.reg_A.set(0b00000001);
+    cpu->state.reg_B.set(0b00000010);
+    cpu->state.reg_C.set(0b00000011);
+    cpu->state.reg_D.set(0b00001000);
+    cpu->state.reg_E.set(0b00000101);
+    cpu->state.reg_H.set(0b00000110);
+    cpu->state.reg_L.set(0b00000111);
+    cpu->state.reg_SP.set_Large(0b0000000000001000);
+    cpu->state.reg_PC.set_Large(0b0000000000001001);
+    cpu->state.opCode_Array[0] = 0b00000001;
+    cpu->state.opCode_Array[1] = 0b00000010;
+    cpu->state.opCode_Array[2] = 0b00000011;
+    // DO NOT CHANGE =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+}
 
-    cpu->state.opCode_Array[0] = 1;
-    cpu->state.opCode_Array[1] = 2;
-    cpu->state.opCode_Array[2] = 3;
+void printStates()
+{
+    printf("    flag_Z  Ctl: %d Var: %d \n", cs->flag_Z.get(), i8080.state.flag_Z.get());
+    printf("    flag_S  Ctl: %d Var: %d \n", cs->flag_S.get(), i8080.state.flag_S.get());
+    printf("    flag_P  Ctl: %d Var: %d \n", cs->flag_P.get(), i8080.state.flag_P.get());
+    printf("    flag_C  Ctl: %d Var: %d \n", cs->flag_C.get(), i8080.state.flag_C.get());
+    printf("    flag_AC  Ctl: %d Var: %d \n", cs->flag_Z.get(), i8080.state.flag_AC.get());
+
+    printf("    reg_A Ctl: %d Var: %d \n", cs->reg_A.get(), i8080.state.reg_A.get());
+    printf("    reg_B Ctl: %d Var: %d \n", cs->reg_B.get(), i8080.state.reg_B.get());
+    printf("    reg_C Ctl: %d Var: %d \n", cs->reg_C.get(), i8080.state.reg_C.get());
+    printf("    reg_D Ctl: %d Var: %d \n", cs->reg_D.get(), i8080.state.reg_D.get());
+    printf("    reg_E Ctl: %d Var: %d \n", cs->reg_E.get(), i8080.state.reg_E.get());
+    printf("    reg_H Ctl: %d Var: %d \n", cs->reg_H.get(), i8080.state.reg_H.get());
+    printf("    reg_L Ctl: %d Var: %d \n", cs->reg_L.get(), i8080.state.reg_L.get());
+    printf("    reg_SP Ctl: %d Var: %d \n", cs->reg_SP.get(), i8080.state.reg_SP.get());
+    printf("    reg_PC Ctl: %d Var: %d \n", cs->reg_PC.get(), i8080.state.reg_PC.get());
+
 }
 
 /*
@@ -93,6 +118,7 @@ void resetCpu(i8080_CPU *cpu)
 bool compareCPUs()
 {
     if(
+        // Check the 8 bit register values
         i8080_control.state.reg_A.get() != i8080.state.reg_A.get() ||
         i8080_control.state.reg_B.get() != i8080.state.reg_B.get() ||
         i8080_control.state.reg_C.get() != i8080.state.reg_C.get() ||
@@ -101,7 +127,23 @@ bool compareCPUs()
         i8080_control.state.reg_H.get() != i8080.state.reg_H.get() ||
         i8080_control.state.reg_L.get() != i8080.state.reg_L.get() ||
         i8080_control.state.reg_SP.get() != i8080.state.reg_SP.get() ||
-        i8080_control.state.reg_PC.get() != i8080.state.reg_PC.get() 
+        i8080_control.state.reg_PC.get() != i8080.state.reg_PC.get() ||
+        // Check the 16 bit register values
+        i8080_control.state.reg_A.get_Large() != i8080.state.reg_A.get_Large() ||
+        i8080_control.state.reg_B.get_Large() != i8080.state.reg_B.get_Large() ||
+        i8080_control.state.reg_C.get_Large() != i8080.state.reg_C.get_Large() ||
+        i8080_control.state.reg_D.get_Large() != i8080.state.reg_D.get_Large() ||
+        i8080_control.state.reg_E.get_Large() != i8080.state.reg_E.get_Large() ||
+        i8080_control.state.reg_H.get_Large() != i8080.state.reg_H.get_Large() ||
+        i8080_control.state.reg_L.get_Large() != i8080.state.reg_L.get_Large() ||
+        i8080_control.state.reg_SP.get_Large() != i8080.state.reg_SP.get_Large() ||
+        i8080_control.state.reg_PC.get_Large() != i8080.state.reg_PC.get_Large() ||
+        // Chaeck the flags
+        i8080_control.state.flag_AC.get() != i8080.state.flag_AC.get() ||
+        i8080_control.state.flag_C.get() != i8080.state.flag_C.get() ||
+        i8080_control.state.flag_P.get() != i8080.state.flag_P.get() ||
+        i8080_control.state.flag_S.get() != i8080.state.flag_S.get() ||
+        i8080_control.state.flag_Z.get() != i8080.state.flag_Z.get()   
     ) 
     {
         return false;
@@ -124,8 +166,8 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x01:
             // B <- byte 3, C <- byte 2
-            cs->reg_B.set(cs->opCode_Array[2]);
-            cs->reg_C.set(cs->opCode_Array[1]);
+            cs->reg_B.set(0b00000011);
+            cs->reg_C.set(0b00000010);
             break;
         case 0x02:
             // (BC) <- A
@@ -133,23 +175,25 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x03:
             // BC <- BC+1
+            // BC = 00000010
             incomplete();
             break;
         case 0x04:
             // B <- B+1
-            cs->reg_B.set(cs->reg_B.get() + 0x01);
+            cs->reg_B.set(0b00000011);            
+            cs->flag_P.set(true);
             break;
         case 0x05:
             // B <- B-1
-            cs->reg_B.set(cs->reg_B.get() - 0x01);
+            cs->reg_B.set(0b00000010);
             break;
         case 0x06:
             // B <- byte 2
-            cs->reg_B.set(cs->opCode_Array[1]);
+            cs->reg_B.set(0b00000010);
             break;
         case 0x07:
             // A = A << 1; bit 0 = prev bit 7; CY = prev bit 7
-            cs->reg_A.set((cs->reg_A.get() << 1) | 0x01);
+            cs->reg_A.set(0b00000010);
             break;
         case 0x08: break;        // NOT IMPLEMENTED
         case 0x09:
@@ -166,25 +210,28 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x0c:
             // C <- C+1
-            cs->reg_C.set(cs->reg_C.get() + 0x01);
+            cs->reg_C.set(0b0000100);
+            cs->flag_P.set(true);
             break;
         case 0x0d:
             // C <-C-1
-            cs->reg_C.set(cs->reg_C.get() - 0x01);
+            cs->reg_C.set(0b00000010);
+            cs->flag_P.set(true);
             break;
         case 0x0e:
             // C <- byte 2
-            cs->reg_C.set(cs->opCode_Array[1]);
+            cs->reg_C.set(0b00000010);
             break;
         case 0x0f:
             // A = A >> 1; bit 7 = prev bit 0; CY = prev bit 0
-            cs->reg_A.set((cs->reg_A.get() >> 1) | 0x01);
+            cs->reg_A.set(0b10000000);
+            cs->flag_C.set(true);
             break;
         case 0x10: break;        // NOT IMPLEMENTED
         case 0x11:
             // D <- byte 3, E <- byte 2
-            cs->reg_D.set(cs->opCode_Array[2]);
-            cs->reg_E.set(cs->opCode_Array[1]);
+            cs->reg_D.set(0b00000011);
+            cs->reg_E.set(0b00000010);
             break;
         case 0x12:
             // (DE) <- A
@@ -196,19 +243,21 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x14:
             // D <- D+1
-            cs->reg_D.set(cs->reg_D.get() + 0x01);
+            cs->reg_D.set(0b00000101);
+            cs->flag_P.set(true);
             break;
         case 0x15:
             // D <- D-1
-            cs->reg_D.set(cs->reg_D.get() - 0x01);
+            cs->reg_D.set(0b00000011);
+            cs->flag_P.set(true);
             break;
         case 0x16:
             // D <- byte 2
-            cs->reg_D.set(cs->opCode_Array[1]);
+            cs->reg_D.set(0b00000010);
             break;
         case 0x17:
             // A = A << 1; bit 0 = prev CY; CY = prev bit 7
-            incomplete();
+            cs->reg_A.set(0b00000010);
             break;
         case 0x18: break;        // NOT IMPLEMENTED
         case 0x19:
@@ -225,28 +274,26 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x1c:
             // E <-E+1
-            cs->reg_E.set(cs->reg_E.get() + 0x01);
+            cs->reg_E.set(0b00000110);
+            cs->flag_P.set(true);
             break;
         case 0x1d:
             // E <- E-1
-            cs->reg_E.set(cs->reg_E.get() - 0x01);
+            cs->reg_E.set(0b0000100);
             break;
         case 0x1e:
             // E <- byte 2
-            cs->reg_E.set(cs->opCode_Array[1]);
+            cs->reg_E.set(0b00000010);
             break;
         case 0x1f:
             // A = A >> 1; bit 7 = prev bit 7; CY = prev bit 0
-            incomplete();
+            cs->reg_A.set(0b00000001);
             break;
-        case 0x20:
-            // special
-            incomplete();
-            break;
+        case 0x20:  break;  // NOT IMPLEMENTED
         case 0x21:
             // H <- byte 3, L <- byte 2
-            cs->reg_H.set(cs->opCode_Array[2]);
-            cs->reg_L.set(cs->opCode_Array[1]);
+            cs->reg_H.set(0b00000011);
+            cs->reg_L.set(0b00000010);
             break;
         case 0x22:
             // (adr) <-L; (adr+1)<-H
@@ -258,15 +305,15 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x24:
             // H <- H+1
-            cs->reg_H.set(cs->reg_H.get() + 1);
+            cs->reg_H.set(0b00000111);
             break;
         case 0x25:
             // H <- H-1
-            cs->reg_H.set(cs->reg_H.get() - 1);
+            cs->reg_H.set(0b00000101);
             break;
         case 0x26:
             // L <- byte 2
-            cs->reg_L.set(cs->opCode_Array[1]);
+            cs->reg_L.set(0b00000010);
             break;
         case 0x27:
             // special
@@ -299,7 +346,7 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x2f:
             // A <- !A
-            incomplete();
+            cs->reg_A.set(~(cs->reg_A.get()));
             break;
         case 0x30:
             // special
@@ -331,7 +378,7 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x37:
             // CY = 1
-            incomplete();
+            cs->flag_C.set(true);
             break;
         case 0x38: break;        // NOT IMPLEMENTED
         case 0x39:

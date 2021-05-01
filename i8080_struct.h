@@ -51,6 +51,7 @@ public:
  ********************************/
 class i8080_State {
 private:
+    uint8_t mem_Array[65536];
 public:
 
     //Constructor and destructor
@@ -70,6 +71,9 @@ public:
     i8080_Register reg_L;
     i8080_Register reg_SP;
     i8080_Register reg_PC;
+    i8080_Register reg_PSW;
+
+    uint8_t get_PSW();
 
     // Flags
     //uint8_t FlagZSP[0x100]; // Precalculated ZSP
@@ -78,9 +82,11 @@ public:
     i8080_Flag flag_P; // Parity
     i8080_Flag flag_C; // Carry
     i8080_Flag flag_AC; // Auxiliar Carry
+    i8080_Flag flag_INTE;
 
     //Memory
-    size_t memsize;
+    uint8_t get_Memory(uint16_t index);
+    void set_Memory(uint16_t index, uint8_t val);
 };
 
 /*********************************

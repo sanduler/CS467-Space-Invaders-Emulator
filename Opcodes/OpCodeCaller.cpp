@@ -43,7 +43,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x1d: func_DCR_E();      break;
         case 0x1e: func_MVI_E_D8();   break;
         case 0x1f: func_RAR();        break;
-        case 0x20: func_RIM();        break;
+        case 0x20:                    break;        // NOT IMPLEMENTED
         case 0x21: func_LXI_H_D16();  break;
         case 0x22: func_SHLD_ADR();   break;
         case 0x23: func_INX_H();      break;

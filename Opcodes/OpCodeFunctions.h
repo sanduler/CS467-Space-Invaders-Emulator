@@ -99,7 +99,7 @@ void  func_INR_E();
 void  func_DCR_E();
 void  func_MVI_E_D8();
 void  func_RAR();
-void  func_RIM();
+// *NOP 0x20 NOT IMPLEMENTED
 void  func_LXI_H_D16();
 void  func_SHLD_ADR();
 void  func_INX_H();
