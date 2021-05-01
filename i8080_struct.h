@@ -12,7 +12,8 @@
 #include <stdint.h>
 #include <cstddef>
 #include <iostream>
-
+#include <stdio.h>
+#include <array>
 
 
 /*********************************
@@ -51,18 +52,15 @@ public:
  ********************************/
 class i8080_State {
 private:
+    
 public:
 
     //Constructor and destructor
     i8080_State();
     ~i8080_State();
-
-    //Class memebrs in state
-    i8080_Flag flags;
-    i8080_Register registers;
-
+    
     // Opcode Array
-    uint8_t opCpde_Array[3];
+    uint8_t opCode_Array[3];
 
     // Registers
     i8080_Register reg_A;
@@ -74,6 +72,9 @@ public:
     i8080_Register reg_L;
     i8080_Register reg_SP;
     i8080_Register reg_PC;
+    i8080_Register reg_PSW;
+
+    uint8_t get_PSW();
 
     // Flags
     //uint8_t FlagZSP[0x100]; // Precalculated ZSP
@@ -82,9 +83,12 @@ public:
     i8080_Flag flag_P; // Parity
     i8080_Flag flag_C; // Carry
     i8080_Flag flag_AC; // Auxiliar Carry
+    i8080_Flag flag_INTE;
 
     //Memory
-    size_t memsize;
+    uint8_t get_Memory(uint16_t index);
+    void set_Memory(uint16_t index, uint8_t val);
+    std::array<uint8_t, 65536> mem_Array;
 };
 
 /*********************************

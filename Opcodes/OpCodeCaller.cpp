@@ -43,9 +43,9 @@ void eval_opCode(unsigned char passed_code) {
         case 0x1d: func_DCR_E();      break;
         case 0x1e: func_MVI_E_D8();   break;
         case 0x1f: func_RAR();        break;
-        case 0x20: func_RIM();        break;
+        case 0x20:                    break;        // NOT IMPLEMENTED
         case 0x21: func_LXI_H_D16();  break;
-        case 0x22: func_SHLD_adr();   break;
+        case 0x22: func_SHLD_ADR();   break;
         case 0x23: func_INX_H();      break;
         case 0x24: func_INR_H();      break;
         case 0x25: func_DCR_H();      break;
@@ -53,7 +53,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x27: func_DAA();        break;
         case 0x28:                    break;        // NOT IMPLEMENTED
         case 0x29: func_DAD_H();      break;
-        case 0x2a: func_LHLD_adr();   break;
+        case 0x2a: func_LHLD_ADR();   break;
         case 0x2b: func_DCX_H();      break;
         case 0x2c: func_INR_L();      break;
         case 0x2d: func_DCR_L();      break;
@@ -61,7 +61,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x2f: func_CMA();        break;
         case 0x30: func_SIM();        break;
         case 0x31: func_LXI_SP_D16(); break;
-        case 0x32: func_STA_adr();    break;
+        case 0x32: func_STA_ADR();    break;
         case 0x33: func_INX_SP();     break;
         case 0x34: func_INR_M();      break;
         case 0x35: func_DCR_M();      break;
@@ -69,7 +69,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x37: func_STC();        break;
         case 0x38:                    break;        // NOT IMPLEMENTED
         case 0x39: func_DAD_SP();     break;
-        case 0x3a: func_LDA_adr();    break;
+        case 0x3a: func_LDA_ADR();    break;
         case 0x3b: func_DCX_SP();     break;
         case 0x3c: func_INR_A();      break;
         case 0x3d: func_DCR_A();      break;
@@ -205,65 +205,65 @@ void eval_opCode(unsigned char passed_code) {
         case 0xbf: func_CMP_A();      break;
         case 0xc0: func_RNZ();        break;
         case 0xc1: func_POP_B();      break;
-        case 0xc2: func_JNZ_adr();    break;
-        case 0xc3: func_JMP_adr();    break;
-        case 0xc4: func_CNZ_adr();    break;
+        case 0xc2: func_JNZ_ADR();    break;
+        case 0xc3: func_JMP_ADR();    break;
+        case 0xc4: func_CNZ_ADR();    break;
         case 0xc5: func_PUSH_B();     break;
         case 0xc6: func_ADI_D8();     break;
         case 0xc7: func_RST_0();      break;
         case 0xc8: func_RZ();         break;
         case 0xc9: func_RET();        break;
-        case 0xca: func_JZ_adr();     break;
+        case 0xca: func_JZ_ADR();     break;
         case 0xcb:                    break;        // NOT IMPLEMENTED
-        case 0xcc: func_CZ_adr();     break;
-        case 0xcd: func_CALL_adr();   break;
+        case 0xcc: func_CZ_ADR();     break;
+        case 0xcd: func_CALL_ADR();   break;
         case 0xce: func_ACI_D8();     break;
         case 0xcf: func_RST_1();      break;
         case 0xd0: func_RNC();        break;
         case 0xd1: func_POP_D();      break;
-        case 0xd2: func_JNC_adr();    break;
+        case 0xd2: func_JNC_ADR();    break;
         case 0xd3: func_OUT_D8();     break;
-        case 0xd4: func_CNC_adr();    break;
+        case 0xd4: func_CNC_ADR();    break;
         case 0xd5: func_PUSH_D();     break;
         case 0xd6: func_SUI_D8();     break;
         case 0xd7: func_RST_2();      break;
         case 0xd8: func_RC();         break;
         case 0xd9:                    break;        // NOT IMPLEMENTED
-        case 0xda: func_JC_adr();     break;
+        case 0xda: func_JC_ADR();     break;
         case 0xdb: func_IN_D8();      break;
-        case 0xdc: func_CC_adr();     break;
+        case 0xdc: func_CC_ADR();     break;
         case 0xdd:                    break;        // NOT IMPLEMENTED
         case 0xde: func_SBI_D8();     break;
         case 0xdf: func_RST_3();      break;
         case 0xe0: func_RPO();        break;
         case 0xe1: func_POP_H();      break;
-        case 0xe2: func_JPO_adr();    break;
+        case 0xe2: func_JPO_ADR();    break;
         case 0xe3: func_XTHL();       break;
-        case 0xe4: func_CPO_adr();    break;
+        case 0xe4: func_CPO_ADR();    break;
         case 0xe5: func_PUSH_H();     break;
         case 0xe6: func_ANI_D8();     break;
         case 0xe7: func_RST_4();      break;
         case 0xe8: func_RPE();        break;
         case 0xe9: func_PCHL();       break;
-        case 0xea: func_JPE_adr();    break;
+        case 0xea: func_JPE_ADR();    break;
         case 0xeb: func_XCHG();       break;
-        case 0xec: func_CPE_adr();    break;
+        case 0xec: func_CPE_ADR();    break;
         case 0xed:                    break;        // NOT IMPLEMENTED
         case 0xee: func_XRI_D8();     break;
         case 0xef: func_RST_5();      break;
         case 0xf0: func_RP();         break;
         case 0xf1: func_POP_PSW();    break;
-        case 0xf2: func_JP_adr();     break;
+        case 0xf2: func_JP_ADR();     break;
         case 0xf3: func_DI();         break;
-        case 0xf4: func_CP_adr();     break;
+        case 0xf4: func_CP_ADR();     break;
         case 0xf5: func_PUSH_PSW();   break;
         case 0xf6: func_ORI_D8();     break;
         case 0xf7: func_RST_6();      break;
         case 0xf8: func_RM();         break;
         case 0xf9: func_SPHL();       break;
-        case 0xfa: func_JM_adr();     break;
+        case 0xfa: func_JM_ADR();     break;
         case 0xfb: func_EI();         break;
-        case 0xfc: func_CM_adr();     break;
+        case 0xfc: func_CM_ADR();     break;
         case 0xfd:                    break;        // NOT IMPLEMENTED
         case 0xfe: func_CPI_D8();     break;
         case 0xff: func_RST_7();      break;
