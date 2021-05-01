@@ -55,6 +55,16 @@ void func_LXI_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2
 //!!! NEEDS TO BE FILLED OUT
 void func_STAX_Registers(i8080_Register &reg_Source) 
 {
+	uint8_t uint8_InitialA = i8080.state.reg_A.get();
+	uint16_t uint16_RegisterTemp = 0x0000;
+
+	uint16_RegisterTemp = uint16_RegisterTemp | reg_Source1.get();
+
+	uint16_RegisterTemp = uint16_RegisterTemp << 8;
+
+	uint16_RegisterTemp = uint16_RegisterTemp | reg_Source2.get();
+
+	i8080.state.set_Memory(uint16_RegisterTemp, uint8_InitialA);
 
 }
 
