@@ -74,6 +74,15 @@ public:
     i8080_Register reg_PC;
     i8080_Register reg_PSW;
 
+    // Special registers
+    uint16_t get_BC();
+    uint16_t get_HL();
+    uint16_t get_DE();
+    void set_BC(uint16_t val);
+    void set_HL(uint16_t val);
+    void set_DE(uint16_t val);
+
+
     uint8_t get_PSW();
 
     // Flags

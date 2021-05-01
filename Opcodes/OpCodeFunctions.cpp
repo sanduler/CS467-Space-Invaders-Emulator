@@ -27,7 +27,7 @@ void  func_NOP() {
 void  func_LXI_B_D16() {
 
 	// Logic for: B <- byte 3, C <- byte 2
-	//func_LXI_Registers(i8080.state.reg_B, i8080.state.reg_D);
+	func_LXI_Registers(i8080.state.reg_B, i8080.state.reg_C);
 
 	func_ClockCycles(10);
 
@@ -62,7 +62,7 @@ void  func_STAX_B() {
 void  func_INX_B() {
 
 	// Logic for: BC <- BC+1
-	func_INX_Registers(i8080.state.reg_B);
+	i8080.state.set_BC(i8080.state.get_BC() + 1);
 
 	func_ClockCycles(5);
 
