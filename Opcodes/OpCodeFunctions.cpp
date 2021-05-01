@@ -4263,41 +4263,15 @@ void  func_RM() {
 
 	// Logic for: if M, RET
 	// @TODO [Michael]: fill in logic
-	uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
-	uint8_t uint8_ResultTemp1 = 0x00;
-	uint8_t uint8_ResultTemp2 = 0x00;
-	uint16_t uint16_ResultTemp = 0x0000;
-	
+
 	if (i8080.state.flag_S.get() == true) {
-		// Function to pull data out of memory
-		//uint8_ResultTemp1 = func_pull_memory(uint16_InitialSP); !!! NOT DEFINED?
-		
-		uint16_InitialSP = uint16_InitialSP + 0x0001;
-		
-		// Function to pull data out of memory
-		//uint8_ResultTemp2 = func_pull_memory(uint16_InitialSP); !!! NOT DEFINED?
-		
-		uint16_InitialSP = uint16_InitialSP + 0x0001;
-		
-		uint16_ResultTemp = uint16_ResultTemp + uint8_ResultTemp2;
-		
-		uint16_ResultTemp = uint16_ResultTemp << 0x08;
-		
-		uint16_ResultTemp = uint16_ResultTemp + uint8_ResultTemp1;
-		
-		i8080.state.reg_PC.set_Large(uint16_ResultTemp);
-		
-		i8080.state.reg_SP.set_Large(uint16_InitialSP);
-		
+		func_RET();
 		func_ClockCycles(11);
 	}
 	else {
 		func_ClockCycles(5);
 	}
 	
-
-	
-
 }
 
 ////////////////////

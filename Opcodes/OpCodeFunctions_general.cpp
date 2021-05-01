@@ -563,3 +563,29 @@ void func_Inc_PC(int steps)
 {
 
 }
+
+void func_RET()
+{
+	uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+	uint8_t uint8_ResultTemp1 = 0x00;
+	uint8_t uint8_ResultTemp2 = 0x00;
+	uint16_t uint16_ResultTemp = 0x0000;
+	
+	uint8_ResultTemp1 = i8080.state.get_Memory(uint16_InitialSP); 
+	
+	uint16_InitialSP = uint16_InitialSP + 0x0001;
+
+	uint8_ResultTemp1 = i8080.state.get_Memory(uint16_InitialSP); 
+	
+	uint16_InitialSP = uint16_InitialSP + 0x0001;
+	
+	uint16_ResultTemp = uint16_ResultTemp + uint8_ResultTemp2;
+	
+	uint16_ResultTemp = uint16_ResultTemp << 0x08;
+	
+	uint16_ResultTemp = uint16_ResultTemp + uint8_ResultTemp1;
+	
+	i8080.state.reg_PC.set_Large(uint16_ResultTemp);
+	
+	i8080.state.reg_SP.set_Large(uint16_InitialSP);
+}

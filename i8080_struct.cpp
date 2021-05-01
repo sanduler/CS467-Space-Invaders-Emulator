@@ -101,6 +101,18 @@ uint16_t i8080_State::get_DE()
     return (reg_D.get() << 8) | reg_E.get();
 }
 
+uint16_t i8080_State::get_Adr()
+{
+    return (opCode_Array[1] << 8) | opCode_Array[2];
+}
+
+uint8_t i8080_State::get_M()
+{
+    return opCode_Array[get_HL()];
+}
+
+
+
 void i8080_State::set_BC(uint16_t val)
 {
     // Split the passed val to the two 8 bit registers
