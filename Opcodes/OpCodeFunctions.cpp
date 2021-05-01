@@ -1417,7 +1417,7 @@ void  func_MOV_C_L() {
 void  func_MOV_C_M() {
 
 	// Logic for: C <- (HL)
-	//func_MOV_Registers(i8080.state.reg_C, i8080.state.reg_M);
+	i8080.state.reg_C.set(i8080.state.get_M());
 
 	func_ClockCycles(7);
 
@@ -1801,7 +1801,7 @@ void  func_MOV_H_L() {
 void  func_MOV_H_M() {
 
 	// Logic for: H <- (HL)
-	//func_MOV_Registers(i8080.state.reg_H, i8080.state.reg_M);
+	i8080.state.reg_H.set(i8080.state.get_Memory(i8080.state.get_HL()));
 
 	func_ClockCycles(7);
 
@@ -1961,7 +1961,7 @@ void  func_MOV_L_A() {
 void  func_MOV_M_B() {
 
 	// Logic for: (HL) <- B
-	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_B);
+	i8080.state.set_M(i8080.state.reg_B.get());
 
 	func_ClockCycles(7);
 
@@ -1977,7 +1977,7 @@ void  func_MOV_M_B() {
 void  func_MOV_M_C() {
 
 	// Logic for: (HL) <- C
-	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_C);
+	i8080.state.set_M(i8080.state.reg_C.get());
 
 	func_ClockCycles(7);
 
@@ -1993,7 +1993,7 @@ void  func_MOV_M_C() {
 void  func_MOV_M_D() {
 
 	// Logic for: (HL) <- D
-	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_D);
+	i8080.state.set_M(i8080.state.reg_D.get());
 
 	func_ClockCycles(7);
 
@@ -2009,7 +2009,7 @@ void  func_MOV_M_D() {
 void  func_MOV_M_E() {
 
 	// Logic for: (HL) <- E
-	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_E);
+	i8080.state.set_M(i8080.state.reg_E.get());
 
 	func_ClockCycles(7);
 
@@ -2025,7 +2025,7 @@ void  func_MOV_M_E() {
 void  func_MOV_M_H() {
 
 	// Logic for: (HL) <- H
-	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_H);
+	i8080.state.set_M(i8080.state.reg_H.get());
 
 	func_ClockCycles(7);
 
@@ -2041,7 +2041,7 @@ void  func_MOV_M_H() {
 void  func_MOV_M_L() {
 
 	// Logic for: (HL) <- L
-	//func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_L);
+	i8080.state.set_M(i8080.state.reg_L.get());
 
 	func_ClockCycles(7);
 
@@ -2185,7 +2185,7 @@ void  func_MOV_A_L() {
 void  func_MOV_A_M() {
 
 	// Logic for: A <- (HL)
-	//func_MOV_Registers(i8080.state.reg_A, i8080.state.reg_M);
+	i8080.state.reg_A.set(i8080.state.get_M());
 
 	func_ClockCycles(7);
 
@@ -3338,8 +3338,7 @@ void  func_RNZ() {
 
 	// Logic for: if NZ, RET
 	if (i8080.state.flag_Z.get() == 1) {
-		uint16_t sp_val = i8080.state.reg_SP.get_Large();
-		i8080.state.reg_PC.set_Large(i8080.state.get_Memory(sp_val) | i8080.state.get_Memory(sp_val + 1));
+		func_General_RET();
 	}
 
 	func_ClockCycles(44505);
@@ -3391,7 +3390,7 @@ void  func_JNZ_ADR() {
 void  func_JMP_ADR() {
 
 	// Logic for: PC <= adr
-	// @TODO [Madison]: fill in logic
+	
 
 	func_ClockCycles(10);
 

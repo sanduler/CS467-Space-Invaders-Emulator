@@ -111,6 +111,10 @@ uint8_t i8080_State::get_M()
     return opCode_Array[get_HL()];
 }
 
+void i8080_State::set_M(uint8_t val)
+{
+    set_Memory(get_HL(), val);
+}
 
 
 void i8080_State::set_BC(uint16_t val)
