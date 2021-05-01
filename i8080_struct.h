@@ -12,7 +12,8 @@
 #include <stdint.h>
 #include <cstddef>
 #include <iostream>
-
+#include <stdio.h>
+#include <array>
 
 
 /*********************************
@@ -51,13 +52,13 @@ public:
  ********************************/
 class i8080_State {
 private:
-    uint8_t mem_Array[65536];
+    
 public:
 
     //Constructor and destructor
     i8080_State();
     ~i8080_State();
-
+    
     // Opcode Array
     uint8_t opCode_Array[3];
 
@@ -87,6 +88,7 @@ public:
     //Memory
     uint8_t get_Memory(uint16_t index);
     void set_Memory(uint16_t index, uint8_t val);
+    std::array<uint8_t, 65536> mem_Array;
 };
 
 /*********************************

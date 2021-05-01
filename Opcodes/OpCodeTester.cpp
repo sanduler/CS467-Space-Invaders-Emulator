@@ -75,20 +75,24 @@ void resetCpu(i8080_CPU *cpu)
     cpu->state.flag_P.set(0);
     cpu->state.flag_C.set(0);
     cpu->state.flag_AC.set(0);
+    cpu->state.flag_INTE.set(0);
 
     // DO NOT CHANGE =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
     cpu->state.reg_A.set(0b00000001);
     cpu->state.reg_B.set(0b00000010);
     cpu->state.reg_C.set(0b00000011);
-    cpu->state.reg_D.set(0b00001000);
+    cpu->state.reg_D.set(0b00000100);
     cpu->state.reg_E.set(0b00000101);
     cpu->state.reg_H.set(0b00000110);
     cpu->state.reg_L.set(0b00000111);
     cpu->state.reg_SP.set_Large(0b0000000000001000);
     cpu->state.reg_PC.set_Large(0b0000000000001001);
+    cpu->state.reg_PSW.set_Large(0b0000000000001010);
     cpu->state.opCode_Array[0] = 0b00000001;
     cpu->state.opCode_Array[1] = 0b00000010;
     cpu->state.opCode_Array[2] = 0b00000011;
+
+    std::fill(std::begin(cpu->state.mem_Array), std::end(cpu->state.mem_Array), 0);
     // DO NOT CHANGE =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 }
 
@@ -175,8 +179,9 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x03:
             // BC <- BC+1
-            // BC = 00000010
-            incomplete();
+            // BC = 0000001000000011 + 1 = 00000010 00000100
+            cs->reg_B.set(0b00000010);
+            cs->reg_C.set(0b00000100);
             break;
         case 0x04:
             // B <- B+1
