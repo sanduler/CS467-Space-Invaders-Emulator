@@ -440,7 +440,7 @@ bool func_Check_Parity(uint8_t uint8_Register)
 		 
 		
 	}
-	
+
 	if (intBitCount % 2 == 0){
 		boolResult = true;
 	}

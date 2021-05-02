@@ -357,6 +357,7 @@ void test_opCode(unsigned char passed_code) {
         case 0x25:
             // H <- H-1
             cs->reg_H.set(0b00000101);
+            cs->flag_P.set(true);
             break;
         case 0x26:
             // L <- byte 2
@@ -399,10 +400,7 @@ void test_opCode(unsigned char passed_code) {
             // A <- !A
             cs->reg_A.set(0b11111110);
             break;
-        case 0x30:
-            // special
-            incomplete();
-            break;
+        case 0x30: break;        // NOT IMPLEMENTED
         case 0x31:
             // SP.hi <- byte 3, SP.lo <- byte 2
             cs->reg_SP.set_Large(0b0000001100000010);
@@ -453,6 +451,7 @@ void test_opCode(unsigned char passed_code) {
             // A <- A-1
             cs->reg_A.set(0b00000000);
             cs->flag_Z.set(true);
+            cs->flag_P.set(true);
             break;
         case 0x3e:
             // A <- byte 2
@@ -817,6 +816,7 @@ void test_opCode(unsigned char passed_code) {
         case 0x94:
             // A <- A - H
             cs->reg_A.set(0b11111011);
+            cs->flag_S.set(true);
             cs->flag_C.set(true);
             break;
         case 0x95:
@@ -1077,7 +1077,10 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xc7:
             // CALL $0
-            incomplete();
+            check_PC = true;
+            cs->set_Memory(0b00000110, 0b00000011);
+            cs->reg_SP.set_Large( 0b0000000000000110);
+            cs->reg_PC.set_Large( 0b0000000000000000);
             break;
         case 0xc8:
             // if Z, RET

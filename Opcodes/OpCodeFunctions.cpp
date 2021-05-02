@@ -587,22 +587,18 @@ void  func_RAR() {
 	
 	// Checks to see if the low order bit is 1 or 0. If it is a one the result
 	// value is changed, and will be used to set the carry flag
-	printf("InitialA: %d \n", uint8_InitialA);
-	printf("MaskedA: %d \n", uint8_InitialA & 0x01);
 	if ((uint8_InitialA & 0x01) != 0x00){
 		bool_Result = true;
 	}
 	
 	// The Accumulator value is shifted to the left one position
 	uint8_ResultTemp = (uint8_InitialA >> 1);
-	printf("ResultTemp1: %d \n", uint8_ResultTemp);
 	
 	// The most significant bit is set by what the carry flag was when the
 	// operation started
 	if (bool_InitialCY == true) {
 		uint8_ResultTemp = (uint8_ResultTemp | 0x80);
 	}
-	printf("ResultTemp2: %d \n", uint8_ResultTemp);
 	
 	// The Accumulator is set to the shifted value
 	i8080.state.reg_A.set(uint8_ResultTemp);
@@ -902,6 +898,10 @@ void  func_CMA() {
 
 	// Logic for: A <- !A
 	// @TODO [Michael]: fill in logic
+	uint8_t uint8_InitialA = i8080.state.reg_A.get();
+	uint8_t uint8_ComplA = ~uint8_InitialA;
+
+	i8080.state.reg_A.set(uint8_ComplA);
 
 	func_ClockCycles(4);
 
@@ -1058,6 +1058,7 @@ void  func_STC() {
 	// @TODO [Ruben ]: fill in logic
 
 	// Set flags: CY
+	i8080.state.flag_C.set(true);
 	func_ClockCycles(4);
 
 }
