@@ -299,23 +299,15 @@ void func_PUSH_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source
 	uint16_TempSP = uint16_TempSP - 0x01;
 	
 	// Function to push data to memory
-	// !!! COMMENTED OUT DUE TO ERROR
-	//func_push_memory(uint16_TempSP, reg_Source1.get());
+	i8080.state.set_Memory(uint16_TempSP, reg_Source1.get());
 	
 	uint16_TempSP = uint16_TempSP - 0x01;
 	
 	// Function to push data to memory
-	// !!! COMMENTED OUT DUE TO ERROR
-	//func_push_memory(uint16_TempSP, reg_Source2->get())
+	i8080.state.set_Memory(uint16_TempSP, reg_Source2.get());
 	
 	i8080.state.reg_SP.set_Large(uint16_TempSP);
 };
-
-//!!! NEEDS TO BE FILLED OUT
-void func_POP_Registers(i8080_Register &reg_Source) 
-{
-
-}
 
 // Generic Check Sign Function to return the Sign of the Accumulator value
 // Reference Material: https://www.cprogramming.com/tutorial/bitwise_operators.html
