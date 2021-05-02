@@ -2909,7 +2909,7 @@ void  func_ANA_L() {
 void  func_ANA_M() {
 
     // Logic for: A <- A & (HL)
-    //func_ANA_Registers(i8080.state.reg_M);
+    func_ANA_Registers(i8080.state.reg_H);
 
     // Set flags: Z, S, P, CY, AC
     func_ClockCycles(7);
