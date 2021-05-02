@@ -98,7 +98,7 @@ void func_DCR_Registers(i8080_Register &reg_Source)
 	uint8_t uint8_RegisterTemp = reg_Source.get();
 	uint8_t uint8_RegisterTwosCompliment = (~(reg_Source.get())) + 0x01;
 	uint8_t uint8_ResultTemp = uint8_RegisterTemp - 0x01;
-	
+
 	reg_Source.set(uint8_ResultTemp);
 	
 	// S	Z	AC	P
@@ -398,7 +398,7 @@ bool func_Check_AuxCarry(uint8_t uint8_Source1, uint8_t uint8_Source2)
 // Generic Check Parity Function to return the parity of the Accumulator value
 bool func_Check_Parity()
 {
-	bool boolResult = 0;
+	bool boolResult = false;
 	
 	int intBitPosition = 0;
 	int intBitCount = 0;
@@ -416,12 +416,11 @@ bool func_Check_Parity()
 		if (uint8_RegisterTemp == 0x01){
 			intBitCount = intBitCount + 1;
 		}
-		 
-		
-	};
+		 	
+	}
 	
 	if (intBitCount % 2 == 0){
-		boolResult = 1;
+		boolResult = true;
 	}
 	
 	return boolResult;
@@ -430,7 +429,7 @@ bool func_Check_Parity()
 // Generic Check Parity Function to return the parity of a register value
 bool func_Check_Parity(uint8_t uint8_Register)
 {
-	bool boolResult = 0;
+	bool boolResult = false;
 	
 	int intBitPosition = 0;
 	int intBitCount = 0;
@@ -448,10 +447,10 @@ bool func_Check_Parity(uint8_t uint8_Register)
 		}
 		 
 		
-	};
+	}
 	
 	if (intBitCount % 2 == 0){
-		boolResult = 1;
+		boolResult = true;
 	}
 	
 	return boolResult;

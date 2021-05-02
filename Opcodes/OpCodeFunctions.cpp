@@ -433,21 +433,21 @@ void  func_RAL() {
 	bool bool_InitialCY = i8080.state.flag_C.get();
 	
 	uint8_t uint8_ResultTemp;
-	bool bool_Result = 0;
+	bool bool_Result = false;
 	
 	// Checks to see if the high order bit is 1 or 0. If it is a one the result
 	// value is changed, and will be used to set the carry flag
-	if (uint8_InitialA & 0x80 != 0x00){
-		bool_Result = 1;
+	if ((uint8_InitialA & 0x80) != 0x00){
+		bool_Result = true;
 	}
 	
 	// The Accumulator value is shifted to the left one position
-	uint8_ResultTemp = uint8_InitialA << 1;
+	uint8_ResultTemp = (uint8_InitialA << 1);
 	
 	// The least significant bit is set by what the carry flag was when the
 	// operation started
 	if (bool_InitialCY == true){
-		uint8_ResultTemp = uint8_ResultTemp | 0x01;
+		uint8_ResultTemp = (uint8_ResultTemp | 0x01);
 	}
 	
 	// The Accumulator is set to the shifted value
@@ -587,18 +587,22 @@ void  func_RAR() {
 	
 	// Checks to see if the low order bit is 1 or 0. If it is a one the result
 	// value is changed, and will be used to set the carry flag
-	if (uint8_InitialA & 0x01 != 0x00){
+	printf("InitialA: %d \n", uint8_InitialA);
+	printf("MaskedA: %d \n", uint8_InitialA & 0x01);
+	if ((uint8_InitialA & 0x01) != 0x00){
 		bool_Result = true;
 	}
 	
 	// The Accumulator value is shifted to the left one position
-	uint8_ResultTemp = uint8_InitialA >> 1;
+	uint8_ResultTemp = (uint8_InitialA >> 1);
+	printf("ResultTemp1: %d \n", uint8_ResultTemp);
 	
 	// The most significant bit is set by what the carry flag was when the
 	// operation started
-	if (bool_InitialCY == true){
-		uint8_ResultTemp = uint8_ResultTemp | 0x80;
+	if (bool_InitialCY == true) {
+		uint8_ResultTemp = (uint8_ResultTemp | 0x80);
 	}
+	printf("ResultTemp2: %d \n", uint8_ResultTemp);
 	
 	// The Accumulator is set to the shifted value
 	i8080.state.reg_A.set(uint8_ResultTemp);
