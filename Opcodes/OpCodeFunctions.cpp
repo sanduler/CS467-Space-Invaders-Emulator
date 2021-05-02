@@ -3389,6 +3389,11 @@ void  func_JNZ_ADR() {
     // Logic for: if NZ, PC <- adr
     // @TODO [Michael]: fill in logic
 
+    if (i8080.state.flag_Z.get() == 0)
+    {
+        i8080.state.reg_PC.set_Large(i8080.state.get_Adr());
+    }
+
     func_ClockCycles(10);
 
     // Inc PC to account for additional size
