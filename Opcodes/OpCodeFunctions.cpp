@@ -2088,6 +2088,7 @@ void  func_MOV_M_A() {
 
     // Logic for: (HL) <- C
     //func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_A);
+    i8080.state.set_M(i8080.state.reg_C.get());
     func_ClockCycles(7);
 
 }
