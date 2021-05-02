@@ -191,13 +191,14 @@ void func_SUB_Registers(i8080_Register &reg_Source)
 void func_SBB_Registers(i8080_Register &reg_Source)
 {
 	uint8_t uint8_InitialA = i8080.state.reg_A.get();
+	uint8_t uint8_RegisterTwosCompliment = (~(reg_Source.get())) + 0x01;
 	uint8_t uint8_RegisterTemp = reg_Source.get();
 	
 	if (i8080.state.flag_C.get() == true){
 		uint8_RegisterTemp = uint8_RegisterTemp + 0x01;
 	}
 	
-	uint8_t uint8_ResultTemp = uint8_InitialA + uint8_RegisterTemp;
+	uint8_t uint8_ResultTemp = uint8_InitialA - uint8_RegisterTemp;
 	
 	i8080.state.reg_A.set(uint8_ResultTemp);
 	
@@ -205,9 +206,14 @@ void func_SBB_Registers(i8080_Register &reg_Source)
 	
 	i8080.state.flag_S.set(func_Check_Sign());
 	i8080.state.flag_Z.set(func_Check_Zero());
-	i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_InitialA, uint8_RegisterTemp));
+	// When checking the Auxiliary Carry Bit Source2 needs to be a 2's compliment
+	i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_InitialA, uint8_RegisterTwosCompliment));
+
 	i8080.state.flag_P.set(func_Check_Parity());
-	i8080.state.flag_C.set(func_Check_Carry(uint8_InitialA, uint8_RegisterTemp));
+	
+	// When checking the Carry Bit Source2 needs to be a 2's compliment
+	// the result has to be negated also before setting/resetting the flag.
+	i8080.state.flag_C.set(!func_Check_Carry(uint8_InitialA, uint8_RegisterTwosCompliment));
 	
 };
 
