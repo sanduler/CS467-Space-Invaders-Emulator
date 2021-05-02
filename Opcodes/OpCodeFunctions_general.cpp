@@ -52,11 +52,6 @@ void func_LXI_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2
 	reg_Source2.set(i8080.state.opCode_Array[1]);
 };
 
-//!!! NEEDS TO BE FILLED OUT
-void func_STAX_Registers(i8080_Register &reg_Source) 
-{
-
-}
 
 //!!! NEEDS TO BE FILLED OUT
 // Generic Increment 16 bit Function to pass the INX 8bit OpCodes to
@@ -304,86 +299,28 @@ void func_PUSH_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source
 	uint16_TempSP = uint16_TempSP - 0x01;
 	
 	// Function to push data to memory
-	// !!! COMMENTED OUT DUE TO ERROR
-	//func_push_memory(uint16_TempSP, reg_Source1.get());
+	i8080.state.set_Memory(uint16_TempSP, reg_Source1.get());
 	
 	uint16_TempSP = uint16_TempSP - 0x01;
 	
 	// Function to push data to memory
-	// !!! COMMENTED OUT DUE TO ERROR
-	//func_push_memory(uint16_TempSP, reg_Source2->get())
+	i8080.state.set_Memory(uint16_TempSP, reg_Source2.get());
 	
 	i8080.state.reg_SP.set_Large(uint16_TempSP);
 };
-
-
-
-//!!! NEEDS TO BE FILLED OUT
-void func_DAD_Registers(i8080_Register &reg_Source) 
-{
-
-}
-
-//!!! NEEDS TO BE FILLED OUT
-void func_LDAX_Registers(i8080_Register &reg_Source) 
-{
-
-}
-
-//!!! NEEDS TO BE FILLED OUT
-void func_DCX_Registers(i8080_Register &reg_Source) 
-{
-
-}
-
-//!!! NEEDS TO BE FILLED OUT
-//void func_ANA_Registers(i8080_Register &reg_Source) 
-//{
-//
-//}
-
-//!!! NEEDS TO BE FILLED OUT
-//void func_XRA_Registers(i8080_Register &reg_Source) 
-//{
-//
-//}
-
-//!!! NEEDS TO BE FILLED OUT
-//void func_ORA_Registers(i8080_Register &reg_Source) 
-//{
-//
-//}
-
-//!!! NEEDS TO BE FILLED OUT
-void func_POP_Registers(i8080_Register &reg_Source) 
-{
-
-}
 
 // Generic Check Sign Function to return the Sign of the Accumulator value
 // Reference Material: https://www.cprogramming.com/tutorial/bitwise_operators.html
 bool func_Check_Sign()
 {
-	bool boolResult = 0;
-	
-	if (i8080.state.reg_A.get() & 0x80 != 0x00){
-		boolResult = 1;
-	}
-		
-	return boolResult;
+	return (0x80 == (i8080.state.reg_A.get() & 0x80));
 };
 
 // Generic Check Sign Function to return the Sign of a register value
 // Reference Material: https://www.cprogramming.com/tutorial/bitwise_operators.html
 bool func_Check_Sign(uint8_t uint8_Register)
 {
-	bool boolResult = 0;
-	
-	if (uint8_Register & 0x80 != 0x00){
-		boolResult = 1;
-	}
-		
-	return boolResult;
+	return (0x80 == (uint8_Register & 0x80));
 };
 
 // Generic Check Sign Function to return the Sign of Accumulator value
