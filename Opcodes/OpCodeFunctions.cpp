@@ -139,7 +139,8 @@ void  func_RLC() {
 	
 	// Checks to see if the high order bit is 1 or 0. If it is a one the result
 	// value is changed, and will be used to set the carry flag
-	if (uint8_InitialA & 0x80 != 0x00){
+
+	if ((uint8_InitialA & 0x80) != 0x00){
 		bool_Result = true;
 	}
 	
