@@ -98,14 +98,14 @@ void func_DCR_Registers(i8080_Register &reg_Source)
 	uint8_t uint8_RegisterTemp = reg_Source.get();
 	uint8_t uint8_RegisterTwosCompliment = (~(reg_Source.get())) + 0x01;
 	uint8_t uint8_ResultTemp = uint8_RegisterTemp - 0x01;
-	
+
 	reg_Source.set(uint8_ResultTemp);
 	
 	// S	Z	AC	P
 	i8080.state.flag_S.set(func_Check_Sign(uint8_ResultTemp));
 	i8080.state.flag_Z.set(func_Check_Zero(uint8_ResultTemp));
 	// When checking the Auxiliary Carry Bit Source2 needs to be a 2's compliment
-	i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_RegisterTemp, ~(0x01) + 0x01));
+	i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_RegisterTemp, 0xFF));
 	
 	i8080.state.flag_P.set(func_Check_Parity(uint8_ResultTemp));
 	
@@ -350,7 +350,7 @@ bool func_Check_Zero(uint8_t uint8_Register)
 // Generic Check Auxiliary Carry Function to return if there was a carry from the bit position 3 addition/subtraction/etc.
 bool func_Check_AuxCarry(uint8_t uint8_Source1, uint8_t uint8_Source2)
 {
-	bool boolResult = 0;
+	bool boolResult = false;
 	
 	uint8_t uint8_Carry = 0x00;
 	
@@ -372,7 +372,7 @@ bool func_Check_AuxCarry(uint8_t uint8_Source1, uint8_t uint8_Source2)
 		uint8_ResultTemp = uint8_Source1Temp + uint8_Source2Temp + uint8_Carry;
 		
 		if ((uint8_ResultTemp & 0x02) != 0x00){
-			boolResult = 1;
+			boolResult = true;
 		}
 		else {
 			boolResult = 0;
@@ -390,7 +390,7 @@ bool func_Check_AuxCarry(uint8_t uint8_Source1, uint8_t uint8_Source2)
 // Generic Check Parity Function to return the parity of the Accumulator value
 bool func_Check_Parity()
 {
-	bool boolResult = 0;
+	bool boolResult = false;
 	
 	int intBitPosition = 0;
 	int intBitCount = 0;
@@ -408,12 +408,11 @@ bool func_Check_Parity()
 		if (uint8_RegisterTemp == 0x01){
 			intBitCount = intBitCount + 1;
 		}
-		 
-		
-	};
+		 	
+	}
 	
 	if (intBitCount % 2 == 0){
-		boolResult = 1;
+		boolResult = true;
 	}
 	
 	return boolResult;
@@ -422,7 +421,7 @@ bool func_Check_Parity()
 // Generic Check Parity Function to return the parity of a register value
 bool func_Check_Parity(uint8_t uint8_Register)
 {
-	bool boolResult = 0;
+	bool boolResult = false;
 	
 	int intBitPosition = 0;
 	int intBitCount = 0;
@@ -440,10 +439,10 @@ bool func_Check_Parity(uint8_t uint8_Register)
 		}
 		 
 		
-	};
-	
+	}
+
 	if (intBitCount % 2 == 0){
-		boolResult = 1;
+		boolResult = true;
 	}
 	
 	return boolResult;
