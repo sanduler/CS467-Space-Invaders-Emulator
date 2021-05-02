@@ -44,7 +44,6 @@ void func_INX_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2
 void func_ANA_Registers(i8080_Register &reg_Source);
 void func_XRA_Registers(i8080_Register &reg_Source);
 void func_ORA_Registers(i8080_Register &reg_Source);
-void func_POP_Registers(i8080_Register &reg_Source);
 
 // FLAG FUNCTIONS
 bool func_Check_Sign();
