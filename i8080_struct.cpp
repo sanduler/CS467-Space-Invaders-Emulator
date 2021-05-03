@@ -5,6 +5,7 @@
  * - State Class
  * - i8080 Class
  ********************************/
+
 #include "i8080_struct.h"
 #include <iostream>
 #include <cstdint>

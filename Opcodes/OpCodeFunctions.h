@@ -15,6 +15,7 @@
 //* http://www.emulator101.com/8080-by-opcode.html
 //********************************************************
 
+#pragma once
 #ifndef _OpCodeFunctions_H
 #define _OpCodeFunctions_H
 
