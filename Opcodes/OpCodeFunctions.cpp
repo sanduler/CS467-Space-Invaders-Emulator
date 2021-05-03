@@ -2790,6 +2790,8 @@ void  func_SBB_M() {
 void  func_SBB_A() {
 
     // Logic for: A <- A - A - CY
+    func_SUB_Registers(i8080.state.reg_C);
+    func_SUB_Registers(i8080.state.reg_A);
     func_SBB_Registers(i8080.state.reg_A);
 
     // Set flags: Z, S, P, CY, AC
