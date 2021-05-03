@@ -2909,7 +2909,7 @@ void  func_ANA_L() {
 void  func_ANA_M() {
 
     // Logic for: A <- A & (HL)
-    //func_ANA_Registers(i8080.state.reg_M);
+    func_ANA_Registers(i8080.state.reg_H);
 
     // Set flags: Z, S, P, CY, AC
     func_ClockCycles(7);
@@ -3388,6 +3388,11 @@ void  func_JNZ_ADR() {
 
     // Logic for: if NZ, PC <- adr
     // @TODO [Michael]: fill in logic
+
+    if (i8080.state.flag_Z.get() == 0)
+    {
+        i8080.state.reg_PC.set_Large(i8080.state.get_Adr());
+    }
 
     func_ClockCycles(10);
 
