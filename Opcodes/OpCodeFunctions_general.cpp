@@ -17,7 +17,7 @@
 
 #include <stdio.h>
 #include "OpCodeFunctions.h"
-#include "../i8080_struct.h"
+// #include "../i8080_struct.h"
 
 
 extern i8080_CPU i8080;
