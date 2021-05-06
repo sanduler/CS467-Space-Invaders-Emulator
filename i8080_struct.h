@@ -96,13 +96,12 @@ public:
     i8080_Flag flag_INTE;
 
     //Memory
-    uint8_t get_Memory(uint16_t index);
-    void set_Memory(uint16_t index, uint8_t val);
+    uint8_t     get_Memory(uint16_t index);
+    void        set_Memory(uint16_t index, uint8_t val);
     std::array<uint8_t, 65536> mem_Array;
-
-    uint16_t get_Adr();
-    uint8_t get_M();
-    void set_M(uint8_t val);
+    uint16_t    get_Adr();
+    uint8_t     get_M();
+    void        set_M(uint8_t val);
 };
 
 /*********************************
@@ -114,18 +113,9 @@ class i8080_CPU {
 private:
 public:
     i8080_CPU();
-    i8080_State state;
-    //i8080_CPU(size_t memsize = 0x10000, uint16_t startpoint = 0);
+    i8080_State     state;
     ~i8080_CPU();
-    unsigned char ROM;
-
-    uint8_t *memory;
-    i8080_State setupEmulator();
-
-    //Loads the rom into the emulator
-    int loadRom(const char * nameOfFile, size_t offset);
-
-    void startEmulator (char*file);
+    unsigned char   ROM;
 };
 
 
