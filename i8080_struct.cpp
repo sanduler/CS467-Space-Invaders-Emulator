@@ -102,12 +102,36 @@ uint16_t i8080_State::get_Adr()
 
 uint8_t i8080_State::get_M()
 {
-    return set_Memory(get_HL());
+    return get_Memory(get_HL());
 }
 
 void i8080_State::set_M(uint8_t val)
 {
     set_Memory(get_HL(), val);
+}
+
+void i8080_State::move_right()
+{
+    // Handle user input to move right
+    printf("MOVE RIGHT\n");
+}
+
+void i8080_State::move_left()
+{
+    // Handle user input to move left 
+    printf("MOVE LEFT\n");
+}
+
+void i8080_State::insert_coin()
+{
+    // Handle user input to insert coin
+    printf("COIN INSERTED\n");
+}
+
+void i8080_State::fire()
+{
+    // Handle fire command
+    printf("FIRE\n");
 }
 
 void i8080_State::set_BC(uint16_t val)
