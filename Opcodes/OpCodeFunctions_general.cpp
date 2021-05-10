@@ -13,6 +13,10 @@
 //* https://pastraiser.com/cpu/i8080/i8080_opcodes.html - Good Page for visual layout of Opcodes
 //* 
 //* http://www.emulator101.com/8080-by-opcode.html
+//*
+//* http://www.classicgaming.cc/classics/space-invaders/sounds
+//*
+//* https://computerarcheology.com/Arcade/SpaceInvaders/Hardware.html
 //********************************************************
 
 #include <stdio.h>
@@ -315,6 +319,66 @@ void func_PUSH_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source
 	i8080.state.reg_SP.set_Large(uint16_TempSP);
 };
 
+// Generic Return function to pass the RET OpCodes to
+void func_General_RET()
+{
+	uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+	uint8_t uint8_ResultTemp1 = 0x00;
+	uint8_t uint8_ResultTemp2 = 0x00;
+	uint16_t uint16_ResultTemp = 0x0000;
+	
+	uint8_ResultTemp1 = i8080.state.get_Memory(uint16_InitialSP); 
+	
+	uint16_InitialSP = uint16_InitialSP + 0x0001;
+
+	uint8_ResultTemp1 = i8080.state.get_Memory(uint16_InitialSP); 
+	
+	uint16_InitialSP = uint16_InitialSP + 0x0001;
+	
+	uint16_ResultTemp = uint16_ResultTemp + uint8_ResultTemp2;
+	
+	uint16_ResultTemp = uint16_ResultTemp << 0x08;
+	
+	uint16_ResultTemp = uint16_ResultTemp + uint8_ResultTemp1;
+	
+	i8080.state.reg_PC.set_Large(uint16_ResultTemp);
+	
+	i8080.state.reg_SP.set_Large(uint16_InitialSP);
+};
+
+// Generic Call function to pass the CALL OpCodes to
+void func_General_CALL()
+{
+	uint16_t uint16_InitialPC = i8080.state.reg_PC.get_Large();
+	uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+
+    // Break the Program Counter into two bytes so that it can be stored in memory.
+    uint8_t uint8_PCAddrLow = 0x00;
+    uint8_t uint8_PCAddrHigh = 0x00;
+    uint8_PCAddrLow = uint8_PCAddrLow | uint16_InitialPC;
+    uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
+
+    // Combine the two bytes following the OpCode to form the address for where the Call
+    // will take the program.
+    uint16_t uint16_AddressTemp = 0x0000;
+    uint16_t uint16_InitialAddrLow = i8080.state.opCode_Array[1];
+    uint16_t uint16_InitialAddrHigh = i8080.state.opCode_Array[2];
+
+    uint16_AddressTemp = uint16_AddressTemp | uint16_InitialAddrHigh;
+    uint16_AddressTemp = uint16_AddressTemp << 8;
+    uint16_AddressTemp = uint16_AddressTemp | uint16_InitialAddrLow;
+
+	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
+	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	
+	// The Stack Pointer is updated
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+
+	i8080.state.reg_PC.set_Large(uint16_AddressTemp);
+
+};
+
 // Generic Check Sign Function to return the Sign of the Accumulator value
 // Reference Material: https://www.cprogramming.com/tutorial/bitwise_operators.html
 bool func_Check_Sign()
@@ -506,28 +570,3 @@ void func_Inc_PC(int steps)
 
 }
 
-void func_General_RET()
-{
-	uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
-	uint8_t uint8_ResultTemp1 = 0x00;
-	uint8_t uint8_ResultTemp2 = 0x00;
-	uint16_t uint16_ResultTemp = 0x0000;
-	
-	uint8_ResultTemp1 = i8080.state.get_Memory(uint16_InitialSP); 
-	
-	uint16_InitialSP = uint16_InitialSP + 0x0001;
-
-	uint8_ResultTemp1 = i8080.state.get_Memory(uint16_InitialSP); 
-	
-	uint16_InitialSP = uint16_InitialSP + 0x0001;
-	
-	uint16_ResultTemp = uint16_ResultTemp + uint8_ResultTemp2;
-	
-	uint16_ResultTemp = uint16_ResultTemp << 0x08;
-	
-	uint16_ResultTemp = uint16_ResultTemp + uint8_ResultTemp1;
-	
-	i8080.state.reg_PC.set_Large(uint16_ResultTemp);
-	
-	i8080.state.reg_SP.set_Large(uint16_InitialSP);
-}
