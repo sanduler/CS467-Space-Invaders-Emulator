@@ -6,6 +6,7 @@
  * - i8080_CPU Class
  ********************************/
 
+#pragma once
 #ifndef I8080_STRUCT_H
 #define I8080_STRUCT_H
 #include <cstdint>
@@ -127,18 +128,5 @@ public:
     void startEmulator (char*file);
 };
 
-
-/*********************************
- * Memory class
- * Intializes the Memory
- ********************************/
-class i8080_Memory {
-private:
-    std::array<uint8_t, 65536> mem_Array;
-
-public:
-    uint8_t get(uint16_t index);
-    void set(uint16_t index, uint8_t val);
-};
 
 #endif

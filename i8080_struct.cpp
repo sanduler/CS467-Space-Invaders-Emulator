@@ -5,6 +5,7 @@
  * - State Class
  * - i8080 Class
  ********************************/
+
 #include "i8080_struct.h"
 #include <iostream>
 #include <cstdint>
@@ -269,21 +270,4 @@ void i8080_CPU::startEmulator(char *file)
 {
     cout << "Emulator has started " << endl;
     //starts the emulator
-}
-
-uint8_t i8080_Memory::get(uint16_t index)
-{
-    return mem_Array[index];
-}
-
-
-
-void i8080_Memory::set(uint16_t index, uint8_t val)
-{
-    mem_Array[index] = val;
-    for (int i = 0; i < val; i++)
-    {
-        mem_Array[index + i];
-    }
-
 }

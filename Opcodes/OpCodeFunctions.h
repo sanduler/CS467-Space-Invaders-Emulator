@@ -15,6 +15,7 @@
 //* http://www.emulator101.com/8080-by-opcode.html
 //********************************************************
 
+#pragma once
 #ifndef _OpCodeFunctions_H
 #define _OpCodeFunctions_H
 
@@ -60,6 +61,7 @@ void func_ClockCycles(int intClockCycles);
 void func_ClockCycles(int cycles);
 void func_Inc_PC(int steps);
 void func_General_RET();
+void func_General_CALL();
 
 
 // OP CODE PROTOTYPES
