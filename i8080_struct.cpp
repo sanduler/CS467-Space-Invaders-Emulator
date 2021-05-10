@@ -220,54 +220,21 @@ i8080_CPU::~i8080_CPU()
  * Discription: gets the name of the rom, loads the rom into the meormy and then
  *              checks if its loaded iof not breaks the loop and returns false
  * **************/
-int i8080_CPU::loadRom(const char * nameOfFile, size_t offset)
+int i8080_CPU::LoadRom(const char * fileName, size_t offset)
 {
-    //cout << "Start Loading the Rom " << endl;
-    //sets the size in memory to 0 = false
-    size_t s = 0;
 
-    //load the rom in usign ifstream
-    std::ifstream rom(nameOfFile, std::ios::binary);
+    memory = new uint8_t;
+    memory = state.opCode_Array;
 
-    //use if statement to check if rom is loaded or rom exists
-    if (!rom)
-    {
-        std::cout << "No rom loaded, please try again" << std::endl;
-        return s;
-    }
+    size_t a = 0;
+    ifstream rom(fileName, ios::binary);
 
-    //While loop, used when the rom does exists loads the rom into the memor
-    //while (true)
-    //{
-    //   if ((offset + s) >= state.memsize)
-    //        break;
+    auto i = rom.get();
+    memory[offset + a] = i;
+    ++a;
 
-        //get the rom
-      //  auto i = rom.get();
-      //  if (i == EOF)
-      //      break;
-      //  memory[offset + s] = i;
-      //  ++s;
-   // }
-    return s;
+    cout << "loaded" <<endl;
+    return a;
 }
 
-/*****************************
- * Function Type: constructor: i8080_CPU::i8080_CPU(size_t memorySize, uint16_t beginPoint)
- * Discription: This function allocates memory and sets the size
- * depending on the rom file then sets the starting point in
- * memory
- * **************/
 
-
-i8080_State i8080_CPU::setupEmulator()
-{
-    cout << "Emulator is being set up" << endl;
-    return i8080_State();
-}
-
-void i8080_CPU::startEmulator(char *file)
-{
-    cout << "Emulator has started " << endl;
-    //starts the emulator
-}
