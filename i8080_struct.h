@@ -55,7 +55,6 @@ class i8080_State {
 private:
     
 public:
-
     //Constructor and destructor
     i8080_State();
     ~i8080_State();
@@ -102,6 +101,12 @@ public:
     uint16_t    get_Adr();
     uint8_t     get_M();
     void        set_M(uint8_t val);
+
+    // User input handlers
+    void move_right();
+    void move_left();
+    void insert_coin();
+    void fire();
 };
 
 /*********************************
