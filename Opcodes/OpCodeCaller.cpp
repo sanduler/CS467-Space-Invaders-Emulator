@@ -19,7 +19,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x05: func_DCR_B();      break;
         case 0x06: func_MVI_B_D8();   break;
         case 0x07: func_RLC();        break;
-        case 0x08:                    break;        // NOT IMPLEMENTED
+        case 0x08: func_NOP();        break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0x09: func_DAD_B();      break;
         case 0x0a: func_LDAX_B();     break;
         case 0x0b: func_DCX_B();      break;
@@ -27,7 +27,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x0d: func_DCR_C();      break;
         case 0x0e: func_MVI_C_D8();   break;
         case 0x0f: func_RRC();        break;
-        case 0x10:                    break;        // NOT IMPLEMENTED
+        case 0x10: func_NOP();        break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0x11: func_LXI_D_D16();  break;
         case 0x12: func_STAX_D();     break;
         case 0x13: func_INX_D();      break;
@@ -35,7 +35,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x15: func_DCR_D();      break;
         case 0x16: func_MVI_D_D8();   break;
         case 0x17: func_RAL();        break;
-        case 0x18:                    break;        // NOT IMPLEMENTED
+        case 0x18: func_NOP();        break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0x19: func_DAD_D();      break;
         case 0x1a: func_LDAX_D();     break;
         case 0x1b: func_DCX_D();      break;
@@ -43,7 +43,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x1d: func_DCR_E();      break;
         case 0x1e: func_MVI_E_D8();   break;
         case 0x1f: func_RAR();        break;
-        case 0x20:                    break;        // NOT IMPLEMENTED
+        case 0x20: func_NOP();        break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0x21: func_LXI_H_D16();  break;
         case 0x22: func_SHLD_ADR();   break;
         case 0x23: func_INX_H();      break;
@@ -51,7 +51,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x25: func_DCR_H();      break;
         case 0x26: func_MVI_H_D8();   break;
         case 0x27: func_DAA();        break;
-        case 0x28:                    break;        // NOT IMPLEMENTED
+        case 0x28: func_NOP();        break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0x29: func_DAD_H();      break;
         case 0x2a: func_LHLD_ADR();   break;
         case 0x2b: func_DCX_H();      break;
@@ -59,7 +59,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x2d: func_DCR_L();      break;
         case 0x2e: func_MVI_L_D8();   break;
         case 0x2f: func_CMA();        break;
-        case 0x30: func_SIM();        break;
+        case 0x30: func_NOP();        break;
         case 0x31: func_LXI_SP_D16(); break;
         case 0x32: func_STA_ADR();    break;
         case 0x33: func_INX_SP();     break;
@@ -67,7 +67,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0x35: func_DCR_M();      break;
         case 0x36: func_MVI_M_D8();   break;
         case 0x37: func_STC();        break;
-        case 0x38:                    break;        // NOT IMPLEMENTED
+        case 0x38: func_NOP();        break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0x39: func_DAD_SP();     break;
         case 0x3a: func_LDA_ADR();    break;
         case 0x3b: func_DCX_SP();     break;
@@ -214,7 +214,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0xc8: func_RZ();         break;
         case 0xc9: func_RET();        break;
         case 0xca: func_JZ_ADR();     break;
-        case 0xcb:                    break;        // NOT IMPLEMENTED
+        case 0xcb: func_JMP_ADR();    break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0xcc: func_CZ_ADR();     break;
         case 0xcd: func_CALL_ADR();   break;
         case 0xce: func_ACI_D8();     break;
@@ -228,11 +228,11 @@ void eval_opCode(unsigned char passed_code) {
         case 0xd6: func_SUI_D8();     break;
         case 0xd7: func_RST_2();      break;
         case 0xd8: func_RC();         break;
-        case 0xd9:                    break;        // NOT IMPLEMENTED
+        case 0xd9: func_RET();        break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0xda: func_JC_ADR();     break;
         case 0xdb: func_IN_D8();      break;
         case 0xdc: func_CC_ADR();     break;
-        case 0xdd:                    break;        // NOT IMPLEMENTED
+        case 0xdd: func_CALL_ADR();   break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0xde: func_SBI_D8();     break;
         case 0xdf: func_RST_3();      break;
         case 0xe0: func_RPO();        break;
@@ -248,7 +248,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0xea: func_JPE_ADR();    break;
         case 0xeb: func_XCHG();       break;
         case 0xec: func_CPE_ADR();    break;
-        case 0xed:                    break;        // NOT IMPLEMENTED
+        case 0xed: func_CALL_ADR();   break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0xee: func_XRI_D8();     break;
         case 0xef: func_RST_5();      break;
         case 0xf0: func_RP();         break;
@@ -264,7 +264,7 @@ void eval_opCode(unsigned char passed_code) {
         case 0xfa: func_JM_ADR();     break;
         case 0xfb: func_EI();         break;
         case 0xfc: func_CM_ADR();     break;
-        case 0xfd:                    break;        // NOT IMPLEMENTED
+        case 0xfd: func_CALL_ADR();   break;        // SHOULD NOT BE USED, Repeated OpCode
         case 0xfe: func_CPI_D8();     break;
         case 0xff: func_RST_7();      break;
     }

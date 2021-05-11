@@ -36,6 +36,54 @@ int main(int argc, char* argv[])
         test_implemented = true;
         check_PC = false;
 
+        if (i == 0xc8) {
+            i8080.state.flag_Z.set(1);
+        }
+
+        if (i == 0xca) {
+            i8080.state.flag_Z.set(1);
+        }
+
+        if (i == 0xcc) {
+            i8080.state.flag_Z.set(1);
+        }
+
+        if (i == 0xd8) {
+            i8080.state.flag_C.set(1);
+        }
+
+        if (i == 0xda) {
+            i8080.state.flag_C.set(1);
+        }
+
+        if (i == 0xdc) {
+            i8080.state.flag_C.set(1);
+        }
+
+        if (i == 0xe8) {
+            i8080.state.flag_P.set(1);
+        }
+
+        if (i == 0xea) {
+            i8080.state.flag_P.set(1);
+        }
+
+        if (i == 0xec) {
+            i8080.state.flag_P.set(1);
+        }
+
+        if (i == 0xf8) {
+            i8080.state.flag_S.set(1);
+        }
+
+        if (i == 0xfa) {
+            i8080.state.flag_S.set(1);
+        }
+
+        if (i == 0xfc) {
+            i8080.state.flag_S.set(1);
+        }
+
         // Send the Op Code to the main switch statement to act on i8080
         eval_opCode(i);
 
@@ -201,7 +249,7 @@ void incomplete() {
 void test_opCode(unsigned char passed_code) {
     switch(passed_code) {
         case 0x00:
-            // Nothing
+            // NOP No Changes
             break;
         case 0x01:
             // B <- byte 3, C <- byte 2
@@ -235,7 +283,9 @@ void test_opCode(unsigned char passed_code) {
             // A = A << 1; bit 0 = prev bit 7; CY = prev bit 7
             cs->reg_A.set(0b00000010);
             break;
-        case 0x08: break;        // NOT IMPLEMENTED
+        case 0x08: 
+            // NOP Repeated OpCode
+        break;
         case 0x09:
             // HL = HL + BC = 00001000 00001010
             cs->reg_H.set(0b00001000);
@@ -268,7 +318,9 @@ void test_opCode(unsigned char passed_code) {
             cs->reg_A.set(0b10000000);
             cs->flag_C.set(true);
             break;
-        case 0x10: break;        // NOT IMPLEMENTED
+        case 0x10:
+            // NOP Repeated OpCode
+        break;
         case 0x11:
             // D <- byte 3, E <- byte 2
             cs->reg_D.set(0b00000011);
@@ -302,7 +354,9 @@ void test_opCode(unsigned char passed_code) {
             // A = A << 1; bit 0 = prev CY; CY = prev bit 7
             cs->reg_A.set(0b00000010);
             break;
-        case 0x18: break;        // NOT IMPLEMENTED
+        case 0x18:
+            // NOP Repeated OpCode
+        break;
         case 0x19:
             // HL = HL + DE = 00001010 00001100
             cs->reg_H.set(0b00001010);
@@ -335,7 +389,9 @@ void test_opCode(unsigned char passed_code) {
             cs->reg_A.set(0b00000000);
             cs->flag_C.set(true);
             break;
-        case 0x20:  break;  // NOT IMPLEMENTED
+        case 0x20:
+            // NOP Repeated OpCode
+        break;
         case 0x21:
             // H <- byte 3, L <- byte 2
             cs->reg_H.set(0b00000011);
@@ -343,7 +399,10 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x22:
             // (adr) <-L; (adr+1)<-H
-            incomplete();
+            cs->reg_H.set(0b00000110);
+            cs->reg_L.set(0b00000111);
+            cs->set_Memory(0b0000001100000010, cs->reg_L.get());
+            cs->set_Memory(0b0000001100000011, cs->reg_H.get());
             break;
         case 0x23:
             // HL <- HL + 1 = 00000110 00001000
@@ -365,9 +424,12 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x27:
             // special
-            // Nothing
+            printf("DAA: Not implemented currently, since it is not used\n");
+            cs->flag_C.set(false);
             break;
-        case 0x28: break;        // NOT IMPLEMENTED
+        case 0x28:
+            // NOP Repeated OpCode
+        break;
         case 0x29:
             // HL = HL + HI = 00001100 00001110  (I think this is a typo and should be HL + HL)
             cs->reg_H.set(0b00001100);
@@ -400,7 +462,9 @@ void test_opCode(unsigned char passed_code) {
             // A <- !A
             cs->reg_A.set(0b11111110);
             break;
-        case 0x30: break;        // NOT IMPLEMENTED
+        case 0x30:
+            // NOP Repeated OpCode
+        break;
         case 0x31:
             // SP.hi <- byte 3, SP.lo <- byte 2
             cs->reg_SP.set_Large(0b0000001100000010);
@@ -429,7 +493,9 @@ void test_opCode(unsigned char passed_code) {
             // CY = 1
             cs->flag_C.set(true);
             break;
-        case 0x38: break;        // NOT IMPLEMENTED
+        case 0x38:
+            // NOP Repeated OpCode
+        break;
         case 0x39:
             // HL = HL + SP = 00000110 00001111
             cs->reg_H.set(0b00000110);
@@ -828,7 +894,7 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x96:
             // A <- A - (HL)
-            // Nothing changes
+            cs->flag_C.set(true);
             break;
         case 0x97:
             // A <- A - A
@@ -877,12 +943,12 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0x9e:
             // A <- A - (HL) - CY
-            // Nothing happens becuase mem is empty
+            cs->flag_C.set(true);
             break;
         case 0x9f:
             // A <- A - A - CY
             cs->reg_A.set(0x00);
-            cs->flag_S.set(true);
+            cs->flag_S.set(false);
             cs->flag_Z.set(true);
             cs->flag_P.set(true);
             break;
@@ -894,7 +960,9 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xa1:
             // A <- A & C
-            // Nothing
+            cs->reg_A.set(0x01);
+            cs->flag_Z.set(false);
+            cs->flag_P.set(false);
             break;
         case 0xa2:
             // A <- A & D
@@ -904,7 +972,9 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xa3:
             // A <- A & E
-            // Nothing
+            cs->reg_A.set(0x01);
+            cs->flag_Z.set(false);
+            cs->flag_P.set(false);
             break;
         case 0xa4:
             // A <- A & H
@@ -914,7 +984,9 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xa5:
             // A <- A & L
-            // Nothing
+            cs->reg_A.set(0x01);
+            cs->flag_Z.set(false);
+            cs->flag_P.set(false);
             break;
         case 0xa6:
             // A <- A & (HL)
@@ -924,7 +996,9 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xa7:
             // A <- A & A
-            // Nothing
+            cs->reg_A.set(0x01);
+            cs->flag_Z.set(false);
+            cs->flag_P.set(false);
             break;
         case 0xa8:
             // A <- A ^ B
@@ -955,7 +1029,9 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xae:
             // A <- A ^ (HL)
-            // Nothing
+            cs->reg_A.set(0x01);
+            cs->flag_P.set(false);
+            cs->flag_Z.set(false);
             break;
         case 0xaf:
             // A <- A ^ A
@@ -993,11 +1069,15 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xb6:
             // A <- A | (HL)
-            // Nothing
+            cs->reg_A.set(0x01);
+            cs->flag_Z.set(false);
+            cs->flag_P.set(false);
             break;
         case 0xb7:
             // A <- A | A
-            // Nothing
+            cs->reg_A.set(0x01);
+            cs->flag_Z.set(false);
+            cs->flag_P.set(false);
             break;
         case 0xb8:
             // A - B
@@ -1034,7 +1114,7 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xbe:
             // A - (HL)
-            // Nothing
+            cs->flag_C.set(true);
             break;
         case 0xbf:
             // A - A
@@ -1043,7 +1123,7 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xc0:
             // if NZ, RET
-            cs->reg_SP.set_Large(0x08);
+            cs->reg_SP.set_Large(0b0000000000001010);
             break;
         case 0xc1:
             // C <- (sp); B <- (sp+1); sp <- sp+2
@@ -1054,7 +1134,7 @@ void test_opCode(unsigned char passed_code) {
         case 0xc2:
             // if NZ, PC <- adr
             check_PC = true;
-            cs->reg_PC.set_Large(0b0000001000000011);
+            cs->reg_PC.set_Large(0b0000001100000010);
             break;
         case 0xc3:
             // PC <= adr
@@ -1063,7 +1143,13 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xc4:
             // if NZ, CALL adr
-            incomplete();
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), (cs->reg_PC.get_Large() >> 8));
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), (cs->reg_PC.get_Large()));
+            cs->reg_SP.set_Large(0b0000000000000110);
+
+            cs->reg_PC.set_Large((cs->opCode_Array[1] >> 8) + (cs->opCode_Array[2]) );
             break;
         case 0xc5:
             // (sp-2)<-C; (sp-1)<-B; sp <- sp - 2
@@ -1078,13 +1164,16 @@ void test_opCode(unsigned char passed_code) {
         case 0xc7:
             // CALL $0
             check_PC = true;
-            cs->set_Memory(0b00000110, 0b00000011);
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
             cs->reg_SP.set_Large( 0b0000000000000110);
             cs->reg_PC.set_Large( 0b0000000000000000);
             break;
         case 0xc8:
             // if Z, RET
-            // Nothing
+            cs->flag_Z.set(true);
+            cs->reg_SP.set_Large( 0b0000000000001010);
+            cs->reg_PC.set_Large( 0b0000000000000000);
             break;
         case 0xc9:
             // PC.lo <- (sp); PC.hi<-(sp+1); SP <- SP+2
@@ -1093,32 +1182,49 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xca:
             // if Z, PC <- adr
-            // Nothing
+            cs->flag_Z.set(true);
+            cs->reg_PC.set_Large(0b0000000000000000);
+            cs->reg_SP.set_Large(0b0000000000001000);
             break;
         case 0xcb: break;        // NOT IMPLEMENTED
         case 0xcc:
             // if Z, CALL adr
-            // Nothing
+            
+            cs->flag_Z.set(1);
+
+
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), (cs->reg_PC.get_Large() >> 8));
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), (cs->reg_PC.get_Large()));
+            cs->reg_SP.set_Large(0b0000000000000110);
+
+            cs->reg_PC.set_Large((cs->opCode_Array[1] >> 8) + (cs->opCode_Array[2]) );
             break;
         case 0xcd:
             // (SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP+2;PC=adr
             cs->set_Memory(0b00000111, 0b00000000);
             cs->set_Memory(0b00000110, 0b00001001);
-            cs->reg_SP.set_Large(0b0000000000001010);
+            cs->reg_SP.set_Large(0b0000000000000110);
             check_PC = true;
             cs->reg_PC.set_Large(0b0000001100000010);
             break;
         case 0xce:
             // A <- A + data + CY
-            incomplete();
+            cs->reg_A.set(0b00000011);
+            cs->flag_P.set(true);
             break;
         case 0xcf:
             // CALL $8
-            incomplete();
+            check_PC = true;
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large( 0b0000000000000110);
+            cs->reg_PC.set_Large( 0b0000000000001000);
             break;
         case 0xd0:
             // if NCY, RET
-            incomplete();
+            cs->reg_SP.set_Large( 0b0000000000001010);
             break;
         case 0xd1:
             // E <- (sp); D <- (sp+1); sp <- sp+2
@@ -1129,7 +1235,7 @@ void test_opCode(unsigned char passed_code) {
         case 0xd2:
             // if NCY, PC<-adr
             check_PC = true;
-            cs->reg_PC.set_Large(0b0000001000000011);
+            cs->reg_PC.set_Large(0b0000001100000010);
             break;
         case 0xd3:
             // special
@@ -1137,7 +1243,14 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xd4:
             // if NCY, CALL adr
-            incomplete();
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), (cs->reg_PC.get_Large() >> 8));
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), (cs->reg_PC.get_Large()));
+            cs->reg_SP.set_Large(0b0000000000000110);
+
+            cs->reg_PC.set_Large((cs->opCode_Array[1] >> 8) + (cs->opCode_Array[2]) );
+
             break;
         case 0xd5:
             // (sp-2)<-E; (sp-1)<-D; sp <- sp - 2
@@ -1147,20 +1260,34 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xd6:
             // A <- A - data
-            incomplete();
+            cs->reg_A.set(0b11111111);
+            cs->flag_P.set(true);
+            cs->flag_S.set(true);
+            cs->flag_C.set(true);
             break;
         case 0xd7:
             // CALL $10
-            incomplete();
+            check_PC = true;
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large( 0b0000000000000110);
+            cs->reg_PC.set_Large( 0b0000000000010000);
             break;
         case 0xd8:
             // if CY, RET
-            incomplete();
+            cs->flag_C.set(1);
+            cs->reg_SP.set_Large( 0b0000000000001010);
             break;
-        case 0xd9: break;        // NOT IMPLEMENTED
+        case 0xd9:
+        // PC.lo <- (sp); PC.hi<-(sp+1); SP <- SP+2
+            cs->reg_PC.set_Large(0b0000000000000000);
+            cs->reg_SP.set_Large(0b0000000000001010);
+        break;
         case 0xda:
             // if CY, PC<-adr
-            // Nothing
+            check_PC = true;
+            cs->flag_C.set(1);
+            cs->reg_PC.set_Large(0b0000001100000010);
             break;
         case 0xdb:
             // special
@@ -1168,20 +1295,43 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xdc:
             // if CY, CALL adr
-            // Nothing
+            cs->flag_C.set(1);
+
+
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), (cs->reg_PC.get_Large() >> 8));
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), (cs->reg_PC.get_Large()));
+            cs->reg_SP.set_Large(0b0000000000000110);
+
+            cs->reg_PC.set_Large((cs->opCode_Array[1] >> 8) + (cs->opCode_Array[2]) );
             break;
-        case 0xdd: break;        // NOT IMPLEMENTED
+        case 0xdd:
+            // (SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP+2;PC=adr
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large(0b0000000000000110);
+            check_PC = true;
+            cs->reg_PC.set_Large(0b0000001100000010);
+        break;
         case 0xde:
             // A <- A - data - CY
-            incomplete();
+            cs->reg_A.set(0xff);
+            cs->flag_S.set(true);
+            cs->flag_C.set(true);
+            cs->flag_P.set(true);
             break;
         case 0xdf:
             // CALL $18
-            incomplete();
+            check_PC = true;
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large( 0b0000000000000110);
+            cs->reg_PC.set_Large( 0b0000000000011000);
             break;
         case 0xe0:
             // if PO, RET
-            incomplete();
+            cs->reg_SP.set_Large( 0b0000000000001010);
             break;
         case 0xe1:
             // L <- (sp); H <- (sp+1); sp <- sp+2
@@ -1191,15 +1341,29 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xe2:
             // if PO, PC <- adr
-            incomplete();
+            check_PC = true;
+            cs->reg_PC.set_Large(0b0000001100000010);
             break;
         case 0xe3:
             // L <-> (SP); H <-> (SP+1)
-            incomplete();
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory(cs->reg_SP.get_Large(), cs->reg_L.get());
+            cs->set_Memory((cs->reg_SP.get_Large() + 1), cs->reg_H.get());
+            cs->reg_H.set(0x00);
+            cs->reg_L.set(0x00);
+            cs->reg_SP.set_Large(0b0000000000001010);
+            
             break;
         case 0xe4:
             // if PO, CALL adr
-            incomplete();
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), (cs->reg_PC.get_Large() >> 8));
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), (cs->reg_PC.get_Large()));
+            cs->reg_SP.set_Large(0b0000000000000110);
+
+            cs->reg_PC.set_Large((cs->opCode_Array[1] >> 8) + (cs->opCode_Array[2]) );
             break;
         case 0xe5:
             // (sp-2)<-L; (sp-1)<-H; sp <- sp - 2
@@ -1209,23 +1373,32 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xe6:
             // A <- A & data
-            incomplete();
+            cs->reg_A.set(0x00);
+            cs->flag_Z.set(true);
+            cs->flag_P.set(true);
             break;
         case 0xe7:
             // CALL $20
-            incomplete();
+            check_PC = true;
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large( 0b0000000000000110);
+            cs->reg_PC.set_Large( 0b0000000000100000);
             break;
         case 0xe8:
             // if PE, RET
-            // Nothing
+            cs->flag_P.set(1);
+            cs->reg_SP.set_Large( 0b0000000000001010);
             break;
         case 0xe9:
             // PC.hi <- H; PC.lo <- L
-            cs->reg_SP.set_Large(0b0000011000000111);
+            cs->reg_PC.set_Large(0b0000011000000111);
             break;
         case 0xea:
             // if PE, PC <- adr
-            // Nothing
+            check_PC = true;
+            cs->flag_P.set(true);
+            cs->reg_PC.set_Large(0b0000001100000010);
             break;
         case 0xeb:
             // H <-> D; L <-> E
@@ -1236,30 +1409,52 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xec:
             // if PE, CALL adr
-            // Nothing
+            cs->flag_P.set(1);
+
+
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), (cs->reg_PC.get_Large() >> 8));
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), (cs->reg_PC.get_Large()));
+            cs->reg_SP.set_Large(0b0000000000000110);
+
+            cs->reg_PC.set_Large((cs->opCode_Array[1] >> 8) + (cs->opCode_Array[2]) );
             break;
-        case 0xed: break;        // NOT IMPLEMENTED
+        case 0xed:
+            // (SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP+2;PC=adr
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large(0b0000000000000110);
+            check_PC = true;
+            cs->reg_PC.set_Large(0b0000001100000010);
+        break;
         case 0xee:
             // A <- A ^ data
-            incomplete();
+            cs->reg_A.set(0x03);
+            cs->flag_P.set(true);
             break;
         case 0xef:
             // CALL $28
-            incomplete();
+            check_PC = true;
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large( 0b0000000000000110);
+            cs->reg_PC.set_Large( 0b0000000000101000);
             break;
         case 0xf0:
             // if P, RET
-            // Nothing
+            cs->reg_SP.set_Large( 0b0000000000001010);
             break;
         case 0xf1:
             // flags <- (sp); A <- (sp+1); sp <- sp+2
             cs->reg_A.set(0x00);
             cs->reg_SP.set_Large(0b0000000000001010);
-            cs->flag_P.set(true);
+            cs->flag_P.set(false);
             break;
         case 0xf2:
             // if P=1 PC <- adr
-            // Nothing
+            check_PC = true;
+            cs->reg_PC.set_Large(0b0000001100000010);
             break;
         case 0xf3:
             // special
@@ -1267,23 +1462,38 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xf4:
             // if P, PC <- adr
-            // Nothing
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), (cs->reg_PC.get_Large() >> 8));
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), (cs->reg_PC.get_Large()));
+            cs->reg_SP.set_Large(0b0000000000000110);
+
+            cs->reg_PC.set_Large((cs->opCode_Array[1] >> 8) + (cs->opCode_Array[2]) );
             break;
         case 0xf5:
             // (sp-2)<-flags; (sp-1)<-A; sp <- sp - 2
+            cs->reg_SP.set_Large(0b0000000000001000);
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), 0b00000001);
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), 0b00000000);
             cs->reg_SP.set_Large(0b0000000000000110);
             break;
         case 0xf6:
             // A <- A | data
-            incomplete();
+            cs->reg_A.set(0x03);
+            cs->flag_P.set(true);
             break;
         case 0xf7:
             // CALL $30
-            incomplete();
+            check_PC = true;
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large( 0b0000000000000110);
+            cs->reg_PC.set_Large( 0b0000000000110000);
             break;
         case 0xf8:
             // if M, RET
-            // Nothing
+            cs->flag_S.set(1);
+            cs->reg_SP.set_Large( 0b0000000000001010);
             break;
         case 0xf9:
             // SP=HL
@@ -1291,7 +1501,9 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xfa:
             // if M, PC <- adr
-            // Nothing
+            check_PC = true;
+            cs->flag_S.set(true);
+            cs->reg_PC.set_Large(0b0000001100000010);
             break;
         case 0xfb:
             // special
@@ -1299,16 +1511,38 @@ void test_opCode(unsigned char passed_code) {
             break;
         case 0xfc:
             // if M, CALL adr
-            // Nothing
+            cs->flag_S.set(1);
+
+
+            cs->reg_SP.set_Large(0b0000000000001000);
+
+            cs->set_Memory((cs->reg_SP.get_Large() - 1), (cs->reg_PC.get_Large() >> 8));
+            cs->set_Memory((cs->reg_SP.get_Large() - 2), (cs->reg_PC.get_Large()));
+            cs->reg_SP.set_Large(0b0000000000000110);
+
+            cs->reg_PC.set_Large((cs->opCode_Array[1] >> 8) + (cs->opCode_Array[2]) );
             break;
-        case 0xfd: break;        // NOT IMPLEMENTED
+        case 0xfd:
+            // (SP-1)<-PC.hi;(SP-2)<-PC.lo;SP<-SP+2;PC=adr
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large(0b0000000000000110);
+            check_PC = true;
+            cs->reg_PC.set_Large(0b0000001100000010);
+        break;
         case 0xfe:
             // A - data
-            incomplete();
+            cs->flag_S.set(true);
+            cs->flag_P.set(true);
+            cs->flag_C.set(true);
             break;
         case 0xff:
             // CALL $38
-            incomplete();
+            check_PC = true;
+            cs->set_Memory(0b00000111, 0b00000000);
+            cs->set_Memory(0b00000110, 0b00001001);
+            cs->reg_SP.set_Large( 0b0000000000000110);
+            cs->reg_PC.set_Large( 0b0000000000111000);
             break;
     }
 }
