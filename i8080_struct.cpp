@@ -192,23 +192,42 @@ uint8_t i8080_State::get_PSW()
     return uint8_RegPSW;
 }
 
-int i8080_State::LoadRom(const char * fileName, size_t address)
+void i8080_State::LoadRomFiles() 
 {
-    size_t i = 0;
-    ifstream rom(fileName, ios::binary);
-    if (!rom)
-        return i;
+    LoadRom("../rom/invaders.h", 0);
+    LoadRom("../rom/invaders.g", 0x0800);
+    LoadRom("../rom/invaders.f", 0x1000);
+    LoadRom("../rom/invaders.e", 0x1800);
+}
 
-    while (true)
-    {
-        auto a = rom.get();
-        if (a == EOF)
-            break;
-        mem_Array[address + i] = a;
-        ++i;
-    }
-    return i;
+void i8080_State::LoadRom(const char * fileName, size_t address)
+{
+    // Open the ROM file
+    FILE *f= fopen(fileName, "rb");
 
+    // Check if the fiule was opened
+	if (f==NULL)
+	{
+		printf("ERROR OPENING %s\nn", fileName);
+	}
+
+    // Find the end of the file
+	fseek(f, 0L, SEEK_END);
+	int file_size = ftell(f);
+	fseek(f, 0L, SEEK_SET);
+	
+    // Create a temporary pointer to the location we want to copy the
+    // ROM into 
+	uint8_t *temp_buffer = &mem_Array[address];
+
+    // Read the data from the file into the temporary pointer which
+    // copies it into the mem_array
+	fread(temp_buffer, file_size, 1, f);
+
+    // Close the file
+	fclose(f);
+
+    return;
 }
 
 /*****************************
