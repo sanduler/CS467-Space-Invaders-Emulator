@@ -1,37 +1,10 @@
-#include "SDL.h"
-#include <stdio.h>
-#include <string>
-#include <math.h> 
-
-// window dimensions 
-// based on the SI bezel (387 : 400)
-const double BEZEL_RATIO = 1.4;
-
-// warnings turned off becuase rounding is OK here
-#pragma warning(disable:4244)
-const int WIND_WIDTH  = 387 * BEZEL_RATIO;
-const int WIND_HEIGHT = 400 * BEZEL_RATIO;
-#pragma warning(default:4244)
-
-// emulator window dimensions
-// based on the SI ROM (7 : 8)
-const int EM_WIDTH = 224;
-const int EM_HEIGHT = 256;
-
-// global SDL variables
-SDL_Window* gameWindow = NULL;			// main window for game
-SDL_Renderer* gwRenderer = NULL;		// main renderer
-
-// function prototypes
-bool initGameWindow();					// initializes the game window
-void waitForMenuEvent();				// wait for the user to make a selection 
-void menuAnimation(bool destroy_flag);	// handle the main menu animation
-void runSpaceInvaders();				// run the emulator for space invaders
-void closeGameWindow();					// shut down procedure for the game
+#include "game_window.h"
+#include "SI_GameLoop.h"
 
 int main(int argc, char* argv[])
 {
 	initGameWindow();					// initialize the SDL structures
+	initJoySticks();
 	waitForMenuEvent();					// wait for the user to select a menu option
 	closeGameWindow();					// close the window
 	return 0;
@@ -45,7 +18,7 @@ bool initGameWindow()
 	bool load_success = true;
 
 	// initialize all SDL attributes
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+	if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_JOYSTICK) < 0) {
 		printf("Error initGameWindow [init] Error Message: %s\n", SDL_GetError());
 		load_success = false;
 	}
@@ -70,11 +43,32 @@ bool initGameWindow()
 		gwRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
 		// check for successful creation of the renderer
 		if (gwRenderer == NULL) {
-			printf("Error initGameWindow [rendere] Error Message: %s\n", SDL_GetError());
+			printf("Error initGameWindow [renderer] Error Message: %s\n", SDL_GetError());
 			load_success = false;
 		}
 	}
 	return load_success;
+}
+
+/*
+	Check if any joysticks are connected and if they are set them up
+*/
+void initJoySticks()
+{
+	// joysticks already inititiated in initGameWindow() so just need
+	// to check if they exist here
+	if (SDL_NumJoysticks() < 1) {
+		printf("No Joysticks connected \n");
+	}
+	else {
+		gameController = SDL_JoystickOpen(0);
+		if (gameController == NULL) {
+			printf("ERROR: Unable to load joystick");
+		}
+		else {
+			printf("Joystick connected\n");
+		}
+	}
 }
 
 /*
@@ -93,24 +87,16 @@ void waitForMenuEvent()
 		// look at the event queue and handle events on it until
 		// there are none left to handle (the queue is empty)
 		while (SDL_PollEvent(&evnt) != 0) {
-			// handle the case where the user has hit the "X"
-			if (evnt.type == SDL_QUIT) {
+			switch (getUserInput(evnt)) {
+			case SI_INPUT::QUIT:
+				printf("QUIT\n");
 				quit_flag = true;
-			}
-			// handle the case where the user presses a key
-			else if (evnt.type == SDL_KEYDOWN) {
-				// evaluate the case based on the keypressed
-				switch (evnt.key.keysym.sym) {
-				case SDLK_q:
-					// User has opted to quit so set the quit flag
-					quit_flag = true;
-					break;
-				case SDLK_c:
-					runSpaceInvaders();
-					break;
-				default:
-					break;
-				}
+				break;
+			case SI_INPUT::INSERT_COIN:
+				printf("COIN INSERTED\n");
+				runSpaceInvaders();
+				break;
+			default: break;
 			}
 		}
 		// after the events have been handled switch to the next screen
@@ -180,15 +166,11 @@ void menuAnimation(bool destroy_flag)
 */
 void runSpaceInvaders()
 {
-	// flag to signal program exit
-	bool quit_flag = false;
-
-	// event to handle 
-	SDL_Event evnt;
-
 	// load the emulator bezel as a texture
 	SDL_Surface* siBezel = SDL_LoadBMP("bmp_files/space_invaders_bezel.bmp");
 	SDL_Texture* siBackground = SDL_CreateTextureFromSurface(gwRenderer, siBezel);
+	// display the background
+	SDL_RenderCopy(gwRenderer, siBackground, NULL, NULL);
 
 	// create a texture to run the emulator inside of 
 	SDL_Texture* siContainer = SDL_CreateTexture(
@@ -198,57 +180,9 @@ void runSpaceInvaders()
 		EM_WIDTH,
 		EM_HEIGHT);
 
-	// START TEST CODE FOR EMULATOR WINDOW *************************
-	// change all the pixels to white 
-	unsigned char* pixels;
-	int pitch;
-	SDL_LockTexture(siContainer, NULL, (void**)&pixels, &pitch);
-	// set pixels to solid white
-	for (int i = 0; i < pitch * EM_HEIGHT; i++) {
-		pixels[i] = 255;
-	}
-	SDL_UnlockTexture(siContainer);
-	// END TEST CODE FOR EMULATOR WINDOW ***************************
-
-	// define the area for the si emulator
-	#pragma warning(disable:4838)
-	#pragma warning(disable:4244)
-	SDL_Rect fillRect = {
-		(WIND_WIDTH / 2) - (EM_WIDTH / 2),
-		WIND_HEIGHT / 3.1,
-		EM_WIDTH,
-		EM_HEIGHT 
-	};
-	#pragma warning(default:4838)
-	#pragma warning(default:4244)
-
-	// enter while loop until quit signal
-	while (!quit_flag) {
-		// look at the event queue and handle events on it until
-		// there are none left to handle (the queue is empty)
-		while (SDL_PollEvent(&evnt) != 0) {
-			// handle the case where the user has hit the "X"
-			if (evnt.type == SDL_QUIT) {
-				quit_flag = true;
-			}
-			// handle the case where the user presses a key
-			else if (evnt.type == SDL_KEYDOWN) {
-				// evaluate the case based on the keypressed
-				switch (evnt.key.keysym.sym) {
-				case SDLK_q:
-					// User has opted to quit so set the quit flag
-					quit_flag = true;
-					break;
-				default:
-					break;
-				}
-			}
-		}
-		// after handling the events re render the screen
-		SDL_RenderCopy(gwRenderer, siBackground, NULL, NULL);
-		SDL_RenderCopy(gwRenderer, siContainer, NULL, &fillRect);
-		SDL_RenderPresent(gwRenderer);
-	}
+	// start the space invaders game loop
+	SI_GameLoop(siContainer);
+	//SI_GameLoop(siBackground);
 
 	// clean up the SDL structures used for the emulator
 	SDL_DestroyTexture(siContainer);
@@ -265,7 +199,11 @@ void closeGameWindow()
 	SDL_DestroyWindow(gameWindow);
 	gameWindow = NULL;
 
-	// Destroy the renderer
+	// close the joystick
+	SDL_JoystickClose(gameController);
+	gameController = NULL;
+
+	// destroy the renderer
 	SDL_DestroyRenderer(gwRenderer);
 	gwRenderer = NULL;
 

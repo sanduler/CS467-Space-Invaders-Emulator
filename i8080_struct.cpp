@@ -16,9 +16,7 @@ using namespace  std;
 
 void i8080_Flag::set(bool new_val)
 {
-    //cout << "Attempt to set flag (" + to_string(new_val) + ")...";
     val = new_val;
-    //cout << "Success: " + to_string(val) << endl;
 }
 
 bool i8080_Flag::get()
@@ -70,11 +68,6 @@ i8080_State::i8080_State()
     reg_PC.set_Large(0);
     reg_PSW.set(0);
 
-
-    //i8080_State state;
-    //size_t max_size = 1 << 15;
-    //state.memory = (uint8_t*) malloc(max_size * sizeof(*state.memory));
-
 }
 
 uint8_t i8080_State::get_Memory(uint16_t index)
@@ -109,7 +102,7 @@ uint16_t i8080_State::get_Adr()
 
 uint8_t i8080_State::get_M()
 {
-    return opCode_Array[get_HL()];
+    return get_Memory(get_HL());
 }
 
 void i8080_State::set_M(uint8_t val)
@@ -117,6 +110,29 @@ void i8080_State::set_M(uint8_t val)
     set_Memory(get_HL(), val);
 }
 
+void i8080_State::move_right()
+{
+    // Handle user input to move right
+    printf("MOVE RIGHT\n");
+}
+
+void i8080_State::move_left()
+{
+    // Handle user input to move left 
+    printf("MOVE LEFT\n");
+}
+
+void i8080_State::insert_coin()
+{
+    // Handle user input to insert coin
+    printf("COIN INSERTED\n");
+}
+
+void i8080_State::fire()
+{
+    // Handle fire command
+    printf("FIRE\n");
+}
 
 void i8080_State::set_BC(uint16_t val)
 {
@@ -136,7 +152,6 @@ void i8080_State::set_DE(uint16_t val)
     reg_E.set(val & 0xff); 
     reg_D.set((val >> 8) & 0xff);
 }
-
 
 uint8_t i8080_State::get_PSW()
 {
@@ -184,22 +199,12 @@ uint8_t i8080_State::get_PSW()
 i8080_State::~i8080_State()
 {
     //cout << "Memory in State has been cleared " << endl;
-    //cout << "START: ";
-    //cout << __func__ ;
-    //cout << "... END" << endl;;
 }
 
 //general contructor
 i8080_CPU::i8080_CPU()
 {
     //cout << "Constructor: i8080_CPU has been initilized...." << endl;
-    //cout << "START: ";
-    //cout << __func__ ;
-    // COMMENTED OUT DUE TO ERROR - Woy
-    //this->state.memsize = state.memsize;
-    //memory = new uint8_t[state.memsize];
-    //cout << "... END" << endl;;
-    //cout << "Memory: has been to allocated" << endl;
 }
 
 /*****************************
@@ -208,33 +213,5 @@ i8080_CPU::i8080_CPU()
  * **************/
 i8080_CPU::~i8080_CPU()
 {
-    //cout << "START: ";
-    //cout << __func__ ;
-    //delete memory;
-    //cout << "... END" << endl;;
     //cout << "Memory in i8080_CPU has been cleared " << endl;
 }
-
-/*****************************
- * Function Type: int i8080::loadRom(const char * nameOfFile, size_t offset)
- * Discription: gets the name of the rom, loads the rom into the meormy and then
- *              checks if its loaded iof not breaks the loop and returns false
- * **************/
-int i8080_CPU::LoadRom(const char * fileName, size_t offset)
-{
-
-    memory = new uint8_t;
-    memory = state.opCode_Array;
-
-    size_t a = 0;
-    ifstream rom(fileName, ios::binary);
-
-    auto i = rom.get();
-    memory[offset + a] = i;
-    ++a;
-
-    cout << "loaded" <<endl;
-    return a;
-}
-
-
