@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <array>
 
+void eval_opCode(unsigned char passed_code);
+
 
 /*********************************
  * Flags class
@@ -84,6 +86,8 @@ public:
 
 
     uint8_t get_PSW();
+
+    void exe_OpCode();
 
     // Flags
     //uint8_t FlagZSP[0x100]; // Precalculated ZSP

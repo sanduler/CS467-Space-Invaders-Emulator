@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include "OpCodeFunctions.h"
+#include "OpCodeCaller.h"
 //#include "i8080.h"
 
 /*
     Function to call the needed function for the desired opcode
 */
-void eval_opCode(unsigned char passed_code) {
+void eval_opCode(uint8_t passed_code) {
 
+    printf("Passed Code: %d\n", passed_code);
     // Inc the PC tha default step of 1
     func_Inc_PC(1);
 
