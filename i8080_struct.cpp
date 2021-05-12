@@ -192,6 +192,25 @@ uint8_t i8080_State::get_PSW()
     return uint8_RegPSW;
 }
 
+int i8080_State::LoadRom(const char * fileName, size_t address)
+{
+    size_t i = 0;
+    ifstream rom(fileName, ios::binary);
+    if (!rom)
+        return i;
+
+    while (true)
+    {
+        auto a = rom.get();
+        if (a == EOF)
+            break;
+        mem_Array[address + i] = a;
+        ++i;
+    }
+    return i;
+
+}
+
 /*****************************
  * Function Type: destructor, ~i8080_State();
  * Discription: clears the allocated memory

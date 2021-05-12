@@ -101,6 +101,7 @@ public:
     uint16_t    get_Adr();
     uint8_t     get_M();
     void        set_M(uint8_t val);
+    int LoadRom(const char * fileName, size_t address);
 
     // User input handlers
     void move_right();

@@ -27,9 +27,20 @@ bool compareCPUs();
 void test_opCode(unsigned char passed_code);
 void resetCpu(i8080_CPU *cpu);
 void printStates();
+void loadRomFiles();
+
+void loadRomFiles()
+{
+    int rom = i8080.state.LoadRom("rom/invaders.h", 0);
+    rom += i8080.state.LoadRom("rom/invaders.g", 0x0800);
+    rom += i8080.state.LoadRom("rom/invaders.f", 0x1000);
+    rom += i8080.state.LoadRom("rom/invaders.e", 0x1800);
+}
 
 int main(int argc, char* argv[])
 {
+    loadRomFiles();
+
     // Call all of the opcodes
     for( int i = 0; i <= 0xff; i++ ) 
     {
