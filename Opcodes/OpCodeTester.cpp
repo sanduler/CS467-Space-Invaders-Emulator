@@ -28,8 +28,11 @@ void test_opCode(unsigned char passed_code);
 void resetCpu(i8080_CPU *cpu);
 void printStates();
 
+
 int main(int argc, char* argv[])
 {
+    i8080.state.LoadRomFiles();
+
     // Call all of the opcodes
     for( int i = 0; i <= 0xff; i++ ) 
     {
@@ -94,17 +97,17 @@ int main(int argc, char* argv[])
         if (test_implemented) {
             // Compare the results 
             if (compareCPUs()) {
-                if (PRINT_OPT == 1 || PRINT_OPT == 2) {printf( "%04x  PASSED\n", i); }
+                //if (PRINT_OPT == 1 || PRINT_OPT == 2) {printf( "%04x  PASSED\n", i); }
                 passed_tests++;
             } else {
-                if (PRINT_OPT == 1 || PRINT_OPT == 3) {printf( "%04x  FAILED\n", i); }
+                //if (PRINT_OPT == 1 || PRINT_OPT == 3) {printf( "%04x  FAILED\n", i); }
                 failed_tests++;
-                printStates();
+                //printStates();
             }
         } else if (!compareCPUs()) {
-            if (PRINT_OPT == 1 || PRINT_OPT == 4) {printf( "UNIMPLEMENTED TEST %04x FAILED\n", i);}
+            //if (PRINT_OPT == 1 || PRINT_OPT == 4) {printf( "UNIMPLEMENTED TEST %04x FAILED\n", i);}
         } else {
-           if (PRINT_OPT == 1 || PRINT_OPT == 4) {printf( "UNIMPLEMENTED TEST %04x PASSED\n", i);}
+           //if (PRINT_OPT == 1 || PRINT_OPT == 4) {printf( "UNIMPLEMENTED TEST %04x PASSED\n", i);}
         }
 
         // Use this to catch a specific opcode to print detail on
@@ -116,10 +119,10 @@ int main(int argc, char* argv[])
         resetCpu(&i8080_control);
     }
 
-    printf("\nSUMMARY: \n");
-    printf("    INCOMPLETE: %d\n", incomplete_tests);
-    printf("    PASSED: %d\n", passed_tests);
-    printf("    FAILED: %d\n", failed_tests);
+    //printf("\nSUMMARY: \n");
+    //printf("    INCOMPLETE: %d\n", incomplete_tests);
+    //printf("    PASSED: %d\n", passed_tests);
+    //printf("    FAILED: %d\n", failed_tests);
 
     return 0;
 } 
