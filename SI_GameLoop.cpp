@@ -126,7 +126,7 @@ void SI_handleUserInput(bool &quit_flag)
 
 void SI_handleScreenUpdate(SDL_Texture* siContainer)
 {
-	// get the video memory array from the processorKaltura Capture recording - May 10th 2021, 8:03:58 pm
+	// get the video memory array from the processor
 	
 	// draw the array to the rectangle
 	

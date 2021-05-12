@@ -1,0 +1,401 @@
+0000  PASSED
+0001  PASSED
+0002  FAILED
+        Mem Arrays != 
+0003  PASSED
+0004  FAILED
+        flag_S  Ctl: 0 Var: 1 
+0005  FAILED
+        flag_S  Ctl: 0 Var: 1 
+        flag_AC  Ctl: 0 Var: 1 
+        reg_B Ctl: 2 Var: 1 
+0006  PASSED
+0007  FAILED
+        flag_C  Ctl: 0 Var: 1 
+        reg_A Ctl: 2 Var: 3 
+0008  PASSED
+0009  FAILED
+        reg_B Ctl: 10 Var: 2 
+        reg_H Ctl: 8 Var: 6 
+000a  FAILED
+        reg_A Ctl: 0 Var: 1 
+000b  FAILED
+        reg_C Ctl: 2 Var: 3 
+000c  FAILED
+        flag_P  Ctl: 1 Var: 0 
+000d  FAILED
+        flag_P  Ctl: 1 Var: 0 
+        flag_AC  Ctl: 0 Var: 1 
+000e  PASSED
+000f  PASSED
+0010  PASSED
+0011  PASSED
+0012  FAILED
+        Mem Arrays != 
+0013  PASSED
+0014  FAILED
+        flag_S  Ctl: 0 Var: 1 
+0015  FAILED
+        flag_S  Ctl: 0 Var: 1 
+        flag_AC  Ctl: 0 Var: 1 
+0016  PASSED
+0017  FAILED
+        flag_C  Ctl: 0 Var: 1 
+0018  PASSED
+0019  FAILED
+        reg_H Ctl: 10 Var: 6 
+        reg_L Ctl: 12 Var: 7 
+001a  FAILED
+        reg_A Ctl: 0 Var: 1 
+001b  FAILED
+        reg_E Ctl: 4 Var: 5 
+001c  PASSED
+001d  FAILED
+        flag_AC  Ctl: 0 Var: 1 
+001e  PASSED
+001f  FAILED
+        flag_C  Ctl: 0 Var: 1 
+        reg_A Ctl: 1 Var: 0 
+0020  PASSED
+0021  PASSED
+UNIMPLEMENTED TEST 0022 PASSED
+0023  PASSED
+0024  FAILED
+        flag_S  Ctl: 0 Var: 1 
+0025  FAILED
+        flag_S  Ctl: 0 Var: 1 
+        flag_P  Ctl: 0 Var: 1 
+        flag_AC  Ctl: 0 Var: 1 
+0026  FAILED
+        reg_H Ctl: 6 Var: 2 
+        reg_L Ctl: 2 Var: 7 
+0027  PASSED
+0028  PASSED
+0029  FAILED
+        reg_H Ctl: 12 Var: 6 
+        reg_L Ctl: 14 Var: 7 
+UNIMPLEMENTED TEST 002a PASSED
+002b  FAILED
+        reg_L Ctl: 6 Var: 7 
+002c  PASSED
+002d  FAILED
+        flag_AC  Ctl: 0 Var: 1 
+002e  PASSED
+002f  FAILED
+        reg_A Ctl: 254 Var: 1 
+UNIMPLEMENTED TEST 0030 PASSED
+0031  PASSED
+UNIMPLEMENTED TEST 0032 PASSED
+0033  PASSED
+UNIMPLEMENTED TEST 0034 PASSED
+UNIMPLEMENTED TEST 0035 PASSED
+UNIMPLEMENTED TEST 0036 PASSED
+0037  FAILED
+        flag_C  Ctl: 1 Var: 0 
+0038  PASSED
+0039  FAILED
+        reg_L Ctl: 15 Var: 7 
+UNIMPLEMENTED TEST 003a PASSED
+003b  FAILED
+        reg_SP Ctl: 7 Var: 8 
+003c  PASSED
+003d  FAILED
+        flag_P  Ctl: 0 Var: 1 
+        flag_AC  Ctl: 0 Var: 1 
+003e  PASSED
+003f  FAILED
+        flag_C  Ctl: 1 Var: 0 
+0040  PASSED
+0041  PASSED
+0042  PASSED
+0043  PASSED
+0044  PASSED
+0045  PASSED
+0046  FAILED
+        reg_B Ctl: 0 Var: 2 
+0047  PASSED
+0048  PASSED
+0049  PASSED
+004a  PASSED
+004b  PASSED
+004c  PASSED
+004d  PASSED
+004e  FAILED
+        reg_C Ctl: 0 Var: 3 
+004f  PASSED
+0050  PASSED
+0051  PASSED
+0052  PASSED
+0053  PASSED
+0054  PASSED
+0055  PASSED
+0056  FAILED
+        reg_D Ctl: 0 Var: 4 
+0057  PASSED
+0058  PASSED
+0059  PASSED
+005a  PASSED
+005b  PASSED
+005c  PASSED
+005d  PASSED
+005e  FAILED
+        reg_E Ctl: 0 Var: 5 
+005f  PASSED
+0060  PASSED
+0061  PASSED
+0062  PASSED
+0063  PASSED
+0064  PASSED
+0065  PASSED
+0066  FAILED
+        reg_H Ctl: 0 Var: 6 
+0067  PASSED
+0068  PASSED
+0069  PASSED
+006a  PASSED
+006b  PASSED
+006c  PASSED
+006d  PASSED
+006e  FAILED
+        reg_L Ctl: 0 Var: 7 
+006f  PASSED
+0070  FAILED
+        Mem Arrays != 
+0071  FAILED
+        Mem Arrays != 
+0072  FAILED
+        Mem Arrays != 
+0073  FAILED
+        Mem Arrays != 
+0074  FAILED
+        Mem Arrays != 
+0075  FAILED
+        Mem Arrays != 
+0076  PASSED
+0077  FAILED
+        Mem Arrays != 
+0078  PASSED
+0079  PASSED
+007a  PASSED
+007b  PASSED
+007c  PASSED
+007d  PASSED
+007e  FAILED
+        reg_A Ctl: 0 Var: 1 
+007f  PASSED
+0080  FAILED
+        flag_S  Ctl: 0 Var: 1 
+0081  PASSED
+0082  FAILED
+        flag_S  Ctl: 0 Var: 1 
+0083  PASSED
+0084  FAILED
+        flag_S  Ctl: 0 Var: 1 
+0085  PASSED
+0086  PASSED
+0087  PASSED
+0088  FAILED
+        flag_S  Ctl: 0 Var: 1 
+0089  PASSED
+008a  FAILED
+        flag_S  Ctl: 0 Var: 1 
+008b  PASSED
+008c  FAILED
+        flag_S  Ctl: 0 Var: 1 
+008d  PASSED
+008e  PASSED
+008f  PASSED
+0090  PASSED
+0091  FAILED
+        flag_S  Ctl: 1 Var: 0 
+0092  PASSED
+0093  FAILED
+        flag_S  Ctl: 1 Var: 0 
+        flag_P  Ctl: 0 Var: 1 
+0094  FAILED
+        flag_S  Ctl: 0 Var: 1 
+0095  FAILED
+        flag_S  Ctl: 1 Var: 0 
+0096  PASSED
+0097  FAILED
+        flag_AC  Ctl: 0 Var: 1 
+0098  FAILED
+        flag_C  Ctl: 1 Var: 0 
+        reg_A Ctl: 255 Var: 3 
+0099  FAILED
+        flag_S  Ctl: 1 Var: 0 
+        flag_C  Ctl: 1 Var: 0 
+        reg_A Ctl: 254 Var: 4 
+009a  FAILED
+        flag_P  Ctl: 0 Var: 1 
+        flag_C  Ctl: 1 Var: 0 
+        reg_A Ctl: 253 Var: 5 
+009b  FAILED
+        flag_S  Ctl: 1 Var: 0 
+        flag_C  Ctl: 1 Var: 0 
+        reg_A Ctl: 252 Var: 6 
+009c  FAILED
+        flag_C  Ctl: 1 Var: 0 
+        reg_A Ctl: 251 Var: 7 
+009d  FAILED
+        flag_S  Ctl: 1 Var: 0 
+        flag_P  Ctl: 1 Var: 0 
+        flag_C  Ctl: 1 Var: 0 
+        reg_A Ctl: 250 Var: 8 
+009e  PASSED
+009f  FAILED
+        flag_Z  Ctl: 1 Var: 0 
+        flag_S  Ctl: 1 Var: 0 
+        flag_P  Ctl: 1 Var: 0 
+        reg_A Ctl: 0 Var: 2 
+00a0  PASSED
+00a1  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00a2  PASSED
+00a3  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00a4  PASSED
+00a5  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00a6  FAILED
+        flag_Z  Ctl: 1 Var: 0 
+        flag_P  Ctl: 1 Var: 0 
+        reg_A Ctl: 0 Var: 1 
+00a7  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00a8  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00a9  PASSED
+00aa  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00ab  PASSED
+00ac  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00ad  PASSED
+00ae  PASSED
+00af  PASSED
+00b0  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00b1  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00b2  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00b3  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00b4  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00b5  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00b6  PASSED
+00b7  FAILED
+        flag_S  Ctl: 0 Var: 1 
+00b8  PASSED
+00b9  FAILED
+        flag_S  Ctl: 1 Var: 0 
+00ba  PASSED
+00bb  FAILED
+        flag_S  Ctl: 1 Var: 0 
+00bc  PASSED
+00bd  FAILED
+        flag_S  Ctl: 1 Var: 0 
+00be  PASSED
+00bf  FAILED
+        flag_AC  Ctl: 0 Var: 1 
+00c0  FAILED
+        reg_SP Ctl: 2 Var: 8 
+00c1  FAILED
+        reg_B Ctl: 1 Var: 2 
+        reg_C Ctl: 62 Var: 3 
+        reg_SP Ctl: 2 Var: 8 
+00c2  FAILED
+        reg_PC Ctl: 2 Var: 9 
+00c3  FAILED
+        reg_PC Ctl: 2 Var: 9 
+UNIMPLEMENTED TEST 00c4 PASSED
+00c5  FAILED
+        Mem Arrays != 
+00c6  FAILED
+        reg_A Ctl: 3 Var: 1 
+UNIMPLEMENTED TEST 00c7 PASSED
+00c8  PASSED
+00c9  FAILED
+        reg_SP Ctl: 10 Var: 8 
+00ca  PASSED
+00cb  PASSED
+00cc  PASSED
+00cd  FAILED
+        reg_SP Ctl: 10 Var: 8 
+        reg_PC Ctl: 2 Var: 9 
+        Mem Arrays != 
+UNIMPLEMENTED TEST 00ce PASSED
+UNIMPLEMENTED TEST 00cf PASSED
+UNIMPLEMENTED TEST 00d0 PASSED
+00d1  FAILED
+        reg_D Ctl: 0 Var: 4 
+        reg_E Ctl: 0 Var: 5 
+        reg_SP Ctl: 10 Var: 8 
+00d2  FAILED
+        reg_PC Ctl: 2 Var: 9 
+UNIMPLEMENTED TEST 00d3 PASSED
+UNIMPLEMENTED TEST 00d4 PASSED
+UNIMPLEMENTED TEST 00d5 FAILED
+UNIMPLEMENTED TEST 00d6 PASSED
+UNIMPLEMENTED TEST 00d7 PASSED
+UNIMPLEMENTED TEST 00d8 PASSED
+00d9  PASSED
+00da  PASSED
+UNIMPLEMENTED TEST 00db PASSED
+00dc  PASSED
+00dd  PASSED
+UNIMPLEMENTED TEST 00de PASSED
+UNIMPLEMENTED TEST 00df PASSED
+UNIMPLEMENTED TEST 00e0 PASSED
+00e1  FAILED
+        reg_H Ctl: 0 Var: 6 
+        reg_L Ctl: 0 Var: 7 
+        reg_SP Ctl: 10 Var: 8 
+UNIMPLEMENTED TEST 00e2 PASSED
+UNIMPLEMENTED TEST 00e3 PASSED
+UNIMPLEMENTED TEST 00e4 PASSED
+00e5  FAILED
+        Mem Arrays != 
+UNIMPLEMENTED TEST 00e6 PASSED
+UNIMPLEMENTED TEST 00e7 PASSED
+00e8  PASSED
+00e9  FAILED
+        reg_SP Ctl: 7 Var: 8 
+00ea  PASSED
+00eb  FAILED
+        reg_D Ctl: 6 Var: 4 
+        reg_E Ctl: 7 Var: 5 
+        reg_H Ctl: 4 Var: 6 
+        reg_L Ctl: 5 Var: 7 
+00ec  PASSED
+00ed  PASSED
+UNIMPLEMENTED TEST 00ee PASSED
+UNIMPLEMENTED TEST 00ef PASSED
+00f0  PASSED
+00f1  FAILED
+        flag_P  Ctl: 1 Var: 0 
+        reg_A Ctl: 0 Var: 1 
+        reg_SP Ctl: 10 Var: 8 
+00f2  PASSED
+UNIMPLEMENTED TEST 00f3 PASSED
+00f4  PASSED
+00f5  FAILED
+        reg_SP Ctl: 6 Var: 8 
+UNIMPLEMENTED TEST 00f6 FAILED
+UNIMPLEMENTED TEST 00f7 PASSED
+00f8  PASSED
+00f9  PASSED
+00fa  PASSED
+UNIMPLEMENTED TEST 00fb PASSED
+00fc  PASSED
+00fd  PASSED
+UNIMPLEMENTED TEST 00fe PASSED
+UNIMPLEMENTED TEST 00ff PASSED
+
+SUMMARY: 
+    INCOMPLETE: 36
+    PASSED: 123
+    FAILED: 97
