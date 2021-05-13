@@ -16,6 +16,8 @@ void SI_GameLoop(SDL_Texture* siContainer)
 		// handle input by the user
 		SI_handleUserInput(quit_flag);
 
+		SI_handleExecuteOpCode();
+
 		SI_handleScreenUpdate(siContainer);
 	}
 }
@@ -173,4 +175,9 @@ void SI_handleScreenUpdate(SDL_Texture* siContainer)
 	SDL_RenderCopy(gwRenderer, siContainer, NULL, &fillRect);
 	SDL_RenderPresent(gwRenderer);
 	free(pixels);
+}
+
+void SI_handleExecuteOpCode()
+{
+	i8080.exe_OpCode();
 }

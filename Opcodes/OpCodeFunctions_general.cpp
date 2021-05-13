@@ -567,6 +567,9 @@ void func_ClockCycles(int intClockCycles)
 
 void func_Inc_PC(int steps) 
 {
-
+	
+	uint16_t uint16_RegisterTemp = i8080.state.reg_PC.get_Large() + steps;
+	printf("Increment PC: %d, %d\n", steps, uint16_RegisterTemp);
+	i8080.state.reg_PC.set_Large(uint16_RegisterTemp);
 }
 

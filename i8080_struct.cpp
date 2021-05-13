@@ -230,6 +230,21 @@ void i8080_State::LoadRom(const char * fileName, size_t address)
     return;
 }
 
+void i8080_State::exe_OpCode()
+{
+    uint16_t uint16_ProgramCounter = reg_PC.get_Large();
+	opCode_Array[0] = get_Memory(uint16_ProgramCounter);
+	opCode_Array[1] = get_Memory(uint16_ProgramCounter + 0x01);
+	opCode_Array[2] = get_Memory(uint16_ProgramCounter + 0x02);
+
+    printf("PC: %d\n", uint16_ProgramCounter);
+    printf("OpCode0: %d\n", opCode_Array[0]);
+    printf("OpCode1: %d\n", opCode_Array[1]);
+    printf("OpCode2: %d\n", opCode_Array[2]);
+	
+	eval_opCode(opCode_Array[0]);
+}
+
 /*****************************
  * Function Type: destructor, ~i8080_State();
  * Discription: clears the allocated memory
