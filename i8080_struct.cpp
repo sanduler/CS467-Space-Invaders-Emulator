@@ -194,10 +194,10 @@ uint8_t i8080_State::get_PSW()
 
 void i8080_State::LoadRomFiles() 
 {
-    LoadRom("../rom/invaders.h", 0);
-    LoadRom("../rom/invaders.g", 0x0800);
-    LoadRom("../rom/invaders.f", 0x1000);
-    LoadRom("../rom/invaders.e", 0x1800);
+    LoadRom("rom/invaders.h", 0);
+    LoadRom("rom/invaders.g", 0x0800);
+    LoadRom("rom/invaders.f", 0x1000);
+    LoadRom("rom/invaders.e", 0x1800);
 }
 
 void i8080_State::LoadRom(const char * fileName, size_t address)
