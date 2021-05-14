@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string>
-#include "../i8080_struct.h"
+#include "i8080_struct.h"
 #include "OpCodeFunctions.h"
 
 // PRINT VARS

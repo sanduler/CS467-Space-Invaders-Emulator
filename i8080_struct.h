@@ -18,7 +18,6 @@
 
 void eval_opCode(unsigned char passed_code);
 
-
 /*********************************
  * Flags class
  * Sets the flags for the opcodes
@@ -57,8 +56,9 @@ class i8080_State {
 private:
     void LoadRom(const char* fileName, size_t address);
 public:
-    //Constructor and destructor
+    // Constructor and destructor
     i8080_State();
+    void SendInterrupt(int itr_num);
     ~i8080_State();
 
     // Opcode Array
@@ -77,41 +77,48 @@ public:
     i8080_Register reg_PSW;
 
     // Special registers
-    uint16_t get_BC();
-    uint16_t get_HL();
-    uint16_t get_DE();
-    void set_BC(uint16_t val);
-    void set_HL(uint16_t val);
-    void set_DE(uint16_t val);
+    uint16_t    get_BC();
+    uint16_t    get_HL();
+    uint16_t    get_DE();
+    void        set_BC(uint16_t val);
+    void        set_HL(uint16_t val);
+    void        set_DE(uint16_t val);
+    uint8_t     get_PSW();
 
+    // Opcode Interactors
+    void        exe_OpCode();
 
-    uint8_t get_PSW();
-
-    void exe_OpCode();
+    // Clock
+    int clock_cycles;
 
     // Flags
-    //uint8_t FlagZSP[0x100]; // Precalculated ZSP
-    i8080_Flag flag_Z; // Zero
-    i8080_Flag flag_S; // Sign
-    i8080_Flag flag_P; // Parity
-    i8080_Flag flag_C; // Carry
-    i8080_Flag flag_AC; // Auxiliar Carry
-    i8080_Flag flag_INTE;
+    //uint8_t FlagZSP[0x100];   // Precalculated ZSP
+    i8080_Flag  flag_Z;         // Zero
+    i8080_Flag  flag_S;         // Sign
+    i8080_Flag  flag_P;         // Parity
+    i8080_Flag  flag_C;         // Carry
+    i8080_Flag  flag_AC;        // Auxiliar Carry
+    i8080_Flag  flag_INTE;
 
-    //Memory
+    // Memory
+    //std::array<uint8_t, 65536> mem_Array;
+    uint8_t*    mem_Array;
     uint8_t     get_Memory(uint16_t index);
     void        set_Memory(uint16_t index, uint8_t val);
-    std::array<uint8_t, 65536> mem_Array;
     uint16_t    get_Adr();
     uint8_t     get_M();
     void        set_M(uint8_t val);
+
+    // Memory Interactors
     void        LoadRomFiles();
+    uint8_t* video_RAM;
+    void        load_screen_update();
 
     // User input handlers
-    void move_right();
-    void move_left();
-    void insert_coin();
-    void fire();
+    void        move_right();
+    void        move_left();
+    void        insert_coin();
+    void        fire();
 };
 
 /*********************************
@@ -125,7 +132,6 @@ public:
     i8080_CPU();
     i8080_State     state;
     ~i8080_CPU();
-    unsigned char   ROM;
 };
 
 

@@ -1,6 +1,8 @@
 #include "game_window.h"
 #include "SI_GameLoop.h"
 
+i8080_CPU i8080;
+
 int main(int argc, char* argv[])
 {
 	initGameWindow();					// initialize the SDL structures
@@ -168,20 +170,21 @@ void runSpaceInvaders()
 {
 	// load the emulator bezel as a texture
 	SDL_Surface* siBezel = SDL_LoadBMP("bmp_files/space_invaders_bezel.bmp");
-	SDL_Texture* siBackground = SDL_CreateTextureFromSurface(gwRenderer, siBezel);
-	// display the background
-	SDL_RenderCopy(gwRenderer, siBackground, NULL, NULL);
+	siBackground = SDL_CreateTextureFromSurface(gwRenderer, siBezel);	
 
 	// create a texture to run the emulator inside of 
-	SDL_Texture* siContainer = SDL_CreateTexture(
+	siContainer = SDL_CreateTexture(
 		gwRenderer,
 		SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_STREAMING,
 		EM_WIDTH,
 		EM_HEIGHT);
 
+	// Load the ROM
+	i8080.state.LoadRomFiles();
+
 	// start the space invaders game loop
-	SI_GameLoop(siContainer);
+	SI_GameLoop();
 	//SI_GameLoop(siBackground);
 
 	// clean up the SDL structures used for the emulator

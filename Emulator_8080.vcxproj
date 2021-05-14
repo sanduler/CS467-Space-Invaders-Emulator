@@ -151,11 +151,16 @@
   <ItemGroup>
     <ClCompile Include="game_window.cpp" />
     <ClCompile Include="i8080_struct.cpp" />
+    <ClCompile Include="OpCodeCaller.cpp" />
+    <ClCompile Include="OpCodeFunctions.cpp" />
+    <ClCompile Include="OpCodeFunctions_general.cpp" />
     <ClCompile Include="SI_GameLoop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_window.h" />
     <ClInclude Include="i8080_struct.h" />
+    <ClInclude Include="OpCodeCaller.h" />
+    <ClInclude Include="OpCodeFunctions.h" />
     <ClInclude Include="SI_GameLoop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -21,8 +21,8 @@ enum class SI_INPUT {
 	NO_ACTION
 };
 
-void SI_GameLoop(SDL_Texture* siContainer);
+void SI_GameLoop();
 SI_INPUT getUserInput(SDL_Event &evnt);
 void SI_handleUserInput(bool &quit_flag);
 void SI_handleExecuteOpCode();
-void SI_handleScreenUpdate(SDL_Texture* siContainer);
+void SI_handleScreenUpdate();

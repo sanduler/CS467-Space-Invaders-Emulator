@@ -1,6 +1,6 @@
 //#pragma once
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <stdio.h>
 #include <string>
 #include <math.h> 
@@ -18,13 +18,13 @@
 // ***************************************************
 
 // Computation results from code ^
-const int WIND_WIDTH = 541;
-const int WIND_HEIGHT = 560;
+const int WIND_WIDTH	= 541;
+const int WIND_HEIGHT	= 560;
 
 // emulator window dimensions
 // based on the SI ROM (7 : 8)
-const int EM_WIDTH = 224;
-const int EM_HEIGHT = 256;
+const int EM_WIDTH		= 224;
+const int EM_HEIGHT		= 256;
 
 // joystick variables
 SDL_Joystick* gameController = NULL;
@@ -32,6 +32,8 @@ SDL_Joystick* gameController = NULL;
 // global SDL variables
 SDL_Window* gameWindow = NULL;			// main window for game
 SDL_Renderer* gwRenderer = NULL;		// main renderer
+SDL_Texture* siContainer;
+SDL_Texture* siBackground;
 
 // function prototypes
 bool initGameWindow();					// initializes the game window

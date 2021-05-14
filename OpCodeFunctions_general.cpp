@@ -563,6 +563,7 @@ bool func_Check_Carry(uint8_t uint8_Source1, uint8_t uint8_Source2)
 // Generic Function to run a given number of Clock Cycles
 void func_ClockCycles(int intClockCycles)
 {
+	i8080.state.clock_cycles += intClockCycles;
 }
 
 void func_Inc_PC(int steps) 

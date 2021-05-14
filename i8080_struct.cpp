@@ -13,7 +13,6 @@
 #include <fstream>
 using namespace  std;
 
-
 void i8080_Flag::set(bool new_val)
 {
     val = new_val;
@@ -48,6 +47,7 @@ i8080_State::i8080_State()
 {
 
     //cout << "Constructor: State has been initilized...." << endl;
+    clock_cycles = 0;
 
     // Set Flags
     flag_Z.set(0);
@@ -67,6 +67,31 @@ i8080_State::i8080_State()
     reg_SP.set_Large(0);
     reg_PC.set_Large(0);
     reg_PSW.set(0);
+
+    // Initialize arrays
+    mem_Array = (uint8_t*)malloc(0x10000);
+    video_RAM = (uint8_t*)malloc(224 * 256 * 4 * sizeof(video_RAM));
+
+}
+
+void i8080_State::SendInterrupt(int itr_num)
+{
+    // first check if interuppts are enabled, only act if they are
+    if (flag_INTE.get()) {
+        //perform "PUSH PC"    
+        uint16_t sp_addr;
+        sp_addr = reg_SP.get_Large();
+        set_Memory(sp_addr - 1, reg_PC.get_Large() & 0xFF00 >> 8);
+        set_Memory(sp_addr - 2, reg_PC.get_Large() & 0xff);
+        reg_SP.set_Large(sp_addr - 2);
+
+        //Set the PC to the low memory vector.    
+        //This is identical to an "RST interrupt_num" instruction.    
+        reg_PC.set_Large(8 * itr_num);
+
+        // reset the int enable bit
+        flag_INTE.set(0);
+    }
 
 }
 
@@ -200,19 +225,77 @@ void i8080_State::LoadRomFiles()
     LoadRom("rom/invaders.e", 0x1800);
 }
 
+void i8080_State::load_screen_update()
+{
+    // Load the current state of memory into an array that will 
+    // eventually be loaded to the screen
+    
+    // Loop through the bytes 
+    for (int byte_cnt = 0; byte_cnt < (256 * 224) / 8; byte_cnt++) {
+        // Get the row and column of the current byte
+        int row = (byte_cnt * 8) / 256;
+        int col = (byte_cnt * 8) % 256;
+
+        /*
+        uint8_t byte = mem_Array[0x2400 + byte_cnt];
+
+        for (int bit = 0; bit < 8; bit++)
+        {
+            int x = row + bit;
+            //read 1 bit from the original byte
+            int pixel = (byte >> bit) & 1;
+            const int temp_x = x;
+
+            int px = col;
+            int py = -temp_x + 256 - 1;
+            int pix_pos = (py * 224 + px) * 4;
+            uint8_t pixel_val;
+            if (pixel) pixel_val = 255; else pixel_val = 0;
+            video_RAM[pix_pos] = pixel_val;
+            video_RAM[pix_pos + 1] = pixel_val;
+            video_RAM[pix_pos + 2] = pixel_val;
+        }
+        */
+
+        ///*
+        // Get the value of the byte out of memory
+        uint8_t* byte = (uint8_t*)&mem_Array[0x2400] + byte_cnt;
+
+        unsigned int* pix;
+        for (int bit = 0; bit < 8; bit++) {
+
+            int offset = (255 - (col + bit)) * 224 * 4 + (row * 4);
+
+            pix = (unsigned int*)((uint8_t*)video_RAM + offset);
+
+            if ((*byte & (1 << bit)) != 0) {
+                *pix = 0xffffffffL;
+            }                
+            else {
+                *pix = 0x00000000L;
+            }
+
+            pix -= 224;
+        }
+        //*/
+    }
+
+}
+
 void i8080_State::LoadRom(const char * fileName, size_t address)
 {
     // Open the ROM file
 #pragma warning(disable:4996)
     FILE *f= fopen(fileName, "rb");
 
-    // Check if the fiule was opened
+    // Check if the file was opened
 	if (f==NULL)
 	{
 		printf("ERROR OPENING %s\nn", fileName);
 	}
 
     // Find the end of the file
+#pragma warning(disable:6387)
 	fseek(f, 0L, SEEK_END);
 	int file_size = ftell(f);
 	fseek(f, 0L, SEEK_SET);
@@ -253,6 +336,7 @@ void i8080_State::exe_OpCode()
 i8080_State::~i8080_State()
 {
     //cout << "Memory in State has been cleared " << endl;
+    free(video_RAM);
 }
 
 //general contructor

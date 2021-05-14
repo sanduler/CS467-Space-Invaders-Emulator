@@ -1,24 +1,51 @@
 #include "SI_GameLoop.h"
+#include <cstdlib>
 
 extern SDL_Window* gameWindow;
 extern SDL_Renderer* gwRenderer;
+extern SDL_Texture* siContainer;
+extern SDL_Texture* siBackground;
 
-i8080_CPU i8080;
+extern i8080_CPU i8080;
+extern const int EM_WIDTH;
+extern const int EM_HEIGHT;
 
-void SI_GameLoop(SDL_Texture* siContainer)
+void SI_GameLoop()
 {
 	// flag to signal space invaders exit
 	bool quit_flag = false;
+
+	// interrupt counter to check if screen update is needed 
+	// only call the update if == 1
+	int middle_interrupt = false;
 
 	// enter while loop until quit signal
 	while (!quit_flag) {
 
 		// handle input by the user
-		//SI_handleUserInput(quit_flag);
+		SI_handleUserInput(quit_flag);
 
+		// execute the opcode
 		SI_handleExecuteOpCode();
 
-		//SI_handleScreenUpdate(siContainer);
+		// handle the update to the screen
+		// only do this 1/60 seconds
+		if (i8080.state.clock_cycles > 120) {
+			// reset the clock cycles when this occurs so we can catch it again
+			i8080.state.clock_cycles = 0;
+			// if on the middle interrupt then do not call update
+			// but still send the interrupt
+			if (middle_interrupt) {
+				i8080.state.SendInterrupt(8);
+			} 
+			// if on the final interrupt then update screen
+			// but call the interrupt first
+			else {
+				i8080.state.SendInterrupt(10);
+				SI_handleScreenUpdate();
+			}
+			system("pause");
+		}
 	}
 }
 
@@ -126,55 +153,25 @@ void SI_handleUserInput(bool &quit_flag)
 	}
 }
 
-void SI_handleScreenUpdate(SDL_Texture* siContainer)
+void SI_handleScreenUpdate()
 {
-	// get the video memory array from the processor
-	
-	// draw the array to the rectangle
-	
-	// START TEST CODE FOR EMULATOR WINDOW *************************
-	// define the area for the si emulator
+	// define the area for the emulator ontop of the bezel
 	const SDL_Rect fillRect = {	165,181,224,256 };
 
-	unsigned int* pixels;
-	//unsigned char pixels[224 * 256];
-
-	//pixels = (unsigned int*)malloc(224 * 256 * 4);
-	//memset(pixels, 255, 224 * 256 * 4);
-	pixels = (unsigned int*)malloc(224 * 256);
-	memset(pixels, 255, 224 * 256);
-
-	//for (int i = 0; i < 224 * 256 * 4; i++) {
-	//	if (i > 224*4) {
-	//		pixels[i] = 255;
-	//	}
-	//	else {
-	//		pixels[i] = 100;
-	//	}
-	//}
-
-	//int pitch;
-	//SDL_LockTexture(siContainer, NULL, (void**)&pixels, &pitch);
-	////SDL_LockTexture(siContainer, &fillRect, (void**)&pixels, &pitch);
-	//// set pixels to solid white
-	//for (int i = 0; i < pitch * 256; i++) {
-	//	if (i > 224*4) {
-	//		pixels[i] = 255;
-	//	}
-	//	else {
-	//		pixels[i] = 100;
-	//	}
-	//}
-
-	//SDL_UnlockTexture(siContainer);
-
-	// END TEST CODE FOR EMULATOR WINDOW ***************************
+	// update the screen pixels (the VRAM)
+	i8080.state.load_screen_update();
 
 	// re render the screen
-	SDL_UpdateTexture(siContainer, NULL, pixels, 224);
+	// apply the updated VRAM to the screen
+	SDL_UpdateTexture(siContainer, NULL, i8080.state.video_RAM, 4 * 224);	
+	// clear the old renderer
+	SDL_RenderClear(gwRenderer);
+	// re apply the background bezel
+	SDL_RenderCopy(gwRenderer, siBackground, NULL, NULL);
+	// apply the si container to the background
 	SDL_RenderCopy(gwRenderer, siContainer, NULL, &fillRect);
+	// display the screen
 	SDL_RenderPresent(gwRenderer);
-	free(pixels);
 }
 
 void SI_handleExecuteOpCode()
