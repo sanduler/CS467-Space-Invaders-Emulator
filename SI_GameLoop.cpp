@@ -14,11 +14,11 @@ void SI_GameLoop(SDL_Texture* siContainer)
 	while (!quit_flag) {
 
 		// handle input by the user
-		SI_handleUserInput(quit_flag);
+		//SI_handleUserInput(quit_flag);
 
 		SI_handleExecuteOpCode();
 
-		SI_handleScreenUpdate(siContainer);
+		//SI_handleScreenUpdate(siContainer);
 	}
 }
 
@@ -179,5 +179,5 @@ void SI_handleScreenUpdate(SDL_Texture* siContainer)
 
 void SI_handleExecuteOpCode()
 {
-	i8080.exe_OpCode();
+	i8080.state.exe_OpCode();
 }

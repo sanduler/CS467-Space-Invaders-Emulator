@@ -19,7 +19,7 @@
 #ifndef _OpCodeFunctions_H
 #define _OpCodeFunctions_H
 
-#include "../i8080_struct.h"
+#include "i8080_struct.h"
 
 using namespace std;
 

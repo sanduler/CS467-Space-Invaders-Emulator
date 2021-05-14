@@ -1,12 +1,17 @@
-#pragma once
-#include "SDL.h"
-#include "Opcodes/OpCodeFunctions.h"
+// Header File for SI_GameLoop
+
+
+
+//#include <SDL2/begin_code.h>
+#include <SDL2/SDL.h>
+#include "OpCodeFunctions.h"
 #include "i8080_struct.h"
 
 const int JOYSTICK_DEAD_ZONE = 8000;
 
 // Enum to generalize the action from an event 
 // Allows for a single evaluation of keyboard/joystick
+//#pragma once
 enum class SI_INPUT {
 	MOVE_LEFT,
 	MOVE_RIGHT,

@@ -1,5 +1,6 @@
-#pragma once
-#include "SDL.h"
+//#pragma once
+
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <string>
 #include <math.h> 

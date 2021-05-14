@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     // Reads the next OpCode and Executes the OpCode
     int i = 0;
 
-    for (i = 0; i < 1000 ; i++)
+    for (i = 0; i < 5 ; i++)
     {
         i8080.state.exe_OpCode();
     }
