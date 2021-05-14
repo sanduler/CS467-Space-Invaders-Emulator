@@ -53,12 +53,12 @@ public:
  ********************************/
 class i8080_State {
 private:
-    void LoadRom(const char * fileName, size_t address);
+    void LoadRom(const char* fileName, size_t address);
 public:
     //Constructor and destructor
     i8080_State();
     ~i8080_State();
-    
+
     // Opcode Array
     uint8_t opCode_Array[3];
 
