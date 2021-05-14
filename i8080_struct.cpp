@@ -203,6 +203,7 @@ void i8080_State::LoadRomFiles()
 void i8080_State::LoadRom(const char * fileName, size_t address)
 {
     // Open the ROM file
+#pragma warning(disable:4996)
     FILE *f= fopen(fileName, "rb");
 
     // Check if the fiule was opened
