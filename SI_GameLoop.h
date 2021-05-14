@@ -3,7 +3,7 @@
 
 
 //#include <SDL2/begin_code.h>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "OpCodeFunctions.h"
 #include "i8080_struct.h"
 
