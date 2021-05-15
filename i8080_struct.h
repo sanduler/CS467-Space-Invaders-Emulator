@@ -40,7 +40,7 @@ private:
     uint8_t val;
     uint16_t large_val;
 public:
-    uint8_t get_Large();
+    uint16_t get_Large();
     uint8_t get();
     void set(uint8_t i);
     void set_Large(uint16_t i);
@@ -119,6 +119,16 @@ public:
     void        move_left();
     void        insert_coin();
     void        fire();
+
+    // Inputs
+    uint8_t inputs[256];
+
+    // Ouputs
+    uint8_t outputs[256];
+
+    // Shift Register
+    uint16_t shiftRegister;
+
 };
 
 /*********************************

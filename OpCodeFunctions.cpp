@@ -3484,7 +3484,9 @@ void  func_JMP_ADR() {
     func_Inc_PC(2);
 
     // Logic for: PC <= adr
+    //printf("Address: %4X\n", i8080.state.get_Adr());
     i8080.state.reg_PC.set_Large(i8080.state.get_Adr());
+    //printf("NewPC: %4X\n", i8080.state.reg_PC.get_Large());
 
     func_ClockCycles(10);
 
@@ -4049,6 +4051,10 @@ void  func_IN_D8() {
 
     // Logic for: special
     // @TODO [Madison]: fill in logic
+
+    uint8_t uint8_RegisterTemp = i8080.state.inputs[i8080.state.opCode_Array[1]];
+
+    i8080.state.reg_A.set(uint8_RegisterTemp);
 
     func_ClockCycles(10);
 

@@ -183,6 +183,8 @@ void runSpaceInvaders()
 	// Load the ROM
 	i8080.state.LoadRomFiles();
 
+
+
 	// start the space invaders game loop
 	SI_GameLoop();
 	//SI_GameLoop(siBackground);

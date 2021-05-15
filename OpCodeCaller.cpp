@@ -8,7 +8,7 @@
 */
 void eval_opCode(uint8_t passed_code) {
 
-    printf("Passed Code: %d\n", passed_code);
+    //printf("Passed Code: %d\n", passed_code);
     // Inc the PC tha default step of 1
     func_Inc_PC(1);
 

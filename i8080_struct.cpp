@@ -23,7 +23,7 @@ bool i8080_Flag::get()
     return val;
 }
 
-uint8_t i8080_Register::get_Large()
+uint16_t i8080_Register::get_Large()
 {
     return large_val;
 }
@@ -72,6 +72,15 @@ i8080_State::i8080_State()
     mem_Array = (uint8_t*)malloc(0x10000);
     video_RAM = (uint8_t*)malloc(224 * 256 * 4 * sizeof(video_RAM));
 
+    // Inputs
+    inputs[256] = { 0 };
+
+    // Ouputs
+    outputs[256] = { 0 };
+
+    // Shift Register
+    shiftRegister = 0x0000;
+
 }
 
 void i8080_State::SendInterrupt(int itr_num)
@@ -79,15 +88,35 @@ void i8080_State::SendInterrupt(int itr_num)
     // first check if interuppts are enabled, only act if they are
     if (flag_INTE.get()) {
         //perform "PUSH PC"    
-        uint16_t sp_addr;
-        sp_addr = reg_SP.get_Large();
-        set_Memory(sp_addr - 1, reg_PC.get_Large() & 0xFF00 >> 8);
-        set_Memory(sp_addr - 2, reg_PC.get_Large() & 0xff);
-        reg_SP.set_Large(sp_addr - 2);
+        //uint16_t sp_addr;
+        //sp_addr = reg_SP.get_Large();
+        //set_Memory(sp_addr - 1, reg_PC.get_Large() & 0xFF00 >> 8);
+        //set_Memory(sp_addr - 2, reg_PC.get_Large() & 0xff);
+        //reg_SP.set_Large(sp_addr - 2);
+
+        // Break the Program Counter into two bytes so that it can be stored in memory.
+        uint16_t uint16_InitialSP = reg_SP.get_Large();
+        uint16_t uint16_InitialPC = reg_PC.get_Large();
+        uint8_t uint8_PCAddrLow = 0x00;
+        uint8_t uint8_PCAddrHigh = 0x00;
+        //printf("PC: %4X\n", uint16_InitialPC);
+        //printf("SP: %4X\n", uint16_InitialSP);
+        uint8_PCAddrLow = uint8_PCAddrLow | uint16_InitialPC;
+        uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8);
+        //printf("PCLow: %4X\n", uint8_PCAddrLow);
+        //printf("PCHigh: %4X\n", uint8_PCAddrHigh);
+        // Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
+        set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
+        set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+
+        // The Stack Pointer is updated
+        reg_SP.set_Large(uint16_InitialSP - 0x02);
+
+
 
         //Set the PC to the low memory vector.    
         //This is identical to an "RST interrupt_num" instruction.    
-        reg_PC.set_Large(8 * itr_num);
+        reg_PC.set_Large(itr_num);
 
         // reset the int enable bit
         flag_INTE.set(0);
@@ -122,7 +151,12 @@ uint16_t i8080_State::get_DE()
 
 uint16_t i8080_State::get_Adr()
 {
-    return (opCode_Array[1] << 8) | opCode_Array[2];
+    // MM-Modified this from [1] to [2] first according to i8080 Manual for JMP
+    uint16_t uint16_AddrTemp = 0x0000;
+    uint16_AddrTemp = uint16_AddrTemp | opCode_Array[2];
+    uint16_AddrTemp = uint16_AddrTemp << 8;
+    uint16_AddrTemp = uint16_AddrTemp | opCode_Array[1];
+    return uint16_AddrTemp;      //(opCode_Array[2] << 8) | opCode_Array[1];
 }
 
 uint8_t i8080_State::get_M()
@@ -158,6 +192,8 @@ void i8080_State::fire()
     // Handle fire command
     printf("FIRE\n");
 }
+
+
 
 void i8080_State::set_BC(uint16_t val)
 {
@@ -321,10 +357,10 @@ void i8080_State::exe_OpCode()
 	opCode_Array[1] = get_Memory(uint16_ProgramCounter + 0x01);
 	opCode_Array[2] = get_Memory(uint16_ProgramCounter + 0x02);
 
-    printf("PC: %d\n", uint16_ProgramCounter);
-    printf("OpCode0: %d\n", opCode_Array[0]);
-    printf("OpCode1: %d\n", opCode_Array[1]);
-    printf("OpCode2: %d\n", opCode_Array[2]);
+    printf("PC: %04X\n", uint16_ProgramCounter);
+    //printf("OpCode0: %04X\n", opCode_Array[0]);
+    printf("OpCode1: %04X\n", opCode_Array[1]);
+    printf("OpCode2: %04X\n", opCode_Array[2]);
 	
 	eval_opCode(opCode_Array[0]);
 }

@@ -13,11 +13,17 @@ const int JOYSTICK_DEAD_ZONE = 8000;
 // Allows for a single evaluation of keyboard/joystick
 //#pragma once
 enum class SI_INPUT {
-	MOVE_LEFT,
-	MOVE_RIGHT,
-	FIRE,
+	P1_MOVE_LEFT,
+	P1_MOVE_RIGHT,
+	P1_FIRE,
 	QUIT,
 	INSERT_COIN,
+	P2_MOVE_LEFT,
+	P2_MOVE_RIGHT,
+	P2_FIRE,
+	P1_START,
+	P2_START,
+	TILT,
 	NO_ACTION
 };
 
@@ -26,3 +32,7 @@ SI_INPUT getUserInput(SDL_Event &evnt);
 void SI_handleUserInput(bool &quit_flag);
 void SI_handleExecuteOpCode();
 void SI_handleScreenUpdate();
+
+void SI_ResetInputs();
+
+void SI_16BitShiftRegister();
