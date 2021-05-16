@@ -20,7 +20,7 @@ bool initGameWindow()
 	bool load_success = true;
 
 	// initialize all SDL attributes
-	if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_JOYSTICK) < 0) {
+	if (SDL_Init(SDL_INIT_EVERYTHING | SDL_INIT_JOYSTICK | SDL_INIT_TIMER) < 0) {
 		printf("Error initGameWindow [init] Error Message: %s\n", SDL_GetError());
 		load_success = false;
 	}

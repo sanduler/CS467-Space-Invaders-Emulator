@@ -72,8 +72,8 @@ i8080_State::i8080_State()
     mem_Array = (uint8_t*)malloc(0x10000);
     //video_RAM = (uint8_t*)malloc(224 * 256 * 4 * sizeof(video_RAM)); 
     video_RAM = (unsigned int*)malloc(224 * 256 * 4);  
-    //memset(video_RAM, 1, 224 * 256 * 4);
-    //memset(mem_Array, 0, 0x10000);
+    memset(video_RAM, 1, 224 * 256 * 4);
+    memset(mem_Array, 0, 0x10000);
 
     // Inputs
     inputs[255] = { 0 };
@@ -319,21 +319,20 @@ void    i8080_State::load_screen_update()
         // Get the value of the byte out of memory
         uint8_t* byte = (uint8_t*)get_VRAM_from_mem() + byte_cnt;
 
-        unsigned int* pix;
+        unsigned int* pixel;
         for (int bit = 0; bit < 8; bit++) {
 
-            int offset = (255 - (col + bit)) * 224 * 4 + (row * 4);
+            int addr_offset = (255 - (col + bit)) * 224 * 4 + (row * 4);
 
-            pix = (unsigned int*)((uint8_t*)video_RAM + offset);
+            pixel = (unsigned int*)((uint8_t*)video_RAM + addr_offset);
 
             if ((*byte & (1 << bit)) != 0) {
-                *pix = 0xffffffffL;
+                *pixel = 0xffffffffL;
             }                
             else {
-                *pix = 0x00000000L;
+                *pixel = 0x00000000L;
             }
 
-            pix -= 224;
         }
         //*/
     }
