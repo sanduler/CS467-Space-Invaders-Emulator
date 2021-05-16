@@ -177,7 +177,7 @@ void runSpaceInvaders()
 		gwRenderer,
 		SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_STREAMING,
-		EM_WIDTH,
+		28 * EM_WIDTH,
 		EM_HEIGHT);
 
 	// Load the ROM

@@ -28,6 +28,11 @@ void SI_GameLoop()
 		// handle input by the user
 		SI_handleUserInput(quit_flag);
 
+		// For Debugging Only
+		if (i8080.state.reg_PC.get_Large() == 0x19E3) {
+			system("pause");
+		}
+
 		// execute the opcode
 		SI_handleExecuteOpCode();
 
@@ -43,12 +48,12 @@ void SI_GameLoop()
 			// if on the middle interrupt then do not call update
 			// but still send the interrupt
 			if (middle_interrupt) {
-				i8080.state.SendInterrupt(8);
+				i8080.state.SendInterrupt(1);
 			} 
 			// if on the final interrupt then update screen
 			// but call the interrupt first
 			else {
-				i8080.state.SendInterrupt(10);
+				i8080.state.SendInterrupt(2);
 				SI_handleScreenUpdate();
 			}
 			//system("pause");
@@ -215,12 +220,14 @@ void SI_handleScreenUpdate()
 	// define the area for the emulator ontop of the bezel
 	const SDL_Rect fillRect = {	165,181,224,256 };
 
+	//int numofbytes = SDL_BYTESPERPIXEL(SDL_PIXELFORMAT_RGBA4444);
+
 	// update the screen pixels (the VRAM)
 	i8080.state.load_screen_update();
 
 	// re render the screen
 	// apply the updated VRAM to the screen
-	SDL_UpdateTexture(siContainer, NULL, i8080.state.video_RAM, 4 * 224);	
+	SDL_UpdateTexture(siContainer, NULL, i8080.state.video_RAM, 28 * 224);	// MM Modified this to 28 from 4 Hardware description states 28
 	// clear the old renderer
 	SDL_RenderClear(gwRenderer);
 	// re apply the background bezel

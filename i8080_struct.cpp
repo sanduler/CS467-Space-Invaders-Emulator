@@ -73,10 +73,10 @@ i8080_State::i8080_State()
     video_RAM = (uint8_t*)malloc(224 * 256 * 4 * sizeof(video_RAM));
 
     // Inputs
-    inputs[256] = { 0 };
+    inputs[255] = { 0 };
 
     // Ouputs
-    outputs[256] = { 0 };
+    outputs[255] = { 0 };
 
     // Shift Register
     shiftRegister = 0x0000;
@@ -115,8 +115,21 @@ void i8080_State::SendInterrupt(int itr_num)
 
 
         //Set the PC to the low memory vector.    
-        //This is identical to an "RST interrupt_num" instruction.    
-        reg_PC.set_Large(itr_num);
+        //This is identical to an "RST interrupt_num" instruction.
+        switch (itr_num)
+        {
+        case 0x00: reg_PC.set_Large(0x0000);
+        case 0x01: reg_PC.set_Large(0x0008);
+        case 0x02: reg_PC.set_Large(0x0010);
+        case 0x03: reg_PC.set_Large(0x0018);
+        case 0x04: reg_PC.set_Large(0x0020);
+        case 0x05: reg_PC.set_Large(0x0028);
+        case 0x06: reg_PC.set_Large(0x0030);
+        case 0x07: reg_PC.set_Large(0x0038);
+
+
+        }
+        
 
         // reset the int enable bit
         flag_INTE.set(0);
@@ -267,9 +280,9 @@ void i8080_State::load_screen_update()
     // eventually be loaded to the screen
     
     // Loop through the bytes 
-    for (int byte_cnt = 0; byte_cnt < (256 * 224) / 8; byte_cnt++) {
+    for (int byte_cnt = 0; byte_cnt < (256 * 224) / 28; byte_cnt++) {
         // Get the row and column of the current byte
-        int row = (byte_cnt * 8) / 256;
+        int row = (byte_cnt * 28) / 256;
         int col = (byte_cnt * 8) % 256;
 
         /*
