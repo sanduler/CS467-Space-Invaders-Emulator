@@ -15,6 +15,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <array>
+#include <chrono>
 
 void eval_opCode(unsigned char passed_code);
 
@@ -54,7 +55,8 @@ public:
  ********************************/
 class i8080_State {
 private:
-    void LoadRom(const char* fileName, size_t address);
+    void        LoadRom(const char* fileName, size_t address);
+    uint64_t    clock_Timer;
 public:
     // Constructor and destructor
     i8080_State();
@@ -89,7 +91,9 @@ public:
     void        exe_OpCode();
 
     // Clock
-    int clock_cycles;
+    int         clock_cycles;   // Keep track of the clock cycles executed so far
+    void        reset_ClockTimer();
+    int         get_CyclesToRun();
 
     // Flags
     //uint8_t FlagZSP[0x100];   // Precalculated ZSP
@@ -97,7 +101,7 @@ public:
     i8080_Flag  flag_S;         // Sign
     i8080_Flag  flag_P;         // Parity
     i8080_Flag  flag_C;         // Carry
-    i8080_Flag  flag_AC;        // Auxiliar Carry
+    i8080_Flag  flag_AC;        // Auxiliary Carry
     i8080_Flag  flag_INTE;
 
     // Memory
@@ -111,7 +115,9 @@ public:
 
     // Memory Interactors
     void        LoadRomFiles();
-    uint8_t* video_RAM;
+    void* get_VRAM_from_mem();
+    //uint8_t* video_RAM;
+    unsigned int* video_RAM;
     void        load_screen_update();
 
     // User input handlers

@@ -42,7 +42,8 @@ bool initGameWindow()
 		}
 
 		// initialize the renderer for the game window
-		gwRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
+		//gwRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED);
+		gwRenderer = SDL_CreateRenderer(gameWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		// check for successful creation of the renderer
 		if (gwRenderer == NULL) {
 			printf("Error initGameWindow [renderer] Error Message: %s\n", SDL_GetError());
@@ -177,7 +178,7 @@ void runSpaceInvaders()
 		gwRenderer,
 		SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_STREAMING,
-		28 * EM_WIDTH,
+		EM_WIDTH,					//28 * EM_WIDTH,
 		EM_HEIGHT);
 
 	// Load the ROM

@@ -327,7 +327,7 @@ void func_General_RET()
 	uint8_t uint8_ResultTemp2 = 0x00;
 	uint16_t uint16_ResultTemp = 0x0000;
 	
-	printf("InitialSP: %4X\n", uint16_InitialSP);
+	//printf("InitialSP: %4X\n", uint16_InitialSP);
 
 	uint8_ResultTemp1 = i8080.state.get_Memory(uint16_InitialSP); 
 	
@@ -343,7 +343,7 @@ void func_General_RET()
 	
 	uint16_ResultTemp = uint16_ResultTemp | uint8_ResultTemp1;
 
-	printf("ReturnPC: %4X\n", uint16_ResultTemp);
+	//printf("ReturnPC: %4X\n", uint16_ResultTemp);
 	
 	i8080.state.reg_PC.set_Large(uint16_ResultTemp);
 	
@@ -359,12 +359,12 @@ void func_General_CALL()
     // Break the Program Counter into two bytes so that it can be stored in memory.
     uint8_t uint8_PCAddrLow = 0x00;
     uint8_t uint8_PCAddrHigh = 0x00;
-	printf("PC: %4X\n", uint16_InitialPC);
-	printf("SP: %4X\n", uint16_InitialSP);
+	//printf("PC: %4X\n", uint16_InitialPC);
+	//printf("SP: %4X\n", uint16_InitialSP);
     uint8_PCAddrLow = uint8_PCAddrLow | uint16_InitialPC;
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8);
-	printf("PCLow: %4X\n", uint8_PCAddrLow);
-	printf("PCHigh: %4X\n", uint8_PCAddrHigh);
+	//printf("PCLow: %4X\n", uint8_PCAddrLow);
+	//printf("PCHigh: %4X\n", uint8_PCAddrHigh);
 
     // Combine the two bytes following the OpCode to form the address for where the Call
     // will take the program.
@@ -382,7 +382,7 @@ void func_General_CALL()
 	
 	// The Stack Pointer is updated
 	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
-	printf("CALL_NewPC: %4X\n", uint16_AddressTemp);
+	//printf("CALL_NewPC: %4X\n", uint16_AddressTemp);
 	i8080.state.reg_PC.set_Large(uint16_AddressTemp);
 
 };

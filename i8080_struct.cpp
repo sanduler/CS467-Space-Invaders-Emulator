@@ -47,7 +47,6 @@ i8080_State::i8080_State()
 {
 
     //cout << "Constructor: State has been initilized...." << endl;
-    clock_cycles = 0;
 
     // Set Flags
     flag_Z.set(0);
@@ -55,6 +54,7 @@ i8080_State::i8080_State()
     flag_P.set(0);
     flag_C.set(0);
     flag_AC.set(0);
+    flag_INTE.set(0);
 
     //set registers
     reg_A.set(0);
@@ -70,7 +70,10 @@ i8080_State::i8080_State()
 
     // Initialize arrays
     mem_Array = (uint8_t*)malloc(0x10000);
-    video_RAM = (uint8_t*)malloc(224 * 256 * 4 * sizeof(video_RAM));
+    //video_RAM = (uint8_t*)malloc(224 * 256 * 4 * sizeof(video_RAM)); 
+    video_RAM = (unsigned int*)malloc(224 * 256 * 4);  
+    //memset(video_RAM, 1, 224 * 256 * 4);
+    //memset(mem_Array, 0, 0x10000);
 
     // Inputs
     inputs[255] = { 0 };
@@ -80,6 +83,10 @@ i8080_State::i8080_State()
 
     // Shift Register
     shiftRegister = 0x0000;
+
+    // Clock variables
+    clock_cycles = 0;
+    clock_Timer = 0;
 
 }
 
@@ -177,51 +184,49 @@ uint8_t i8080_State::get_M()
     return get_Memory(get_HL());
 }
 
-void i8080_State::set_M(uint8_t val)
+void    i8080_State::set_M(uint8_t val)
 {
     set_Memory(get_HL(), val);
 }
 
-void i8080_State::move_right()
+void    i8080_State::move_right()
 {
     // Handle user input to move right
     printf("MOVE RIGHT\n");
 }
 
-void i8080_State::move_left()
+void    i8080_State::move_left()
 {
     // Handle user input to move left 
     printf("MOVE LEFT\n");
 }
 
-void i8080_State::insert_coin()
+void    i8080_State::insert_coin()
 {
     // Handle user input to insert coin
     printf("COIN INSERTED\n");
 }
 
-void i8080_State::fire()
+void    i8080_State::fire()
 {
     // Handle fire command
     printf("FIRE\n");
 }
 
-
-
-void i8080_State::set_BC(uint16_t val)
+void    i8080_State::set_BC(uint16_t val)
 {
     // Split the passed val to the two 8 bit registers
     reg_C.set(val & 0xff); 
     reg_B.set((val >> 8) & 0xff);
 }
 
-void i8080_State::set_HL(uint16_t val)
+void    i8080_State::set_HL(uint16_t val)
 {
     reg_L.set(val & 0xff); 
     reg_H.set((val >> 8) & 0xff);
 }
 
-void i8080_State::set_DE(uint16_t val)
+void    i8080_State::set_DE(uint16_t val)
 {
     reg_E.set(val & 0xff); 
     reg_D.set((val >> 8) & 0xff);
@@ -266,23 +271,27 @@ uint8_t i8080_State::get_PSW()
     return uint8_RegPSW;
 }
 
-void i8080_State::LoadRomFiles() 
+void    i8080_State::LoadRomFiles() 
 {
     LoadRom("rom/invaders.h", 0);
-    LoadRom("rom/invaders.g", 0x0800);
+    LoadRom("rom/invaders.g", 0x800);
     LoadRom("rom/invaders.f", 0x1000);
     LoadRom("rom/invaders.e", 0x1800);
 }
 
-void i8080_State::load_screen_update()
+void*   i8080_State::get_VRAM_from_mem() {
+    return (void*)&mem_Array[0x2400];
+}
+
+void    i8080_State::load_screen_update()
 {
     // Load the current state of memory into an array that will 
     // eventually be loaded to the screen
     
     // Loop through the bytes 
-    for (int byte_cnt = 0; byte_cnt < (256 * 224) / 28; byte_cnt++) {
+    for (int byte_cnt = 0; byte_cnt < 256 * 224 / 8; byte_cnt++) {
         // Get the row and column of the current byte
-        int row = (byte_cnt * 28) / 256;
+        int row = (byte_cnt * 8) / 256;
         int col = (byte_cnt * 8) % 256;
 
         /*
@@ -308,7 +317,7 @@ void i8080_State::load_screen_update()
 
         ///*
         // Get the value of the byte out of memory
-        uint8_t* byte = (uint8_t*)&mem_Array[0x2400] + byte_cnt;
+        uint8_t* byte = (uint8_t*)get_VRAM_from_mem() + byte_cnt;
 
         unsigned int* pix;
         for (int bit = 0; bit < 8; bit++) {
@@ -331,7 +340,7 @@ void i8080_State::load_screen_update()
 
 }
 
-void i8080_State::LoadRom(const char * fileName, size_t address)
+void    i8080_State::LoadRom(const char * fileName, size_t address)
 {
     // Open the ROM file
 #pragma warning(disable:4996)
@@ -363,20 +372,64 @@ void i8080_State::LoadRom(const char * fileName, size_t address)
     return;
 }
 
-void i8080_State::exe_OpCode()
+void    i8080_State::exe_OpCode()
 {
-    uint16_t uint16_ProgramCounter = reg_PC.get_Large();
-	opCode_Array[0] = get_Memory(uint16_ProgramCounter);
-	opCode_Array[1] = get_Memory(uint16_ProgramCounter + 0x01);
-	opCode_Array[2] = get_Memory(uint16_ProgramCounter + 0x02);
+    // Get how many clock cycles we need to run
+    int clock_cycles_to_run = get_CyclesToRun();
+    int goal_clock_cycles = clock_cycles + clock_cycles_to_run;
 
-    printf("PC: %04X\n", uint16_ProgramCounter);
-    //printf("OpCode0: %04X\n", opCode_Array[0]);
-    printf("OpCode1: %04X\n", opCode_Array[1]);
-    printf("OpCode2: %04X\n", opCode_Array[2]);
+    // run the CPU until we have handled all the opcodes that we need to
+    while (clock_cycles < goal_clock_cycles) {
+
+        uint16_t uint16_ProgramCounter = reg_PC.get_Large();
+	    opCode_Array[0] = get_Memory(uint16_ProgramCounter);
+	    opCode_Array[1] = get_Memory(uint16_ProgramCounter + 0x01);
+	    opCode_Array[2] = get_Memory(uint16_ProgramCounter + 0x02);
+
+        //printf("PC: %04X\n", uint16_ProgramCounter);
+        //printf("OpCode0: %04X\n", opCode_Array[0]);
+        //printf("OpCode1: %04X\n", opCode_Array[1]);
+        //printf("OpCode2: %04X\n", opCode_Array[2]);
 	
-	eval_opCode(opCode_Array[0]);
+	    eval_opCode(opCode_Array[0]);
+    }
+
+    // Reset the timer once the opCodes have executed
+    reset_ClockTimer();
 }
+
+void    i8080_State::reset_ClockTimer()
+{
+    /*
+        Reset the clock timer to the current time in micro seconds
+    */
+    clock_Timer = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::
+        now().time_since_epoch()).count();
+}
+
+int     i8080_State::get_CyclesToRun()
+{
+    /*
+        i8080 runs at 2Mhz which means it processes 2 clock cycles every micro second
+        so we need to calculate how much time has passed since the last time we
+        checked to run the proper amount of cycles
+    */
+
+    // On the first opCode exe call (when the timer is 0) just start the timer
+    if (clock_Timer == 0) {
+        reset_ClockTimer();
+        return 0;
+    }
+    
+    // On all subsequesnt passes see how much time has passed on the timer and calculate
+    // how many clock cycles need to be executed
+    uint64_t now_micro = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::
+        now().time_since_epoch()).count();
+
+    // number of clock cycles = (time in micro seconds) * 2
+    return (now_micro - clock_Timer) * 2;
+}
+
 
 /*****************************
  * Function Type: destructor, ~i8080_State();

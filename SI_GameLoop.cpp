@@ -19,6 +19,9 @@ void SI_GameLoop()
 	// only call the update if == 1
 	int middle_interrupt = false;
 
+	// keep track of the game time to keep the screen updates consistent
+	int game_timer = 0;
+
 	// enter while loop until quit signal
 	while (!quit_flag) {
 
@@ -29,22 +32,24 @@ void SI_GameLoop()
 		SI_handleUserInput(quit_flag);
 
 		// For Debugging Only
-		if (i8080.state.reg_PC.get_Large() == 0x19E3) {
+		/*if (i8080.state.reg_PC.get_Large() == 0x19E3) {
 			system("pause");
-		}
+		}*/
 
 		// execute the opcode
 		SI_handleExecuteOpCode();
 
-		if ((i8080.state.opCode_Array[0] == 0xD3) && (i8080.state.opCode_Array[1] == 0x04)) {
-			SI_16BitShiftRegister();
-		}
+		// MW moved bit shift ing code into op code handler for time testing
+		//if ((i8080.state.opCode_Array[0] == 0xD3) && (i8080.state.opCode_Array[1] == 0x04)) {
+		//	SI_16BitShiftRegister();
+		//}
 
 		// handle the update to the screen
-		// only do this 1/60 seconds
-		if (i8080.state.clock_cycles > 120) {
-			// reset the clock cycles when this occurs so we can catch it again
-			i8080.state.clock_cycles = 0;
+		// only do this 1/60 seconds by looking at the SDL ticks 
+		// if the current SDL ticks (which are returned in ms) is greater than 60 Hz
+		if (SDL_GetTicks() - game_timer	> (1000/60)) {
+			// reset the game timer so the next instance can be caught
+			game_timer = SDL_GetTicks();
 			// if on the middle interrupt then do not call update
 			// but still send the interrupt
 			if (middle_interrupt) {
@@ -227,7 +232,8 @@ void SI_handleScreenUpdate()
 
 	// re render the screen
 	// apply the updated VRAM to the screen
-	SDL_UpdateTexture(siContainer, NULL, i8080.state.video_RAM, 28 * 224);	// MM Modified this to 28 from 4 Hardware description states 28
+	//SDL_UpdateTexture(siContainer, NULL, i8080.state.video_RAM, 28 * 224);	// MM Modified this to 28 from 4 Hardware description states 28
+	SDL_UpdateTexture(siContainer, NULL, i8080.state.video_RAM, 4 * 224);
 	// clear the old renderer
 	SDL_RenderClear(gwRenderer);
 	// re apply the background bezel
@@ -240,6 +246,11 @@ void SI_handleScreenUpdate()
 
 void SI_handleExecuteOpCode()
 {
+	
+	if ((i8080.state.opCode_Array[0] == 0xD3) && (i8080.state.opCode_Array[1] == 0x04)) {
+		SI_16BitShiftRegister();
+	}
+
 	i8080.state.exe_OpCode();
 }
 
