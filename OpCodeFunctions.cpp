@@ -743,8 +743,8 @@ void  func_DAA() {
     // Logic for: Decimal Adjust Accumulator
 
     uint8_t uint8_InitialA = i8080.state.reg_A.get();
-    uint8_t uint8_ResultTemp1;
-    uint8_t uint8_ResultTemp2;
+    uint8_t uint8_ResultTemp1 = 0x00;
+    uint8_t uint8_ResultTemp2 = 0x00;
     bool bool_InitialAC = i8080.state.flag_AC.get();
     bool bool_InitialCY = i8080.state.flag_C.get();
     bool bool_Result1 = false;
@@ -4737,7 +4737,7 @@ void  func_DI() {
 
     // Logic for: special
 
-    i8080.state.flag_INTE.set(true);
+    i8080.state.flag_INTE.set(false);
 
     func_ClockCycles(4);
 

@@ -73,9 +73,13 @@ void func_INX_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source2
 
 	uint16_RegisterTemp = uint16_RegisterTemp + 0x0001;
 
-	reg_Source2.set(uint16_RegisterTemp);
+	uint8_t uint8_ResultTemp = uint16_RegisterTemp & 0x00FF;
 
-	reg_Source1.set(uint16_RegisterTemp >> 8);
+	reg_Source2.set(uint8_ResultTemp);
+
+	uint8_ResultTemp = (uint16_RegisterTemp >> 8) & 0x00FF;
+
+	reg_Source1.set(uint8_ResultTemp);
 
 }
 

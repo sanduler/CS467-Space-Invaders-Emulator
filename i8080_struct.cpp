@@ -56,6 +56,9 @@ i8080_State::i8080_State()
     flag_AC.set(false);
     flag_INTE.set(false);
 
+    // Opcode Array
+    opCode_Array[2] = { 0 };
+
     //set registers
     reg_A.set(0);
     reg_B.set(0);
@@ -383,8 +386,8 @@ void    i8080_State::exe_OpCode()
 
         uint16_t uint16_ProgramCounter = reg_PC.get_Large();
 	    opCode_Array[0] = get_Memory(uint16_ProgramCounter);
-	    opCode_Array[1] = get_Memory(uint16_ProgramCounter + 0x01);
-	    opCode_Array[2] = get_Memory(uint16_ProgramCounter + 0x02);
+	    opCode_Array[1] = get_Memory(uint16_ProgramCounter + 0x0001);
+	    opCode_Array[2] = get_Memory(uint16_ProgramCounter + 0x0002);
 
         //printf("PC: %04X\n", uint16_ProgramCounter);
         //printf("OpCode0: %04X\n", opCode_Array[0]);
