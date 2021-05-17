@@ -55,6 +55,7 @@ bool func_Check_AuxCarry(uint8_t uint8_Source1, uint8_t uint8_Source2);
 bool func_Check_Parity();
 bool func_Check_Parity(uint8_t uint8_Register);
 bool func_Check_Carry(uint8_t uint8_Source1, uint8_t uint8_Source2);
+bool func_Check_Carry(uint16_t uint16_Source1, uint16_t uint16_Source2);
 
 // GENERAL FUNCTIONS
 void func_ClockCycles(int intClockCycles);

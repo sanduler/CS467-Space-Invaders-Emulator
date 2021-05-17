@@ -306,17 +306,17 @@ void func_PUSH_Registers(i8080_Register &reg_Source1, i8080_Register &reg_Source
 {
 	uint16_t uint16_TempSP = i8080.state.reg_SP.get_Large();
 	
-	uint16_TempSP = uint16_TempSP - 0x01;
+	//uint16_TempSP = uint16_TempSP - 0x01;
 	
 	// Function to push data to memory
-	i8080.state.set_Memory(uint16_TempSP, reg_Source1.get());
+	i8080.state.set_Memory(uint16_TempSP - 0x0001, reg_Source1.get());
 	
-	uint16_TempSP = uint16_TempSP - 0x01;
+	//uint16_TempSP = uint16_TempSP - 0x01;
 	
 	// Function to push data to memory
-	i8080.state.set_Memory(uint16_TempSP, reg_Source2.get());
+	i8080.state.set_Memory(uint16_TempSP - 0x0002, reg_Source2.get());
 	
-	i8080.state.reg_SP.set_Large(uint16_TempSP);
+	i8080.state.reg_SP.set_Large(uint16_TempSP - 0x0002);
 };
 
 // Generic Return function to pass the RET OpCodes to
@@ -566,6 +566,51 @@ bool func_Check_Carry(uint8_t uint8_Source1, uint8_t uint8_Source2)
 	return boolResult;
 	
 };
+
+
+
+
+// Generic Check Carry Function for 16 bit values to return if there was a carry from the bit position 7 addition/subtraction/etc.
+bool func_Check_Carry(uint16_t uint16_Source1, uint16_t uint16_Source2)
+{
+	bool boolResult = 0;
+
+	uint16_t uint16_Carry = 0x0000;
+
+	int intBitPosition;
+	uint16_t uint16_Source1Temp = 0x0000;
+	uint16_t uint16_Source2Temp = 0x0000;
+	uint16_t uint16_ResultTemp = 0x0000;
+
+	for (intBitPosition = 0; intBitPosition < 16; intBitPosition++) {
+
+		uint16_Source1Temp = 0x0000;
+		uint16_Source2Temp = 0x0000;
+
+		uint16_Carry = uint16_Carry >> 1;
+
+		uint16_Source1Temp = ((uint16_Source1 >> intBitPosition) & 0x01);
+		uint16_Source2Temp = ((uint16_Source2 >> intBitPosition) & 0x01);
+
+		uint16_ResultTemp = uint16_Source1Temp + uint16_Source2Temp + uint16_Carry;
+
+		if ((uint16_ResultTemp & 0x02) != 0x00) {
+			boolResult = 1;
+		}
+		else {
+			boolResult = 0;
+		};
+
+		uint16_Carry = uint16_ResultTemp;
+
+
+	};
+
+	return boolResult;
+
+};
+
+
 
 
 // Generic Function to run a given number of Clock Cycles

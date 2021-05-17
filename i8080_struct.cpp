@@ -49,12 +49,12 @@ i8080_State::i8080_State()
     //cout << "Constructor: State has been initilized...." << endl;
 
     // Set Flags
-    flag_Z.set(0);
-    flag_S.set(0);
-    flag_P.set(0);
-    flag_C.set(0);
-    flag_AC.set(0);
-    flag_INTE.set(0);
+    flag_Z.set(false);
+    flag_S.set(false);
+    flag_P.set(false);
+    flag_C.set(false);
+    flag_AC.set(false);
+    flag_INTE.set(false);
 
     //set registers
     reg_A.set(0);
@@ -113,11 +113,11 @@ void i8080_State::SendInterrupt(int itr_num)
         //printf("PCLow: %4X\n", uint8_PCAddrLow);
         //printf("PCHigh: %4X\n", uint8_PCAddrHigh);
         // Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-        set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-        set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+        set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+        set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 
         // The Stack Pointer is updated
-        reg_SP.set_Large(uint16_InitialSP - 0x02);
+        reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 
 
@@ -139,7 +139,7 @@ void i8080_State::SendInterrupt(int itr_num)
         
 
         // reset the int enable bit
-        flag_INTE.set(0);
+        flag_INTE.set(true);
     }
 
 }

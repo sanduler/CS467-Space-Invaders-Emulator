@@ -175,10 +175,11 @@ void  func_DAD_B() {
 
     // Logic for: HL = HL + BC
     uint16_t initial_HL = i8080.state.get_HL();
-    i8080.state.set_HL(i8080.state.get_HL() + i8080.state.get_BC());
+    uint16_t uint16_InitialBC = i8080.state.get_BC();
+    i8080.state.set_HL(initial_HL + uint16_InitialBC);
 
     // Set flags: CY
-    i8080.state.flag_C.set(func_Check_Carry(initial_HL, i8080.state.get_BC()));
+    i8080.state.flag_C.set(func_Check_Carry(initial_HL, uint16_InitialBC));
 
     func_ClockCycles(10);
 
@@ -193,8 +194,10 @@ void  func_DAD_B() {
 ////////////////////
 void  func_LDAX_B() {
 
+    uint16_t uint16_InitialBC = i8080.state.get_BC();
+    uint8_t uint8_MemoryValue = i8080.state.get_Memory(uint16_InitialBC);
     // Logic for: A <- (BC)
-    i8080.state.reg_A.set(i8080.state.get_Memory(i8080.state.get_BC()));
+    i8080.state.reg_A.set(uint8_MemoryValue);
 
     func_ClockCycles(7);
 
@@ -286,7 +289,7 @@ void  func_RRC() {
 
     // Checks to see if the low order bit is 1 or 0. If it is a one the result
     // value is changed, and will be used to set the carry flag
-    if (uint8_InitialA & 0x01 != 0x00){
+    if ((uint8_InitialA & 0x01) != 0x00){
         bool_Result = true;
     }
 
@@ -794,10 +797,10 @@ void  func_DAD_H() {
 
     // Logic for: HL = HL + HI
     uint16_t initial_HL = i8080.state.get_HL();
-    i8080.state.set_HL(i8080.state.get_HL() + i8080.state.get_HL());
+    i8080.state.set_HL(initial_HL + initial_HL);
 
     // Set flags: CY
-    i8080.state.flag_C.set(func_Check_Carry(initial_HL, i8080.state.get_HL()));
+    i8080.state.flag_C.set(func_Check_Carry(initial_HL, initial_HL));
 
     // Set flags: CY
     func_ClockCycles(10);
@@ -1067,10 +1070,11 @@ void  func_DAD_SP() {
 
     // Logic for: HL = HL + SP
     uint16_t initial_HL = i8080.state.get_HL();
-    i8080.state.set_HL(i8080.state.get_HL() + i8080.state.reg_SP.get_Large());
+    uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+    i8080.state.set_HL(initial_HL + uint16_InitialSP);
 
     // Set flags: CY
-    i8080.state.flag_C.set(func_Check_Carry(initial_HL, i8080.state.reg_SP.get_Large()));
+    i8080.state.flag_C.set(func_Check_Carry(initial_HL, uint16_InitialSP));
 
     // Set flags: CY
     func_ClockCycles(10);
@@ -1288,7 +1292,7 @@ void  func_MOV_B_L() {
 void  func_MOV_B_M() {
 
     // Logic for: B <- (HL)
-    i8080.state.reg_B.set(i8080.state.get_Memory(i8080.state.get_HL()));
+    i8080.state.reg_B.set(i8080.state.get_M());
     //func_MOV_Registers(i8080.state.reg_B, i8080.state.reg_M);
 
     func_ClockCycles(7);
@@ -1417,7 +1421,7 @@ void  func_MOV_C_L() {
 void  func_MOV_C_M() {
 
     // Logic for: C <- (HL)
-    i8080.state.reg_C.set(i8080.state.get_M());
+    i8080.state.reg_C.set(i8080.state.get_M());     // MM - This wasn't pulling from memory 
 
     func_ClockCycles(7);
 
@@ -1546,7 +1550,7 @@ void  func_MOV_D_M() {
 
     // Logic for: D <- (HL)
 
-    i8080.state.reg_D.set(i8080.state.get_Memory(i8080.state.get_HL()));
+    i8080.state.reg_D.set(i8080.state.get_M());
     //func_MOV_Registers(i8080.state.reg_D, i8080.state.reg_M);
 
     func_ClockCycles(7);
@@ -1677,7 +1681,7 @@ void  func_MOV_E_M() {
     // Logic for: E <- (HL)
     //func_MOV_Registers(i8080.state.reg_E, i8080.state.reg_M);
 
-    i8080.state.reg_E.set(i8080.state.get_Memory(i8080.state.get_HL()));
+    i8080.state.reg_E.set(i8080.state.get_M());
 
     func_ClockCycles(7);
 
@@ -1805,7 +1809,7 @@ void  func_MOV_H_L() {
 void  func_MOV_H_M() {
 
     // Logic for: H <- (HL)
-    i8080.state.reg_H.set(i8080.state.get_Memory(i8080.state.get_HL()));
+    i8080.state.reg_H.set(i8080.state.get_M());
 
     func_ClockCycles(7);
 
@@ -1935,7 +1939,7 @@ void  func_MOV_L_M() {
     // Logic for: L <- (HL)
     //func_MOV_Registers(i8080.state.reg_L, i8080.state.reg_M);
 
-    i8080.state.reg_L.set(i8080.state.get_Memory(i8080.state.get_HL()));
+    i8080.state.reg_L.set(i8080.state.get_M());
     func_ClockCycles(7);
 
 }
@@ -2064,6 +2068,9 @@ void  func_HLT() {
     // Logic for: special
     // @TODO [Ruben ]: fill in logic
 
+    printf("HLT Function");
+    //system("pause"); // MM - Just to see if it has been called
+
     func_ClockCycles(7);
 
 }
@@ -2079,7 +2086,7 @@ void  func_MOV_M_A() {
 
     // Logic for: (HL) <- C
     //func_MOV_Registers(i8080.state.reg_M, i8080.state.reg_A);
-    i8080.state.set_M(i8080.state.reg_C.get());
+    i8080.state.set_M(i8080.state.reg_A.get());  // MM - Changed to reg_A form reg_C
     func_ClockCycles(7);
 
 }
@@ -2338,6 +2345,21 @@ void  func_ADD_M() {
     // Logic for: A <- A + (HL)
     //func_ADD_Registers(i8080.state.reg_M);
 
+    uint8_t uint8_InitialA = i8080.state.reg_A.get();
+    uint8_t uint8_InitialM = i8080.state.get_M();
+    uint8_t uint8_ResultTemp = uint8_InitialA + uint8_InitialM;
+
+    i8080.state.reg_A.set(uint8_ResultTemp);
+
+    // S	Z	AC	P	CY
+
+    i8080.state.flag_S.set(func_Check_Sign());
+    i8080.state.flag_Z.set(func_Check_Zero());
+    i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_InitialA, uint8_InitialM));
+    i8080.state.flag_P.set(func_Check_Parity());
+    i8080.state.flag_C.set(func_Check_Carry(uint8_InitialA, uint8_InitialM));
+
+
     // Set flags: Z, S, P, CY, AC
     // Flags set in AD function
 
@@ -2490,8 +2512,24 @@ void  func_ADC_M() {
     // Logic for: A <- A + (HL) + CY
     //func_ADC_Registers(i8080.state.reg_M);
 
-    // Set flags: Z, S, P, CY, AC
-    // Flags set in AD function
+    uint8_t uint8_InitialA = i8080.state.reg_A.get();
+    uint8_t uint8_InitialM = i8080.state.get_M();
+
+    if (i8080.state.flag_C.get() == true) {
+        uint8_InitialA = uint8_InitialA + 0x01;
+    }
+
+    uint8_t uint8_ResultTemp = uint8_InitialA + uint8_InitialM;
+
+    i8080.state.reg_A.set(uint8_ResultTemp);
+
+    // S	Z	AC	P	CY
+
+    i8080.state.flag_S.set(func_Check_Sign());
+    i8080.state.flag_Z.set(func_Check_Zero());
+    i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_InitialA, uint8_InitialM));
+    i8080.state.flag_P.set(func_Check_Parity());
+    i8080.state.flag_C.set(func_Check_Carry(uint8_InitialA, uint8_InitialM));
 
     func_ClockCycles(7);
 
@@ -2559,7 +2597,7 @@ void  func_SUB_C() {
 ////////////////////
 void  func_SUB_D() {
 
-    // Logic for: A <- A + D
+    // Logic for: A <- A - D
     func_SUB_Registers(i8080.state.reg_D);
 
     // Set flags: Z, S, P, CY, AC
@@ -2629,7 +2667,7 @@ void  func_SUB_M() {
 
     // Logic for: A <- A - (HL)
 
-    uint8_t uint8_RegisterTemp = i8080.state.get_Memory(i8080.state.get_HL());
+    uint8_t uint8_RegisterTemp = i8080.state.get_M();
 
     uint8_t uint8_InitialA = i8080.state.reg_A.get();
 	uint8_t uint8_RegisterTwosCompliment = (~(uint8_RegisterTemp)) + 0x01;
@@ -2783,7 +2821,7 @@ void  func_SBB_M() {
 
     // Logic for: A <- A - (HL) - CY
 
-    uint8_t uint8_RegisterTemp = i8080.state.get_Memory(i8080.state.get_HL());
+    uint8_t uint8_RegisterTemp = i8080.state.get_M();
 
     uint8_t uint8_InitialA = i8080.state.reg_A.get();
 	uint8_t uint8_RegisterTwosCompliment = (~(uint8_RegisterTemp)) + 0x01;
@@ -2941,7 +2979,21 @@ void  func_ANA_L() {
 void  func_ANA_M() {
 
     // Logic for: A <- A & (HL)
-    func_ANA_Registers(i8080.state.reg_H);
+    //func_ANA_Registers(i8080.state.reg_H); --MM Removed this because it is wrong
+    uint8_t uint8_InitialM = i8080.state.get_M();
+
+    uint8_t uint8_ResultTemp = i8080.state.reg_A.get() & uint8_InitialM;
+
+    i8080.state.reg_A.set(uint8_ResultTemp);
+
+    // According to the i8080 Programming Manual the ANA instructions do not affect the AC Flag (pg 19)
+    // This differs from the documentation on other sites.
+    // S	Z	P	CY
+
+    i8080.state.flag_S.set(func_Check_Sign());
+    i8080.state.flag_Z.set(func_Check_Zero());
+    i8080.state.flag_P.set(func_Check_Parity());
+    i8080.state.flag_C.set(0);
 
     // Set flags: Z, S, P, CY, AC
     func_ClockCycles(7);
@@ -3077,7 +3129,7 @@ void  func_XRA_L() {
 void  func_XRA_M() {
 
     // Logic for: A <- A ^ (HL)
-    uint8_t uint8_RegisterTemp = i8080.state.get_Memory(i8080.state.get_HL());
+    uint8_t uint8_RegisterTemp = i8080.state.get_M();
     uint8_t uint8_ResultTemp = i8080.state.reg_A.get() ^ uint8_RegisterTemp;
 	
 	i8080.state.reg_A.set(uint8_ResultTemp);
@@ -3225,6 +3277,19 @@ void  func_ORA_M() {
     // Logic for: A <- A | (HL)
     //func_ORA_Registers(i8080.state.reg_M);
 
+    uint8_t uint8_InitialM = i8080.state.get_M();
+    uint8_t uint8_ResultTemp = i8080.state.reg_A.get() | uint8_InitialM;
+
+    i8080.state.reg_A.set(uint8_ResultTemp);
+
+    // According to the i8080 Programming Manual the ORA instructions do not affect the AC Flag (pg 19)
+    // This differs from the documentation on other sites.
+    // S	Z	P	CY
+    i8080.state.flag_S.set(func_Check_Sign());
+    i8080.state.flag_Z.set(func_Check_Zero());
+    i8080.state.flag_P.set(func_Check_Parity());
+    i8080.state.flag_C.set(0);
+
     // Set flags: Z, S, P, CY, AC
     func_ClockCycles(7);
 
@@ -3360,7 +3425,7 @@ void  func_CMP_M() {
 
     // Logic for: A - (HL)
     uint8_t uint8_InitialA = i8080.state.reg_A.get();
-    uint8_t uint8_RegisterTemp = i8080.state.get_Memory(i8080.state.get_HL());
+    uint8_t uint8_RegisterTemp = i8080.state.get_M();
 	uint8_t uint8_RegisterTwosCompliment = (~uint8_RegisterTemp) + 0x01;
 	uint8_t uint8_ResultTemp = uint8_InitialA - uint8_RegisterTemp;
 
@@ -3433,9 +3498,10 @@ void  func_RNZ() {
 void  func_POP_B() {
 
     // Logic for: C <- (sp); B <- (sp+1); sp <- sp+2
-    i8080.state.reg_C.set(i8080.state.get_Memory(i8080.state.reg_SP.get_Large()));
-    i8080.state.reg_B.set(i8080.state.get_Memory(i8080.state.reg_SP.get_Large() + 1));
-    i8080.state.reg_SP.set_Large(i8080.state.reg_SP.get_Large() + 2);
+    uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+    i8080.state.reg_C.set(i8080.state.get_Memory(uint16_InitialSP));
+    i8080.state.reg_B.set(i8080.state.get_Memory(uint16_InitialSP + 0x0001));
+    i8080.state.reg_SP.set_Large(uint16_InitialSP + 0x0002);
 
     func_ClockCycles(10);
 
@@ -3582,8 +3648,8 @@ void  func_RST_0() {
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
 
 	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	i8080.state.set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
 	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
@@ -3812,9 +3878,10 @@ void  func_RNC() {
 void  func_POP_D() {
 
     // Logic for: E <- (sp); D <- (sp+1); sp <- sp+2
-    i8080.state.reg_E.set(i8080.state.get_Memory(i8080.state.reg_SP.get_Large()));
-    i8080.state.reg_D.set(i8080.state.get_Memory(i8080.state.reg_SP.get_Large() + 1));
-    i8080.state.reg_SP.set_Large(i8080.state.reg_SP.get_Large() + 2);
+    uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+    i8080.state.reg_E.set(i8080.state.get_Memory(uint16_InitialSP));
+    i8080.state.reg_D.set(i8080.state.get_Memory(uint16_InitialSP + 0x0001));
+    i8080.state.reg_SP.set_Large(uint16_InitialSP + 0x0002);
 
     func_ClockCycles(10);
 
@@ -3862,6 +3929,10 @@ void  func_OUT_D8() {
 
     // Logic for: special
     // @TODO [Ruben ]: fill in logic
+
+    // Moves the Accumulator into the Output Port specified in opCode_Array[1]
+    i8080.state.outputs[i8080.state.opCode_Array[1]] = i8080.state.reg_A.get();
+    //system("pause");
 
     func_ClockCycles(10);
 
@@ -4111,6 +4182,8 @@ void  func_SBI_D8() {
 	
 	if (i8080.state.flag_C.get() == true){
 		uint8_RegisterTemp = uint8_RegisterTemp + 0x01;
+        uint8_RegisterTwosCompliment = (~(uint8_RegisterTemp) + 0x01);
+
 	}
 	
 	uint8_t uint8_ResultTemp = uint8_InitialA - uint8_RegisterTemp;
@@ -4157,11 +4230,11 @@ void  func_RST_3() {
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
 
 	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	i8080.state.set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
-	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 	i8080.state.reg_PC.set_Large(0x0018);
 
@@ -4198,9 +4271,10 @@ void  func_RPO() {
 void  func_POP_H() {
 
     // Logic for: L <- (sp); H <- (sp+1); sp <- sp+2
-    i8080.state.reg_L.set(i8080.state.get_Memory(i8080.state.reg_SP.get_Large()));
-    i8080.state.reg_H.set(i8080.state.get_Memory(i8080.state.reg_SP.get_Large() + 1));
-    i8080.state.reg_SP.set_Large(i8080.state.reg_SP.get_Large() + 2);
+    uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+    i8080.state.reg_L.set(i8080.state.get_Memory(uint16_InitialSP));
+    i8080.state.reg_H.set(i8080.state.get_Memory(uint16_InitialSP + 1));
+    i8080.state.reg_SP.set_Large(uint16_InitialSP + 2);
 
     func_ClockCycles(10);
 
@@ -4249,16 +4323,16 @@ void  func_XTHL() {
     uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
     uint8_t uint8_InitialH = i8080.state.reg_H.get();
     uint8_t uint8_InitialL = i8080.state.reg_L.get();
-    uint8_t uint8_RegisterTempH = i8080.state.get_Memory(uint16_InitialSP);
-    uint8_t uint8_RegisterTempL = i8080.state.get_Memory(uint16_InitialSP + 0x01);
+    uint8_t uint8_RegisterTempL = i8080.state.get_Memory(uint16_InitialSP);
+    uint8_t uint8_RegisterTempH = i8080.state.get_Memory(uint16_InitialSP + 0x0001);
 
     i8080.state.set_Memory(uint16_InitialSP, uint8_InitialL);
-    i8080.state.set_Memory((uint16_InitialSP + 0x01), uint8_InitialH);
+    i8080.state.set_Memory((uint16_InitialSP + 0x0001), uint8_InitialH);
 
     i8080.state.reg_H.set(uint8_RegisterTempH);
     i8080.state.reg_L.set(uint8_RegisterTempL);
 
-    i8080.state.reg_SP.set_Large(uint16_InitialSP + 0x02);
+    //i8080.state.reg_SP.set_Large(uint16_InitialSP + 0x0002);
 
     func_ClockCycles(18);
 
@@ -4360,11 +4434,11 @@ void  func_RST_4() {
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
 
 	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	i8080.state.set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
-	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 	i8080.state.reg_PC.set_Large(0x0020);
 
@@ -4552,11 +4626,11 @@ void  func_RST_5() {
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
 
 	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	i8080.state.set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
-	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 	i8080.state.reg_PC.set_Large(0x0028);
 
@@ -4593,30 +4667,31 @@ void  func_RP() {
 void  func_POP_PSW()
 {
     // Logic for: flags <- (sp); A <- (sp+1); sp <- sp+2
-    uint8_t uint8_TempPSW = i8080.state.get_Memory(i8080.state.reg_SP.get_Large());
+    uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
+    uint8_t uint8_TempPSW = i8080.state.get_Memory(uint16_InitialSP);
 
     if ((uint8_TempPSW & 0x80) != 0x00) {
-        i8080.state.flag_S.set(1);
+        i8080.state.flag_S.set(true);
     }
 
     if ((uint8_TempPSW & 0x40) != 0x00) {
-        i8080.state.flag_Z.set(1);
+        i8080.state.flag_Z.set(true);
     }
 
     if ((uint8_TempPSW & 0x10) != 0x00) {
-        i8080.state.flag_AC.set(1);
+        i8080.state.flag_AC.set(true);
     }
 
     if ((uint8_TempPSW & 0x04) != 0x00) {
-        i8080.state.flag_P.set(1);
+        i8080.state.flag_P.set(true);
     }
 
     if ((uint8_TempPSW & 0x01) != 0x00) {
-        i8080.state.flag_C.set(1);
+        i8080.state.flag_C.set(true);
     }
 
-    i8080.state.reg_A.set(i8080.state.get_Memory(i8080.state.reg_SP.get_Large() + 1));
-    i8080.state.reg_SP.set_Large(i8080.state.reg_SP.get_Large() + 2);
+    i8080.state.reg_A.set(i8080.state.get_Memory(uint16_InitialSP + 0x0001));
+    i8080.state.reg_SP.set_Large(uint16_InitialSP + 0x0002);
 
     func_ClockCycles(10);
 }
@@ -4662,7 +4737,7 @@ void  func_DI() {
 
     // Logic for: special
 
-    i8080.state.flag_INTE.set(0);
+    i8080.state.flag_INTE.set(true);
 
     func_ClockCycles(4);
 
@@ -4765,11 +4840,11 @@ void  func_RST_6() {
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
 
 	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	i8080.state.set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
-	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 	i8080.state.reg_PC.set_Large(0x0030);
 
@@ -4789,7 +4864,7 @@ void  func_RM() {
     // Logic for: if M, RET
 
     if (i8080.state.flag_S.get() == true) {
-        func_RET();
+        func_General_RET();
         func_ClockCycles(11);
     }
     else {
@@ -4866,7 +4941,7 @@ void  func_EI() {
     // Logic for: special
     // @TODO [Michael]: fill in logic
 
-    i8080.state.flag_INTE.set(1);
+    i8080.state.flag_INTE.set(true);
 
     func_ClockCycles(4);
 
@@ -4964,11 +5039,11 @@ void  func_RST_7() {
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
 
 	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	i8080.state.set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
-	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 	i8080.state.reg_PC.set_Large(0x0038);
 

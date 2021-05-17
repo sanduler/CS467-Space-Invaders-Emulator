@@ -183,11 +183,11 @@ void SI_handleUserInput(bool &quit_flag)
 			i8080.state.fire();
 			break;
 		case SI_INPUT::INSERT_COIN:
-			printf("PreInputs: %4X\n", i8080.state.inputs[1]);
+			//printf("PreInputs: %4X\n", i8080.state.inputs[1]);
 			i8080.state.inputs[1] = i8080.state.inputs[1] | 0x01;
 			i8080.state.insert_coin();
-			printf("PostInputs: %4X\n", i8080.state.inputs[1]);
-			system("pause");
+			//printf("PostInputs: %4X\n", i8080.state.inputs[1]);
+			//system("pause");
 			break;
 		case SI_INPUT::P2_MOVE_LEFT:
 			i8080.state.inputs[1] = i8080.state.inputs[2] | 0x20;
@@ -202,18 +202,18 @@ void SI_handleUserInput(bool &quit_flag)
 			i8080.state.fire();
 			break;
 		case SI_INPUT::P1_START:
-			printf("PreInputs: %4X\n", i8080.state.inputs[1]);
+			//printf("PreInputs: %4X\n", i8080.state.inputs[1]);
 			i8080.state.inputs[1] = i8080.state.inputs[1] | 0x04;
 			printf("Player 1 Start\n");
-			printf("PostInputs: %4X\n", i8080.state.inputs[1]);
-			system("pause");
+			//printf("PostInputs: %4X\n", i8080.state.inputs[1]);
+			//system("pause");
 			break;
 		case SI_INPUT::P2_START:
-			printf("PreInputs: %4X\n", i8080.state.inputs[1]);
+			//printf("PreInputs: %4X\n", i8080.state.inputs[1]);
 			i8080.state.inputs[1] = i8080.state.inputs[1] | 0x02;
 			printf("Player 2 Start\n");
-			printf("PostInputs: %4X\n", i8080.state.inputs[1]);
-			system("pause");
+			//printf("PostInputs: %4X\n", i8080.state.inputs[1]);
+			//system("pause");
 			break;
 		default: break;
 		}
@@ -247,11 +247,12 @@ void SI_handleScreenUpdate()
 void SI_handleExecuteOpCode()
 {
 	
+
+	i8080.state.exe_OpCode();
+
 	if ((i8080.state.opCode_Array[0] == 0xD3) && (i8080.state.opCode_Array[1] == 0x04)) {
 		SI_16BitShiftRegister();
 	}
-
-	i8080.state.exe_OpCode();
 }
 
 void SI_ResetInputs()
@@ -342,5 +343,5 @@ void SI_16BitShiftRegister()
 	printf("PostInput[3]: %4X\n", i8080.state.inputs[3]);
 
 	//	Reading from port 3 returns said result.
-	system("pause");
+	//system("pause");
 }
