@@ -162,6 +162,7 @@
     <ClInclude Include="OpCodeCaller.h" />
     <ClInclude Include="OpCodeFunctions.h" />
     <ClInclude Include="SI_GameLoop.h" />
+    <ClInclude Include="testWriter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

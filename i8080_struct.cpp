@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <cstring>
 #include <fstream>
+#include "testWriter.h"
 using namespace  std;
 
 void i8080_Flag::set(bool new_val)
@@ -75,8 +76,8 @@ i8080_State::i8080_State()
     mem_Array = (uint8_t*)malloc(0x10000);
     //video_RAM = (uint8_t*)malloc(224 * 256 * 4 * sizeof(video_RAM)); 
     video_RAM = (unsigned int*)malloc(224 * 256 * 4);  
-    //memset(video_RAM, 1, 224 * 256 * 4);
-    //memset(mem_Array, 0, 0x10000);
+    memset(video_RAM, 1, 224 * 256 * 4);
+    memset(mem_Array, 0, 0x10000);
 
     // Inputs
     inputs[255] = { 0 };
@@ -297,28 +298,6 @@ void    i8080_State::load_screen_update()
         int row = (byte_cnt * 8) / 256;
         int col = (byte_cnt * 8) % 256;
 
-        /*
-        uint8_t byte = mem_Array[0x2400 + byte_cnt];
-
-        for (int bit = 0; bit < 8; bit++)
-        {
-            int x = row + bit;
-            //read 1 bit from the original byte
-            int pixel = (byte >> bit) & 1;
-            const int temp_x = x;
-
-            int px = col;
-            int py = -temp_x + 256 - 1;
-            int pix_pos = (py * 224 + px) * 4;
-            uint8_t pixel_val;
-            if (pixel) pixel_val = 255; else pixel_val = 0;
-            video_RAM[pix_pos] = pixel_val;
-            video_RAM[pix_pos + 1] = pixel_val;
-            video_RAM[pix_pos + 2] = pixel_val;
-        }
-        */
-
-        ///*
         // Get the value of the byte out of memory
         uint8_t* byte = (uint8_t*)get_VRAM_from_mem() + byte_cnt;
 
@@ -335,10 +314,7 @@ void    i8080_State::load_screen_update()
             else {
                 *pix = 0x00000000L;
             }
-
-            pix -= 224;
         }
-        //*/
     }
 
 }
@@ -377,6 +353,7 @@ void    i8080_State::LoadRom(const char * fileName, size_t address)
 
 void    i8080_State::exe_OpCode()
 {
+
     // Get how many clock cycles we need to run
     int clock_cycles_to_run = get_CyclesToRun();
     int goal_clock_cycles = clock_cycles + clock_cycles_to_run;
@@ -393,12 +370,21 @@ void    i8080_State::exe_OpCode()
         //printf("OpCode0: %04X\n", opCode_Array[0]);
         //printf("OpCode1: %04X\n", opCode_Array[1]);
         //printf("OpCode2: %04X\n", opCode_Array[2]);
-	
+        //printf("OPCODE: %04x	PC: %d\n", opCode_Array[0], reg_PC.get_Large());
+        
+        // TEST FUNCTION TO COMPARE OPCODES -=-=-=-=-=-=-=-=-=-
+        writeOpcode(opCode_Array[0], reg_PC.get_Large(), clock_cycles, reg_SP.get_Large(),
+            reg_A.get(), reg_B.get(), reg_C.get(), reg_D.get(), reg_E.get(), reg_H.get(), reg_L.get(),
+            flag_Z.get(), flag_S.get(), flag_P.get(), flag_C.get(), flag_AC.get());
+        // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 	    eval_opCode(opCode_Array[0]);
+        //system("pause");
     }
 
     // Reset the timer once the opCodes have executed
     reset_ClockTimer();
+
 }
 
 void    i8080_State::reset_ClockTimer()
