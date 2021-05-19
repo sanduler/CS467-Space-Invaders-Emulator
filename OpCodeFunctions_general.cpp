@@ -113,7 +113,8 @@ void func_DCR_Registers(i8080_Register &reg_Source)
 	i8080.state.flag_S.set(func_Check_Sign(uint8_ResultTemp));
 	i8080.state.flag_Z.set(func_Check_Zero(uint8_ResultTemp));
 	// When checking the Auxiliary Carry Bit Source2 needs to be a 2's compliment
-	i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_RegisterTemp, 0xFF));
+	//i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_RegisterTemp, 0xFF));
+	i8080.state.flag_AC.set(false);
 	
 	i8080.state.flag_P.set(func_Check_Parity(uint8_ResultTemp));
 	
@@ -239,13 +240,15 @@ void func_ANA_Registers(i8080_Register &reg_Source)
 	i8080.state.flag_S.set(func_Check_Sign());
 	i8080.state.flag_Z.set(func_Check_Zero());
 	i8080.state.flag_P.set(func_Check_Parity());
-	i8080.state.flag_C.set(0);
+	i8080.state.flag_C.set(false);
 };
 
 // Generic Exclusive OR Function to pass XRA OpCodes to
 void func_XRA_Registers(i8080_Register &reg_Source)
 {
-	uint8_t uint8_ResultTemp = i8080.state.reg_A.get() ^ reg_Source.get();
+	uint8_t uint8_InitialA = i8080.state.reg_A.get();
+	uint8_t uint8_RegisterTemp = reg_Source.get();
+	uint8_t uint8_ResultTemp = uint8_InitialA ^ uint8_RegisterTemp;
 	
 	i8080.state.reg_A.set(uint8_ResultTemp);
 	

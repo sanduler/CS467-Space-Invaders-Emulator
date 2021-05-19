@@ -308,39 +308,54 @@ void SI_16BitShiftRegister()
 	//	write $aa->$aa00,
 	//	write $ff->$ffaa,
 	//	write $12->$12ff, ..
-	printf("PreShiftRegister: %4X\n", i8080.state.shiftRegister);
-	i8080.state.shiftRegister = i8080.state.shiftRegister >> 0x0008;
-	i8080.state.shiftRegister = i8080.state.outputs[4] | 0x0000;
-	printf("PostShiftRegister: %4X\n", i8080.state.shiftRegister);
+	//printf("PreShiftRegister: %4X\n", i8080.state.shiftRegister);
+	uint16_t uint16_InitialShiftRegister = i8080.state.shiftRegister;
+	uint16_t uint16_ShiftRegisterTemp = 0x0000;
+	uint8_t uint8_ShiftLow = 0x00;
+	uint8_t uint8_ShiftHigh = 0x00;
+
+	uint8_ShiftLow = uint8_ShiftLow | uint16_InitialShiftRegister;
+	uint8_ShiftHigh = uint8_ShiftHigh | (uint16_InitialShiftRegister >> 8);
+
+	uint16_ShiftRegisterTemp = uint16_ShiftRegisterTemp | i8080.state.outputs[4];
+	uint16_ShiftRegisterTemp = uint16_ShiftRegisterTemp << 0x08;
+	uint16_ShiftRegisterTemp = uint16_ShiftRegisterTemp | uint8_ShiftHigh;
+		
+	//i8080.state.shiftRegister & 0x00FF;
+	//i8080.state.shiftRegister = i8080.state.shiftRegister >> 0x0008;
+	//i8080.state.shiftRegister = i8080.state.outputs[4] | 0x0000;
+	//printf("PostShiftRegister: %4X\n", i8080.state.shiftRegister);
 
 
 	//	Writing to port 2 (bits 0, 1, 2) sets the offset for the 8 bit result, eg.
 	//	offset 0:
 	//rrrrrrrr		result = xxxxxxxx
 	//	xxxxxxxxyyyyyyyy
-	printf("PreInput[3]: %4X\n", i8080.state.inputs[3]);
+	//printf("PreInput[3]: %4X\n", i8080.state.inputs[3]);
 	uint8_t uint8_Offset = i8080.state.outputs[2] & 0x07;
-	printf("Offset: %4X\n", uint8_Offset);
+	uint8_t uint8_RegisterTemp = 0x00;
+	//printf("Offset: %4X\n", uint8_Offset);
 
 	if (uint8_Offset == 0x00) {
-		i8080.state.inputs[3] = i8080.state.shiftRegister >> 0x08;
+		uint8_RegisterTemp = i8080.state.shiftRegister >> 0x08;
 	}
 
 	//	offset 2 :
 	//	rrrrrrrr	result = xxxxxxyy
 	//	xxxxxxxxyyyyyyyy
 	if (uint8_Offset == 0x02) {
-		i8080.state.inputs[3] = i8080.state.shiftRegister >> 0x06;
+		uint8_RegisterTemp = i8080.state.shiftRegister >> 0x06;
 	}
 
 	//	offset 7 :
 	//	rrrrrrrr	result = xyyyyyyy
 	//	xxxxxxxxyyyyyyyy
 	if (uint8_Offset == 0x07) {
-		i8080.state.inputs[3] = i8080.state.shiftRegister >> 0x04;
+		uint8_RegisterTemp = i8080.state.shiftRegister >> 0x01;
 	}
 
-	printf("PostInput[3]: %4X\n", i8080.state.inputs[3]);
+	i8080.state.inputs[3] = uint8_RegisterTemp;
+	//printf("PostInput[3]: %4X\n", i8080.state.inputs[3]);
 
 	//	Reading from port 3 returns said result.
 	//system("pause");

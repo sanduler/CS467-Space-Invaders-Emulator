@@ -11,6 +11,10 @@
 #include <cstdint>
 #include <cstring>
 #include <fstream>
+
+//
+#include "testWriter.h"
+//
 using namespace  std;
 
 void i8080_Flag::set(bool new_val)
@@ -49,9 +53,9 @@ i8080_State::i8080_State()
     //cout << "Constructor: State has been initilized...." << endl;
 
     // Set Flags
-    flag_Z.set(false);
+    flag_Z.set(true);
     flag_S.set(false);
-    flag_P.set(false);
+    flag_P.set(true);
     flag_C.set(false);
     flag_AC.set(false);
     flag_INTE.set(false);
@@ -75,8 +79,8 @@ i8080_State::i8080_State()
     mem_Array = (uint8_t*)malloc(0x10000);
     //video_RAM = (uint8_t*)malloc(224 * 256 * 4 * sizeof(video_RAM)); 
     video_RAM = (unsigned int*)malloc(224 * 256 * 4);  
-    //memset(video_RAM, 1, 224 * 256 * 4);
-    //memset(mem_Array, 0, 0x10000);
+    memset(video_RAM, 1, 224 * 256 * 4);
+    memset(mem_Array, 0, 0x10000);
 
     // Inputs
     inputs[255] = { 0 };
@@ -128,14 +132,15 @@ void i8080_State::SendInterrupt(int itr_num)
         //This is identical to an "RST interrupt_num" instruction.
         switch (itr_num)
         {
-        case 0x00: reg_PC.set_Large(0x0000);
-        case 0x01: reg_PC.set_Large(0x0008);
-        case 0x02: reg_PC.set_Large(0x0010);
-        case 0x03: reg_PC.set_Large(0x0018);
-        case 0x04: reg_PC.set_Large(0x0020);
-        case 0x05: reg_PC.set_Large(0x0028);
-        case 0x06: reg_PC.set_Large(0x0030);
-        case 0x07: reg_PC.set_Large(0x0038);
+        case 0x00: reg_PC.set_Large(0x0000); break;
+        case 0x01: reg_PC.set_Large(0x0008); break;
+        case 0x02: reg_PC.set_Large(0x0010); break;
+        case 0x03: reg_PC.set_Large(0x0018); break;
+        case 0x04: reg_PC.set_Large(0x0020); break;
+        case 0x05: reg_PC.set_Large(0x0028); break;
+        case 0x06: reg_PC.set_Large(0x0030); break;
+        case 0x07: reg_PC.set_Large(0x0038); break;
+        default: break;
 
 
         }
@@ -389,10 +394,19 @@ void    i8080_State::exe_OpCode()
 	    opCode_Array[1] = get_Memory(uint16_ProgramCounter + 0x0001);
 	    opCode_Array[2] = get_Memory(uint16_ProgramCounter + 0x0002);
 
+        //////// Added for OpCode comparison
+        writeOpcode(opCode_Array[0], reg_PC.get_Large(), 0, reg_SP.get_Large(),
+            reg_A.get(), reg_B.get(), reg_C.get(), reg_D.get(), reg_E.get(), reg_H.get(), reg_L.get(),
+            flag_Z.get(), flag_S.get(), flag_P.get(), flag_C.get(), flag_AC.get());
+
+
+        /////////
+
         //printf("PC: %04X\n", uint16_ProgramCounter);
         //printf("OpCode0: %04X\n", opCode_Array[0]);
         //printf("OpCode1: %04X\n", opCode_Array[1]);
         //printf("OpCode2: %04X\n", opCode_Array[2]);
+        //system("pause");
 	
 	    eval_opCode(opCode_Array[0]);
     }

@@ -111,13 +111,13 @@ void  func_DCR_B() {
 ////////////////////
 void  func_MVI_B_D8() {
 
+    // Inc PC to account for additional size
+    func_Inc_PC(1);
+
     // Logic for: B <- byte 2
     func_MVI_Registers(i8080.state.reg_B, i8080.state.opCode_Array[1] );
 
     func_ClockCycles(7);
-
-    // Inc PC to account for additional size
-    func_Inc_PC(1);
 
 }
 
@@ -719,7 +719,7 @@ void  func_DCR_H() {
 ////////////////////
 void  func_MVI_H_D8() {
 
-    // Logic for: L <- byte 2
+    // Logic for: H <- byte 2
     func_MVI_Registers(i8080.state.reg_H, i8080.state.opCode_Array[1]);
 
     func_ClockCycles(7);
@@ -954,7 +954,9 @@ void  func_LXI_SP_D16() {
 void  func_STA_ADR() {
 
     // Logic for: (adr) <- A
-    i8080.state.set_Memory(i8080.state.get_Adr(), i8080.state.reg_A.get());
+    uint8_t uint8_InitialA = i8080.state.reg_A.get();
+    uint16_t uint16_InitialAddress = i8080.state.get_Adr();
+    i8080.state.set_Memory(uint16_InitialAddress, uint8_InitialA);
 
     func_ClockCycles(13);
 
@@ -997,9 +999,17 @@ void  func_INX_SP() {
 void  func_INR_M() {
 
     // Logic for: (HL) <- (HL)+1
-    i8080.state.set_M(i8080.state.get_M() + 1);
+    uint8_t uint8_InitialM = i8080.state.get_M();
+    uint8_t uint8_ResultTemp = uint8_InitialM + 0x01;
+
+    i8080.state.set_M(uint8_ResultTemp);
 
     // Set flags: Z, S, P, AC
+    i8080.state.flag_S.set(func_Check_Sign(uint8_ResultTemp));
+    i8080.state.flag_Z.set(func_Check_Zero(uint8_ResultTemp));
+    i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_InitialM, 0x01));
+    i8080.state.flag_P.set(func_Check_Parity(uint8_ResultTemp));
+
     func_ClockCycles(10);
 
 }
@@ -1014,9 +1024,20 @@ void  func_INR_M() {
 void  func_DCR_M() {
 
     // Logic for: (HL) <- (HL)-1
-    i8080.state.set_M(i8080.state.get_M() - 1);
+    uint8_t uint8_InitialM = i8080.state.get_M();
+    uint8_t uint8_ResultTemp = uint8_InitialM + 0x01;
+
+    i8080.state.set_M(uint8_ResultTemp);
 
     // Set flags: Z, S, P, AC
+    i8080.state.flag_S.set(func_Check_Sign(uint8_ResultTemp));
+    i8080.state.flag_Z.set(func_Check_Zero(uint8_ResultTemp));
+    // When checking the Auxiliary Carry Bit Source2 needs to be a 2's compliment
+    //i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_RegisterTemp, 0xFF));
+    i8080.state.flag_AC.set(false);
+
+    i8080.state.flag_P.set(func_Check_Parity(uint8_ResultTemp));
+
     func_ClockCycles(10);
 
 }
@@ -1091,7 +1112,9 @@ void  func_DAD_SP() {
 void  func_LDA_ADR() {
 
     // Logic for: A <- (adr)
-    i8080.state.reg_A.set(i8080.state.get_Memory(i8080.state.get_Adr()));
+    uint16_t uint16_AddrTemp = i8080.state.get_Adr();
+    uint8_t uint8_InitialMemory = i8080.state.get_Memory(uint16_AddrTemp);
+    i8080.state.reg_A.set(uint8_InitialMemory);
 
     func_ClockCycles(13);
 
@@ -2993,7 +3016,7 @@ void  func_ANA_M() {
     i8080.state.flag_S.set(func_Check_Sign());
     i8080.state.flag_Z.set(func_Check_Zero());
     i8080.state.flag_P.set(func_Check_Parity());
-    i8080.state.flag_C.set(0);
+    i8080.state.flag_C.set(false);
 
     // Set flags: Z, S, P, CY, AC
     func_ClockCycles(7);
@@ -3288,7 +3311,7 @@ void  func_ORA_M() {
     i8080.state.flag_S.set(func_Check_Sign());
     i8080.state.flag_Z.set(func_Check_Zero());
     i8080.state.flag_P.set(func_Check_Parity());
-    i8080.state.flag_C.set(0);
+    i8080.state.flag_C.set(false);
 
     // Set flags: Z, S, P, CY, AC
     func_ClockCycles(7);
@@ -3433,10 +3456,10 @@ void  func_CMP_M() {
 	i8080.state.flag_S.set(func_Check_Sign(uint8_ResultTemp));
 	
 	if (uint8_InitialA == uint8_RegisterTemp){
-		i8080.state.flag_Z.set(1);
+		i8080.state.flag_Z.set(true);
 	}
 	else {
-		i8080.state.flag_Z.set(0);
+		i8080.state.flag_Z.set(false);
 	}
 	
 	// When checking the Auxiliary Carry Bit Source2 needs to be a 2's compliment
@@ -3616,10 +3639,16 @@ void  func_PUSH_B() {
 void  func_ADI_D8() {
 
     // Logic for: A <- A + byte
-    i8080.state.reg_A.set(i8080.state.reg_A.get() + i8080.state.opCode_Array[1]);
+    uint8_t uint8_InitialA = i8080.state.reg_A.get();
+    uint8_t uint8_Data = i8080.state.opCode_Array[1];
+    i8080.state.reg_A.set(uint8_InitialA + uint8_Data);
 
     // Set flags: Z, S, P, CY, AC
-    // Flags set in AD function
+    i8080.state.flag_S.set(func_Check_Sign());
+    i8080.state.flag_Z.set(func_Check_Zero());
+    i8080.state.flag_AC.set(func_Check_AuxCarry(uint8_InitialA, uint8_Data));
+    i8080.state.flag_P.set(func_Check_Parity());
+    i8080.state.flag_C.set(func_Check_Carry(uint8_InitialA, uint8_Data));
 
     func_ClockCycles(7);
 
@@ -3652,7 +3681,7 @@ void  func_RST_0() {
     i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
-	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 	i8080.state.reg_PC.set_Large(0x0000);
 
@@ -3836,11 +3865,11 @@ void  func_RST_1() {
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
 
 	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	i8080.state.set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
-	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 	i8080.state.reg_PC.set_Large(0x0008);
 
@@ -4044,11 +4073,11 @@ void  func_RST_2() {
     uint8_PCAddrHigh = uint8_PCAddrHigh | (uint16_InitialPC >> 8); 
 
 	// Push the Program Counter to memory where the Stack Pointer - 1 and Stack Pointer - 2 point
-	i8080.state.set_Memory((uint16_InitialSP - 0x01), uint8_PCAddrHigh);
-    i8080.state.set_Memory((uint16_InitialSP - 0x02), uint8_PCAddrLow);
+	i8080.state.set_Memory((uint16_InitialSP - 0x0001), uint8_PCAddrHigh);
+    i8080.state.set_Memory((uint16_InitialSP - 0x0002), uint8_PCAddrLow);
 	
 	// The Stack Pointer is updated
-	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x02);
+	i8080.state.reg_SP.set_Large(uint16_InitialSP - 0x0002);
 
 	i8080.state.reg_PC.set_Large(0x0010);
 
@@ -4273,8 +4302,8 @@ void  func_POP_H() {
     // Logic for: L <- (sp); H <- (sp+1); sp <- sp+2
     uint16_t uint16_InitialSP = i8080.state.reg_SP.get_Large();
     i8080.state.reg_L.set(i8080.state.get_Memory(uint16_InitialSP));
-    i8080.state.reg_H.set(i8080.state.get_Memory(uint16_InitialSP + 1));
-    i8080.state.reg_SP.set_Large(uint16_InitialSP + 2);
+    i8080.state.reg_H.set(i8080.state.get_Memory(uint16_InitialSP + 0x0001));
+    i8080.state.reg_SP.set_Large(uint16_InitialSP + 0x0002);
 
     func_ClockCycles(10);
 
@@ -4405,7 +4434,7 @@ void  func_ANI_D8() {
 	i8080.state.flag_S.set(func_Check_Sign());
 	i8080.state.flag_Z.set(func_Check_Zero());
 	i8080.state.flag_P.set(func_Check_Parity());
-	i8080.state.flag_C.set(0);
+	i8080.state.flag_C.set(false);
 
     func_ClockCycles(7);
 
