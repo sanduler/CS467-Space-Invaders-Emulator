@@ -56,7 +56,7 @@ i8080_State::i8080_State()
     flag_Z.set(true);
     flag_S.set(false);
     flag_P.set(true);
-    flag_C.set(false);
+    flag_C.set(true);
     flag_AC.set(false);
     flag_INTE.set(false);
 
@@ -95,6 +95,48 @@ i8080_State::i8080_State()
     clock_cycles = 0;
     clock_Timer = 0;
 
+}
+
+void i8080_State::set_Inputs(int index, uint8_t val) {
+    if (index < 256) {
+        inputs[index] = val;
+    }
+}
+
+uint8_t i8080_State::get_Inputs(int index)
+{
+    if (index < 256) {
+        return inputs[index];
+    }
+    else {
+        return NULL;
+    }
+}
+
+void i8080_State::set_Outputs(int index, uint8_t val) {
+    if (index < 256) {
+        outputs[index] = val;
+    }
+}
+
+uint8_t i8080_State::get_Outputs(int index)
+{
+    if (index < 256) {
+        return outputs[index];
+    }
+    else {
+        return NULL;
+    }
+}
+
+void i8080_State::set_ShiftRegister(uint16_t val)
+{
+    shiftRegister = val;
+}
+
+uint16_t i8080_State::get_ShiftRegister()
+{
+    return shiftRegister;
 }
 
 void i8080_State::SendInterrupt(int itr_num)

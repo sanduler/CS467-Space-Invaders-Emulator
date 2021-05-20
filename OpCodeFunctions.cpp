@@ -3960,6 +3960,9 @@ void  func_OUT_D8() {
     // @TODO [Ruben ]: fill in logic
 
     // Moves the Accumulator into the Output Port specified in opCode_Array[1]
+    if ((i8080.state.opCode_Array[1] == 0x02) && (i8080.state.reg_A.get() != 0x00)) {
+        printf("Setting Offset\n");
+    }
     i8080.state.outputs[i8080.state.opCode_Array[1]] = i8080.state.reg_A.get();
     //system("pause");
 

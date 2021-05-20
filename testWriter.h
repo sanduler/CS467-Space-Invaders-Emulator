@@ -12,8 +12,8 @@
 #include <iomanip>
 using namespace std;
 
-int OPCODES_TO_WRITE_START = 42000;        // Defines which opcode call to start writing on (can bve changed)
-int OPCODES_TO_WRITE_END = 45000;    // Defines which opcode call to stop writing on  (can be changed)
+int OPCODES_TO_WRITE_START = 40000;        // Defines which opcode call to start writing on (can bve changed)
+int OPCODES_TO_WRITE_END = 50000;    // Defines which opcode call to stop writing on  (can be changed)
 int NUM_OPCODE_DIGITS = 5;        // Make this value match the number of digits in the variable above it
 ofstream TEST_OUT_FILE;                 // File handler for output
 

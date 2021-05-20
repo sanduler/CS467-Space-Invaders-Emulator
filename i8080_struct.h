@@ -135,6 +135,18 @@ public:
     // Shift Register
     uint16_t shiftRegister;
 
+    void set_Inputs(int index, uint8_t val);
+
+    uint8_t get_Inputs(int index);
+
+    void set_Outputs(int index, uint8_t val);
+
+    uint8_t get_Outputs(int index);
+
+    void set_ShiftRegister(uint16_t val);
+
+    uint16_t get_ShiftRegister();
+
 };
 
 /*********************************
